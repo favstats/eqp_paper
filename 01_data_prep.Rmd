@@ -6,7 +6,7 @@ output: html_notebook
 ## packages
 
 ```{r}
-pacman::p_load(tidyverse, haven, psych, sjPlot)
+pacman::p_load(tidyverse, haven, psych, sjPlot, ggpubr)
 ```
 
 ## data
@@ -19,13 +19,11 @@ trolley <- read_spss("data/trolley.sav") %>%
          t1_eqp_eqp11, t1_eqp_eqp12 ,t1_eqp_eqp13, t1_eqp_eqp14, t1_eqp_eqp18,
          t1_eqp_eqp2, t1_eqp_eqp4, t1_eqp_eqp5, t1_eqp_eqp6, t1_eqp_eqp10,
          t1_eqp_eqp15, t1_eqp_eqp16 ,t1_eqp_eqp17, t1_eqp_eqp19, t1_eqp_eqp20,
-         t1_szenario1q2, t2_szenario1q2, t1_szenario2q2, t2_szenario2q2) %>% 
-  select(t1_eqp_eqp1, t1_eqp_eqp3, t1_eqp_eqp7, t1_eqp_eqp8, t1_eqp_eqp9,
-         t1_eqp_eqp11, t1_eqp_eqp12 ,t1_eqp_eqp13, t1_eqp_eqp14, t1_eqp_eqp18,
-         t1_eqp_eqp2, t1_eqp_eqp4, t1_eqp_eqp5, t1_eqp_eqp6, t1_eqp_eqp10,
-         t1_eqp_eqp15, t1_eqp_eqp16 ,t1_eqp_eqp17, t1_eqp_eqp19, t1_eqp_eqp20,
-         t1_szenario1q2, t2_szenario1q2, t1_szenario2q2, t2_szenario2q2,
-         t1_szenario1q1, t2_szenario1q1, t1_szenario2q1, t2_szenario2q1)
+         t1_szenario1q2, t2_szenario1q2, t1_szenario2q2, t2_szenario2q2) 
+
+
+trolley %>% 
+  select(general_finisher:t2_religion_community, t2_religion_practice:t2_year_of_birth)
 
 
 eqp <- trolley %>% 
@@ -105,9 +103,14 @@ ggheatmap <- function(.data) {
                  title.position = "top", title.hjust = 0.5))
 }
 
-ggheatmap(eqp)
+ggheatmap(reg_dat %>% select_if(is.numeric))
 
-ggsave(filename = "images/heatmap.png", height = 10, width = 10)
+ggsave(filename = "images/heatmap2.png", height = 30, width = 30)
+
+
+reg_dat %>% 
+  select(t2_gender) %>% table()
+
 ```
 
 
@@ -120,37 +123,160 @@ reg_dat <- eqp %>%
   predict.psych(data = eqp) %>% 
   cbind(trolley, .)
   
-
+reg_dat <- reg_dat %>% 
+  rename(idealism_pca = RC1) %>% 
+  rename(relativism_pca = RC2)   
 
 
 
 ```
 
-## regression
+## t_tests
 
 ```{r}
-fit1 <- lm(t2_szenario2q2 ~ t1_szenario2q2 + RC1 + RC2, data = reg_dat)
 
-sjPlot::plot_model(fit1, show.p = T, show.values = T)
-
-
+## Szenario 1 - Idealism
 reg_dat %>% 
-  mutate(diff = t1_szenario2q1 == t2_szenario2q1) %>% 
-  ggplot(aes(diff, RC1)) +
-  geom_boxplot()
+  mutate(opinion_change_s1 = ifelse(t1_szenario1q1 == t2_szenario1q1, 0, 1) %>% as.factor) %>% 
+  ggplot(aes(opinion_change_s1, idealism_pca)) +
+  geom_violin(aes(fill = opinion_change_s1), alpha = 0.4) +
+  geom_boxplot(width = 0.1) +
+  ggthemes::theme_hc() +
+  ggthemes::scale_fill_fivethirtyeight() + 
+  stat_compare_means(label.x.npc = "middle", label.y.npc = "top") +
+  ggtitle("Szenario 1 Opinion Change - Idealism")
 
+ggsave(filename = "images/s1_idealism.png", width = 5, height = 5)
+
+## Szenario 1 - Relativism
+reg_dat %>% 
+  mutate(opinion_change_s1 = ifelse(t1_szenario1q1 == t2_szenario1q1, 0, 1) %>% as.factor) %>% 
+  ggplot(aes(opinion_change_s1, relativism_pca)) +
+  geom_violin(aes(fill = opinion_change_s1), alpha = 0.4) +
+  geom_boxplot(width = 0.1) +
+  ggthemes::theme_hc() +
+  ggthemes::scale_fill_fivethirtyeight() + 
+  stat_compare_means(label.x.npc = "middle", label.y.npc = "top") +
+  ggtitle("Szenario 1 Opinion Change - Relativism")
+
+ggsave(filename = "images/s1_relativism.png", width = 5, height = 5)
+
+## Szenario 2 - Idealism
+reg_dat %>% 
+  mutate(opinion_change_s2 = ifelse(t1_szenario2q1 == t2_szenario2q1, 0, 1) %>% as.factor) %>% 
+  ggplot(aes(opinion_change_s2, idealism_pca)) +
+  geom_violin(aes(fill = opinion_change_s2), alpha = 0.4) +
+  geom_boxplot(width = 0.1) +
+  ggthemes::theme_hc() +
+  ggthemes::scale_fill_fivethirtyeight() + 
+  stat_compare_means(label.x.npc = "middle", label.y.npc = "top") +
+  ggtitle("Szenario 2 Opinion Change - Idealism")
+
+ggsave(filename = "images/s2_idealism.png", width = 5, height = 5)
+
+## Szenario 2 - Relativism
+reg_dat %>% 
+  mutate(opinion_change_s2 = ifelse(t1_szenario2q1 == t2_szenario2q1, 0, 1) %>% as.factor) %>% 
+  ggplot(aes(opinion_change_s2, relativism_pca)) +
+  geom_violin(aes(fill = opinion_change_s2), alpha = 0.4) +
+  geom_boxplot(width = 0.1) +
+  ggthemes::theme_hc() +
+  ggthemes::scale_fill_fivethirtyeight() + 
+  stat_compare_means(label.x.npc = "middle", label.y.npc = "top") +
+  ggtitle("Szenario 2 Opinion Change - Relativism")
+
+ggsave(filename = "images/s2_relativism.png", width = 5, height = 5)
+```
+
+## bivariate
+
+```{r}
+reg_dat %>%
+  mutate(diff_num = t2_szenario1q2 - t1_szenario1q2) %>% 
+  mutate(opinion_change_s1 = ifelse(t1_szenario1q1 == t2_szenario1q1, 0, 1) %>% as.factor) %>% 
+  ggplot(aes(idealism_pca, diff_num, color = opinion_change_s1)) +
+  geom_point() +
+  geom_smooth(method = "lm", se = F) +
+  ggthemes::theme_hc() +
+  ggthemes::scale_fill_fivethirtyeight() +
+  ggtitle("Szenario 1 Opinion Change - Idealism")
+
+ggsave(filename = "images/b_s1_idealism.png", width = 5, height = 5)
+
+reg_dat %>%
+  mutate(diff_num = t2_szenario1q2 - t1_szenario1q2) %>% 
+  mutate(opinion_change_s1 = ifelse(t1_szenario1q1 == t2_szenario1q1, 0, 1) %>% as.factor) %>% 
+  ggplot(aes(relativism_pca, diff_num, color = opinion_change_s1)) +
+  geom_point() +
+  geom_smooth(method = "lm", se = F) +
+  ggthemes::theme_hc() +
+  ggthemes::scale_fill_fivethirtyeight() +
+  ggtitle("Szenario 1 Opinion Change - Relativism")
+
+ggsave(filename = "images/b_s1_relativism.png", width = 5, height = 5)
+
+
+reg_dat %>%
+  mutate(diff_num = t2_szenario2q2 - t1_szenario2q2) %>% 
+  mutate(opinion_change_s2 = ifelse(t1_szenario2q1 == t2_szenario2q1, 0, 1) %>% as.factor) %>% 
+  ggplot(aes(idealism_pca, diff_num, color = opinion_change_s2)) +
+  geom_point() +
+  geom_smooth(method = "lm", se = F) +
+  ggthemes::theme_hc() +
+  ggthemes::scale_fill_fivethirtyeight() +
+  ggtitle("Szenario 2 Opinion Change - Idealism")
+
+ggsave(filename = "images/b_s2_idealism.png", width = 5, height = 5)
+
+
+reg_dat %>%
+  mutate(diff_num = t2_szenario2q2 - t1_szenario2q2) %>% 
+  mutate(opinion_change_s2 = ifelse(t1_szenario2q1 == t2_szenario2q1, 0, 1) %>% as.factor) %>%  
+  ggplot(aes(relativism_pca, diff_num, color = opinion_change_s2)) +
+  geom_point() +
+  geom_smooth(method = "lm", se = F) +
+  ggthemes::theme_hc() +
+  ggthemes::scale_fill_fivethirtyeight() +
+  ggtitle("Szenario 2 Opinion Change - Relativism")
+
+ggsave(filename = "images/b_s2_relativism.png", width = 5, height = 5)
+
+# fit2 <- lm(diff_num ~ t1_szenario1q2 + idealism_pca + relativism_pca, data = reg2)
+
+# sjPlot::plot_model(fit2, show.p = T, show.values = T)
 
 reg_dat %>% 
   mutate(diff_num = t2_szenario1q2 - t1_szenario1q2) %>% 
   select(diff_num) %>% ggplot(aes(diff_num)) + geom_histogram()
   
+```
 
-reg_dat %>% 
-  mutate(diff_num = t2_szenario1q2 - t1_szenario1q2) -> reg2
 
-fit2 <- lm(diff_num ~ t1_szenario1q2 + RC1 + RC2, data = reg2)
 
-sjPlot::plot_model(fit2, show.p = T, show.values = T)
+## regression
+
+```{r}
+fit1 <- lm(t2_szenario1q2 ~ t1_szenario1q2 + idealism_pca + relativism_pca, data = reg_dat)
+
+sjPlot::plot_model(fit1, show.p = T, show.values = T) +
+  ggtitle("Regression - Opinion Change in Szenario 1") +
+  ggthemes::theme_hc() +
+  ggthemes::scale_fill_fivethirtyeight()
+
+ggsave(filename = "images/reg1.png", width = 5, height = 5)
+
+fit2 <- lm(t2_szenario2q2 ~ t1_szenario2q2 + idealism_pca + relativism_pca, data = reg_dat)
+
+sjPlot::plot_model(fit2, show.p = T, show.values = T) +
+  ggtitle("Regression - Opinion Change in Szenario 2") +
+  ggthemes::theme_hc() +
+  ggthemes::scale_fill_fivethirtyeight()
+
+ggsave(filename = "images/reg2.png", width = 5, height = 5)
+
+
+
+
 
 ```
 
