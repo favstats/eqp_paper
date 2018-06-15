@@ -13,14 +13,20 @@ pacman::p_load(tidyverse, haven, psych, sjPlot, ggpubr)
 
 ```{r}
 trolley <- read_spss("data/trolley.sav") %>% 
-  janitor::clean_names() %>% 
+  janitor::clean_names(.) %>% 
   filter(general_finisher == 1) %>% 
   drop_na(t1_eqp_eqp1, t1_eqp_eqp3, t1_eqp_eqp7, t1_eqp_eqp8, t1_eqp_eqp9,
          t1_eqp_eqp11, t1_eqp_eqp12 ,t1_eqp_eqp13, t1_eqp_eqp14, t1_eqp_eqp18,
          t1_eqp_eqp2, t1_eqp_eqp4, t1_eqp_eqp5, t1_eqp_eqp6, t1_eqp_eqp10,
          t1_eqp_eqp15, t1_eqp_eqp16 ,t1_eqp_eqp17, t1_eqp_eqp19, t1_eqp_eqp20,
-         t1_szenario1q2, t2_szenario1q2, t1_szenario2q2, t2_szenario2q2) 
-
+         t1_szenario1q2, t2_szenario1q2, t1_szenario2q2, t2_szenario2q2) %>% 
+  filter(t2_gender != 2) %>% 
+  mutate(gender = ifelse(t2_gender == 1, 0, 1)) %>% 
+  mutate(leftright = t2_pol_alignment) %>% 
+  mutate(pol_interest = 5 - t2_pol_interest) %>% 
+  mutate(church_attendance = 7 - t2_religion_church) %>% 
+  mutate(age = 2018 - as.numeric(t2_year_of_birth)) %>% 
+  mutate(university = ifelse(t2_university == 4, 0, 1))
 
 trolley %>% 
   select(general_finisher:t2_religion_community, t2_religion_practice:t2_year_of_birth)
@@ -45,7 +51,10 @@ trolley %>%
   ggplot(aes(t2_szenario2q2)) +
   geom_histogram()
 
+trolley %>% mutate_all(sjmisc::to_label)
+trolley
 ```
+
 
 ## heatmap
 
@@ -103,13 +112,13 @@ ggheatmap <- function(.data) {
                  title.position = "top", title.hjust = 0.5))
 }
 
-ggheatmap(reg_dat %>% select_if(is.numeric))
+ggheatmap(trolley %>% select_if(is.numeric))
 
 ggsave(filename = "images/heatmap2.png", height = 30, width = 30)
 
 
-reg_dat %>% 
-  select(t2_gender) %>% table()
+# reg_dat %>% 
+  # select(t2_gender) %>% table()
 
 ```
 
@@ -119,9 +128,18 @@ reg_dat %>%
 
 ```{r}
 reg_dat <- eqp %>% 
-  psych::pca(2, rotate = "varimax") %>% 
+  psych::pca(2, rotate = "none") %>% 
   predict.psych(data = eqp) %>% 
   cbind(trolley, .)
+
+reg_dat <- reg_dat %>% 
+  rename(akquisenz_pca = PC1) %>% 
+  rename(ideal_relativ_pca = PC2)  
+
+reg_dat <- eqp %>% 
+  psych::pca(2, rotate = "varimax") %>% 
+  predict.psych(data = eqp) %>% 
+  cbind(reg_dat, .)
   
 reg_dat <- reg_dat %>% 
   rename(idealism_pca = RC1) %>% 
@@ -186,6 +204,65 @@ reg_dat %>%
   ggtitle("Szenario 2 Opinion Change - Relativism")
 
 ggsave(filename = "images/s2_relativism.png", width = 5, height = 5)
+
+
+### Acquisenz
+
+## Szenario 1 
+reg_dat %>% 
+  mutate(opinion_change_s1 = ifelse(t1_szenario1q1 == t2_szenario1q1, 0, 1) %>% as.factor) %>% 
+  ggplot(aes(opinion_change_s1, akquisenz_pca)) +
+  geom_violin(aes(fill = opinion_change_s1), alpha = 0.4) +
+  geom_boxplot(width = 0.1) +
+  ggthemes::theme_hc() +
+  ggthemes::scale_fill_fivethirtyeight() + 
+  stat_compare_means(label.x.npc = "middle", label.y.npc = "top") +
+  ggtitle("Szenario 2 Opinion Change - Relativism")
+
+ggsave(filename = "images/s1_akquisenz.png", width = 5, height = 5)
+
+## Szenario 2 
+reg_dat %>% 
+  mutate(opinion_change_s2 = ifelse(t1_szenario2q1 == t2_szenario2q1, 0, 1) %>% as.factor) %>% 
+  ggplot(aes(opinion_change_s2, akquisenz_pca)) +
+  geom_violin(aes(fill = opinion_change_s2), alpha = 0.4) +
+  geom_boxplot(width = 0.1) +
+  ggthemes::theme_hc() +
+  ggthemes::scale_fill_fivethirtyeight() + 
+  stat_compare_means(label.x.npc = "middle", label.y.npc = "top") +
+  ggtitle("Szenario 2 Opinion Change - Relativism")
+
+ggsave(filename = "images/s2_akquisenz.png", width = 5, height = 5)
+
+
+
+### Double Dimension
+
+## Szenario 1
+reg_dat %>% 
+  mutate(opinion_change_s1 = ifelse(t1_szenario1q1 == t2_szenario1q1, 0, 1) %>% as.factor) %>% 
+  ggplot(aes(opinion_change_s1, ideal_relativ_pca)) +
+  geom_violin(aes(fill = opinion_change_s1), alpha = 0.4) +
+  geom_boxplot(width = 0.1) +
+  ggthemes::theme_hc() +
+  ggthemes::scale_fill_fivethirtyeight() + 
+  stat_compare_means(label.x.npc = "middle", label.y.npc = "top") +
+  ggtitle("Szenario 2 Opinion Change - Relativism")
+
+ggsave(filename = "images/s1_ideal_relativ.png", width = 5, height = 5)
+
+## Szenario 2 
+reg_dat %>% 
+  mutate(opinion_change_s2 = ifelse(t1_szenario2q1 == t2_szenario2q1, 0, 1) %>% as.factor) %>% 
+  ggplot(aes(opinion_change_s2, ideal_relativ_pca)) +
+  geom_violin(aes(fill = opinion_change_s2), alpha = 0.4) +
+  geom_boxplot(width = 0.1) +
+  ggthemes::theme_hc() +
+  ggthemes::scale_fill_fivethirtyeight() + 
+  stat_compare_means(label.x.npc = "middle", label.y.npc = "top") +
+  ggtitle("Szenario 2 Opinion Change - Relativism")
+
+ggsave(filename = "images/s2_ideal_relativ.png", width = 5, height = 5)
 ```
 
 ## bivariate
@@ -276,7 +353,251 @@ ggsave(filename = "images/reg2.png", width = 5, height = 5)
 
 
 
+fit3 <- lm(t2_szenario1q2 ~ t1_szenario1q2 + akquisenz_pca + ideal_relativ_pca, data = reg_dat)
+
+sjPlot::plot_model(fit3, show.p = T, show.values = T) +
+  ggtitle("Regression - Opinion Change in Szenario 1") +
+  ggthemes::theme_hc() +
+  ggthemes::scale_fill_fivethirtyeight()
+
+ggsave(filename = "images/reg3.png", width = 5, height = 5)
+
+fit4 <- lm(t2_szenario2q2 ~ t1_szenario2q2 + akquisenz_pca + ideal_relativ_pca, data = reg_dat)
+
+sjPlot::plot_model(fit4, show.p = T, show.values = T) +
+  ggtitle("Regression - Opinion Change in Szenario 2") +
+  ggthemes::theme_hc() +
+  ggthemes::scale_fill_fivethirtyeight()
+
+ggsave(filename = "images/reg4.png", width = 5, height = 5)
+
 
 
 ```
+
+## bayesian regression
+
+```{r}
+# devtools::install_github("paul-buerkner/brms", dependencies = TRUE)
+pacman::p_load(brms)
+
+
+brm1 <- brm(t2_szenario1q2 ~ t1_szenario1q2 + akquisenz_pca + ideal_relativ_pca + general_group_discussion + general_group_information, data = reg_dat)
+
+plot_model(brm1, show.p = T, show.values = T) +
+  ggtitle("Regression - Opinion Change in Szenario 1") +
+  ggthemes::theme_hc() +
+  ggthemes::scale_fill_fivethirtyeight()
+
+ggsave(filename = "images/brm1.png", width = 7, height = 7)
+
+brm2 <- brm(t2_szenario2q2 ~ t1_szenario2q2 + akquisenz_pca + ideal_relativ_pca + general_group_discussion + general_group_information, data = reg_dat)
+
+plot_model(brm2, show.p = T, show.values = T) +
+  ggtitle("Regression - Opinion Change in Szenario 2") +
+  ggthemes::theme_hc() +
+  ggthemes::scale_fill_fivethirtyeight()
+
+ggsave(filename = "images/brm2.png", width = 7, height = 7)
+
+
+brm3 <- brm(t2_szenario1q2 ~ t1_szenario1q2 + akquisenz_pca + ideal_relativ_pca + general_group_discussion + general_group_information + akquisenz_pca*general_group_discussion, data = reg_dat)
+
+plot_model(brm3, show.p = T, show.values = T) +
+  ggtitle("Regression - Opinion Change in Szenario 1") +
+  ggthemes::theme_hc() +
+  ggthemes::scale_fill_fivethirtyeight()
+
+ggsave(filename = "images/brm3.png", width = 7, height = 7)
+
+
+brm4 <- brm(t2_szenario2q2 ~ t1_szenario2q2 + akquisenz_pca + ideal_relativ_pca + general_group_discussion + general_group_information + akquisenz_pca*general_group_discussion, data = reg_dat)
+
+plot_model(brm4, show.p = T, show.values = T) +
+  ggtitle("Regression - Opinion Change in Szenario 2") +
+  ggthemes::theme_hc() +
+  ggthemes::scale_fill_fivethirtyeight()
+
+ggsave(filename = "images/brm4.png", width = 7, height = 7)
+
+
+### full model 
+
+brm5 <- brm(t2_szenario1q2 ~ t1_szenario1q2 + akquisenz_pca + ideal_relativ_pca + general_group_discussion + general_group_information + gender + leftright + pol_interest + church_attendance + age + university, data = reg_dat)
+
+plot_model(brm5, show.p = T, show.values = T) +
+  ggtitle("Regression - Opinion Change in Szenario 1") +
+  ggthemes::theme_hc() +
+  ggthemes::scale_fill_fivethirtyeight()
+
+ggsave(filename = "images/brm5.png", width = 7, height = 7)
+
+
+brm6 <- brm(t2_szenario2q2 ~ t1_szenario2q2 + akquisenz_pca + ideal_relativ_pca + general_group_discussion + general_group_information + gender + leftright + pol_interest + church_attendance + age + university, data = reg_dat)
+
+plot_model(brm6, show.p = T, show.values = T) +
+  ggtitle("Regression - Opinion Change in Szenario 2") +
+  ggthemes::theme_hc() +
+  ggthemes::scale_fill_fivethirtyeight()
+
+ggsave(filename = "images/brm6.png", width = 7, height = 7)
+
+
+plot(marginal_effects(fit1, effects = "ideal_relativ_pca"))
+
+```
+
+
+
+
+
+
+## halfeye
+
+```{r}
+# devtools::install_github("mjskay/tidybayes")
+pacman::p_load(tidybayes)
+
+# shinystan::launch_shinystan(brm5)
+parameters(brm5)
+
+
+brm5 %>% 
+  spread_samples(b_Intercept)
+
+
+reg_dat %>%
+  add_fitted_samples(brm5) -> spread_brm5
+
+
+spread_brm5 %>% 
+  ggplot(aes(akquisenz_pca, estimate, color = .iteration)) +
+  geom_halfeyeh()
+
+```
+
+
+
+## animate
+
+```{r}
+trolley %>% 
+  select(general_group_control:general_group_information, 
+         t1_szenario1q2, t2_szenario1q2) %>% 
+ # spread()
+  gather(key, value, -t1_szenario1q2, -t2_szenario1q2) %>% 
+  filter(value == 1) %>% #select(key) %>% table()
+  mutate(diff = t2_szenario1q2 - t1_szenario1q2) %>% 
+  ggplot(aes(key, diff)) +
+  geom_col()
+
+
+
+trolley %>% 
+  select(general_group_control:general_group_information, 
+         t1_szenario1q2, t2_szenario1q2) %>% 
+ # spread()
+  gather(key, value, -t1_szenario1q2, -t2_szenario1q2) %>% 
+  filter(value == 1) %>% #select(key) %>% table()
+  select(-value) %>% 
+  gather(time, support, -key) %>% 
+  ggplot(aes(time, support)) +
+  geom_violin(aes(fill = time), alpha = 0.4) +
+  geom_boxplot(width = 0.1) +
+  ggthemes::theme_hc() +
+  ggthemes::scale_fill_fivethirtyeight() +
+  facet_wrap(~key) +
+  stat_compare_means(label.x.npc = "middle", label.y.npc = "top") +
+  ggtitle("Szenario 1 Opinion Change - Idealism")
+
+library(gganimate)
+
+trolley %>% 
+  select(general_group_control:general_group_information, 
+         t1_szenario1q2, t2_szenario1q2) %>% 
+ # spread()
+  gather(key, value, -t1_szenario1q2, -t2_szenario1q2) %>% 
+  filter(value == 1) %>% #select(key) %>% table()
+  select(-value) %>% 
+  mutate(direction = t2_szenario1q2 - t1_szenario1q2) %>% 
+  mutate(direction = case_when(
+    direction > 0 ~ "more support",
+    direction < 0 ~ "lower support",
+    TRUE ~ "same"
+  )) %>% 
+  gather(time, support, -key, -direction) %>% 
+#  filter(time == "t1_szenario1q2") %>% 
+  ggplot(aes(key, support, fill = direction)) + 
+  geom_violin() +
+  transition_states(time, transition_length = 4, state_length = 4) +
+  shadow_wake(wake_length = 0.1) +
+  ggthemes::theme_hc() +
+  ggthemes::scale_color_fivethirtyeight() -> ss
+
+animate(ss, nframes = 30, fps = 10, length = 30)
+
+trolley %>% 
+  select(general_group_control:general_group_information, 
+         t1_szenario1q2, t2_szenario1q2) %>% 
+ # spread()
+  gather(key, value, -t1_szenario1q2, -t2_szenario1q2) %>% 
+  filter(value == 1) %>% #select(key) %>% table()
+  select(-value) %>% 
+  gather(time, support, -key) %>% 
+  filter(time == "t2_szenario1q2") %>% 
+  ggplot(aes(key, support)) + 
+  geom_dotplot(binaxis='y', stackdir='center')
+
+
+trolley %>% 
+  select(general_group_control:general_group_information, 
+         t1_szenario1q2, t2_szenario1q2) %>% 
+ # spread()
+  gather(key, value, -t1_szenario1q2, -t2_szenario1q2) %>% 
+  filter(value == 1) %>% #select(key) %>% table()
+  select(-value) %>% 
+  mutate(name = 1:n()) %>% 
+  gather(time, support, -key, -name) %>% 
+  ggplot(aes(time, support)) + 
+     geom_violin(color = "grey70") +
+  #    geom_point(aes(group = name, color = factor(name)), alpha = 0.3) +
+  #    geom_line(aes(group = name, color = factor(name)), alpha = 0.3) + 
+  #    stat_summary(fun.data = "mean_cl_normal", size = 5, geom = "point") +
+  #    stat_summary(fun.y = "mean",size = 2, geom = "line", aes(group = 1)) +
+  #    ylab("Truth-Pledge Alignment")   +
+  #    ggthemes::theme_hc() +
+  # ggtitle("Pro Truth-Pledge Alignment  Before & After PTP") +
+  # scale_x_discrete("", labels = c("Before PTP","After PTP")) +
+  # guides(fill = F, color = F) + 
+  stat_compare_means(paired = TRUE, method = "t.test") +
+  ylim(1,5)
+
+
+trolley %>% 
+  select(general_group_control:general_group_information, 
+         t1_szenario1q2, t2_szenario1q2) %>% 
+ # spread()
+  gather(key, value, -t1_szenario1q2, -t2_szenario1q2) %>% 
+  filter(value == 1) %>% #select(key) %>% table()
+  select(-value) %>% 
+  mutate(name = 1:n()) %>% 
+  gather(time, support, -key, -name) -> ss
+
+# Box plot facetted by "dose"
+p <- ggpaired(ss, x = "time", y = "support",
+          color = "time", palette = "jco", 
+          line.color = "gray", line.size = 0.4,
+          facet.by = "key", short.panel.labs = FALSE)
+# Use only p.format as label. Remove method name.
+p + stat_compare_means(label = "p.format", paired = TRUE)
+```
+
+
+
+
+
+
+
+
+
 
