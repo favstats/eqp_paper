@@ -146,8 +146,151 @@ reg_dat <- reg_dat %>%
   rename(relativism_pca = RC2)   
 
 
+```
+
+## four types
+
+```{r}
+range01 <- function(x, ...){(x - min(x, ...)) / (max(x, ...) - min(x, ...))}
+
+reg_dat %<>% 
+  mutate_at(vars(relativism_pca, idealism_pca), ~range01(., na.rm=T)) %>% 
+  mutate(types = case_when(
+    idealism_pca >= .5 & relativism_pca < .5 ~ "Absolutists",
+    idealism_pca >= .5 & relativism_pca >= .5 ~ "Situationists",
+    idealism_pca < .5 & relativism_pca >= .5 ~ "Subjectivists",
+    idealism_pca < .5 & relativism_pca < .5 ~ "Exceptionists"
+  )) #select(types) %>% table()
+  
+reg_dat %>% 
+  ggplot(aes(relativism_pca, idealism_pca)) +
+  geom_point(aes(color = types)) +
+  ggthemes::theme_hc() +
+  ggthemes::scale_fill_fivethirtyeight() +
+  ggtitle("4 Types of Ethical Positions") +
+  geom_smooth(method = "lm")
+  
+ggsave(filename = "images/four_types.png", height = 8, width = 8)
+
+
+reg_dat %>% 
+  select(types, t1_szenario1q2, t2_szenario1q2) %>% 
+  rename(t1 = t1_szenario1q2, t2 = t2_szenario1q2) %>% 
+  gather(key, value, -types) %>% 
+  ggplot(aes(key, value)) +
+  geom_violin(aes(fill = types), alpha = 0.4) +
+  geom_boxplot(width = 0.1) +
+  facet_wrap(~types, nrow = 1) +
+  ggthemes::theme_hc() +
+  ggthemes::scale_fill_fivethirtyeight() +
+  ggtitle("Opinion Change by four Types of Ethical Positions") +
+  xlab("") +
+  ylab("Morally justifiable: Switch Track") 
+
+
+ggsave(filename = "images/Opinionchange_fourtypes.png", height = 5, width = 12)
+
+
+
+reg_dat %>% 
+  select(types, general_group_control:general_group_information, t1_szenario1q2, t2_szenario1q2) %>% 
+  rename(t1 = t1_szenario1q2, t2 = t2_szenario1q2) %>% 
+  rename(`Control Group` = general_group_control,
+         `Discussion Group` = general_group_discussion,
+         `Information Group` = general_group_information
+         ) %>% 
+  gather(key, value, -types, -t1, -t2) %>% 
+  filter(value == 1) %>% 
+  mutate(change = t2 - t1)  %>% 
+  ggplot(aes(types, change)) +
+  geom_violin(aes(fill = types), alpha = 0.4) +
+  geom_boxplot(width = 0.1) +
+  facet_wrap(~key, nrow = 1)  +
+  ggthemes::theme_hc() +
+  ggthemes::scale_fill_gdocs() +
+  ggtitle("Average Opinion Change by four Types of Ethical Positions - Switch Track") +
+  xlab("") +
+  ylab("Morally justifiable: Switch Track") 
+
+ggsave(filename = "images/Opinionchange_switchtrack2.png", height = 5, width = 12)
+
+
+
+reg_dat %>% 
+  select(types, general_group_control:general_group_information, t1_szenario2q2, t2_szenario2q2) %>% 
+  rename(t1 = t1_szenario2q2, t2 = t2_szenario2q2) %>% 
+  rename(`Control Group` = general_group_control,
+         `Discussion Group` = general_group_discussion,
+         `Information Group` = general_group_information
+         ) %>% 
+  gather(key, value, -types, -t1, -t2) %>% 
+  filter(value == 1) %>% 
+  mutate(change = t2 - t1)  %>% 
+  ggplot(aes(types, change)) +
+  geom_violin(aes(fill = types), alpha = 0.4) +
+  geom_boxplot(width = 0.1) +
+  facet_wrap(~key, nrow = 1)  +
+  ggthemes::theme_hc() +
+  ggthemes::scale_fill_gdocs() +
+  ggtitle("Average Opinion Change by four Types of Ethical Positions - Push Person") +
+  xlab("") +
+  ylab("Morally justifiable: Push Person") 
+
+ggsave(filename = "images/Opinionchange_pushperson2.png", height = 5, width = 12)
+
+
+
+reg_dat %>% 
+  select(types, general_group_control:general_group_information, t1_szenario1q2, t2_szenario1q2) %>% 
+  rename(t1 = t1_szenario1q2, t2 = t2_szenario1q2) %>% 
+  rename(`Control Group` = general_group_control,
+         `Discussion Group` = general_group_discussion,
+         `Information Group` = general_group_information
+         ) %>% 
+  gather(key, value, -types, -t1, -t2) %>% 
+  filter(value == 1) %>% 
+  mutate(change = t2 - t1) %>% #select(types, key) %>% table()
+  group_by(types, key) %>% 
+  summarise_all(mean) %>% 
+  ggplot(aes(types, change)) +
+  geom_bar(stat = "identity", aes(fill = types), legend = FALSE) +
+  facet_wrap(~key, nrow = 1) +
+  ggthemes::theme_hc() +
+  ggthemes::scale_fill_gdocs()  +
+  ggtitle("Average Opinion Change by four Types of Ethical Positions - Switch Track") +
+  xlab("") +
+  ylab("Morally justifiable: Switch Track") 
+
+ggsave(filename = "images/Opinionchange_switchtrack.png", height = 5, width = 12)
+
+reg_dat %>% 
+  select(types, general_group_control:general_group_information, t1_szenario2q2, t2_szenario2q2) %>% 
+  rename(t1 = t1_szenario2q2, t2 = t2_szenario2q2) %>% 
+  rename(`Control Group` = general_group_control,
+         `Discussion Group` = general_group_discussion,
+         `Information Group` = general_group_information
+         ) %>% 
+  gather(key, value, -types, -t1, -t2) %>% 
+  filter(value == 1) %>% 
+  mutate(change = t2 - t1) %>% #select(types, key) %>% table()
+  group_by(types, key) %>% 
+  summarise_all(mean) %>% 
+  ggplot(aes(types, change)) +
+  geom_bar(stat = "identity", aes(fill = types), legend = FALSE) +
+  facet_wrap(~key, nrow = 1) +
+  ggthemes::theme_hc() +
+  ggthemes::scale_fill_gdocs()  +
+  ggtitle("Average Opinion Change by four Types of Ethical Positions - Push Person") +
+  xlab("") +
+  ylab("Morally justifiable: Push Person") 
+
+ggsave(filename = "images/Opinionchange_pushperson.png", height = 5, width = 12)
+
+
 
 ```
+
+
 
 ## t_tests
 
@@ -442,8 +585,28 @@ plot_model(brm6, show.p = T, show.values = T) +
 
 ggsave(filename = "images/brm6.png", width = 7, height = 7)
 
+reg_dat %<>% 
+  mutate(types = factor(types))
 
-plot(marginal_effects(fit1, effects = "ideal_relativ_pca"))
+brm7 <- brm(t2_szenario1q2 ~ t1_szenario1q2 + akquisenz_pca + ideal_relativ_pca + general_group_discussion + general_group_information + gender + leftright + pol_interest + church_attendance + age + university + types, data = reg_dat)
+
+plot_model(brm7, show.p = T, show.values = T) +
+  ggtitle("Regression - Opinion Change in Szenario 1") +
+  ggthemes::theme_hc() +
+  ggthemes::scale_fill_fivethirtyeight()
+
+ggsave(filename = "images/brm7.png", width = 7, height = 7)
+
+brm8 <- brm(t2_szenario2q2 ~ t1_szenario2q2 + akquisenz_pca + ideal_relativ_pca + general_group_discussion + general_group_information + gender + leftright + pol_interest + church_attendance + age + university + types, data = reg_dat)
+
+plot_model(brm8, show.p = T, show.values = T) +
+  ggtitle("Regression - Opinion Change in Szenario 2") +
+  ggthemes::theme_hc() +
+  ggthemes::scale_fill_fivethirtyeight()
+
+ggsave(filename = "images/brm8.png", width = 7, height = 7)
+
+
 
 ```
 

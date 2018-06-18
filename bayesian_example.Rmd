@@ -1,0 +1,100 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+This is an [R Markdown](http://rmarkdown.rstudio.com) Notebook. When you execute code within the notebook, the results appear beneath the code. 
+
+Try executing this chunk by clicking the *Run* button within the chunk or by placing your cursor inside it and pressing *Ctrl+Shift+Enter*. 
+
+## halfeye
+
+```{r}
+# devtools::install_github("mjskay/tidybayes")
+pacman::p_load(tidybayes)
+
+# shinystan::launch_shinystan(brm5)
+parameters(brm5) %>% as.factor()
+
+
+brm5 %>% 
+  spread_samples(b_Intercept, b_t1_szenario1q2, b_akquisenz_pca, 
+                 b_ideal_relativ_pca, b_general_group_discussion, 
+                 b_general_group_information, b_gender,  b_leftright, 
+                 b_pol_interest, b_church_attendance, b_age, b_university)
+
+
+
+reg_dat %>%
+  add_fitted_samples(brm5) -> spread_brm5
+  
+ga <- spread_brm5 %>% 
+  select(t1_szenario1q2, akquisenz_pca, ideal_relativ_pca, 
+                       general_group_discussion, general_group_information, 
+                       gender,  leftright, pol_interest, church_attendance, age, 
+                       university, estimate) %>%
+  gather(key, value, -estimate)
+  ggplot(aes(x = estimate, y = condition)) +
+  stat_pointintervalh(.prob = c(.66, .95))
+
+ss <- brm5 %>% 
+  predicted_samples(reg_dat) %>% 
+  as_tibble()
+
+ss %>%
+  ggplot(aes(x = .row, y = pred)) +
+  geom_halfeyeh()
+
+
+pacman::p_load(ggdistribute, bayesplot)
+
+data <- data_normal_sample(mu = c(-1, 2, 3, 5), n = 2500)
+
+
+ggplot(data) +
+  aes(x = value, y = GroupScore) +
+  geom_vline(
+    xintercept = 0,
+    size = .6) +
+  geom_posterior(
+    aes(fill = Group),
+    midline_color = "#FFFFFF",
+    colour = "#FFFFFF",
+    alpha = 0.7,
+    brighten = c(1.3, 0, -1.3),
+    interval_type = "hdi",
+    position = position_spread(
+      height = 0.5,
+      padding = 0)) +
+  labs(
+    title = "Rainbow Hills",
+    x = "Parameter estimate",
+    y = "Group's score") +
+  scale_x_continuous(breaks = seq(-10, 10, 1)) +
+  scale_y_continuous(breaks = seq(-10, 10, .5)) +
+  ggthemes::theme_hc()
+
+
+posterior <- as.matrix(brm5)
+
+plot_title <- ggtitle("Posterior distributions",
+                      "with medians and 80% intervals")
+mcmc_areas(posterior, 
+           pars = c( "b_akquisenz_pca",
+                    "b_ideal_relativ_pca",
+                    "b_general_group_discussion",
+                    "b_general_group_information",
+                    "b_gender",
+                    "b_leftright",
+                    "b_pol_interest",
+                    "b_church_attendance",
+                    "b_age"), 
+           prob = 0.8) + plot_title
+
+```
+
+Add a new chunk by clicking the *Insert Chunk* button on the toolbar or by pressing *Ctrl+Alt+I*.
+
+When you save the notebook, an HTML file containing the code and output will be saved alongside it (click the *Preview* button or press *Ctrl+Shift+K* to preview the HTML file).
+
+The preview shows you a rendered HTML copy of the contents of the editor. Consequently, unlike *Knit*, *Preview* does not run any R code chunks. Instead, the output of the chunk when it was last run in the editor is displayed.
