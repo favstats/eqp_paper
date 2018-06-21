@@ -22,10 +22,10 @@ trolley <- read_spss("data/TrolleyExperimentArgumentNew.sav") %>%
          t1_szenario1q2, t2_szenario1q2, t1_szenario2q2, t2_szenario2q2) %>% 
   filter(t2_gender != 2) %>% 
   mutate(gender = ifelse(t2_gender == 1, 0, 1)) %>% 
-  mutate(leftright = t2_polalignment) %>% 
-  mutate(pol_interest = 5 - t2_polinterest) %>% 
-  mutate(church_attendance = 7 - t2_religionchurch) %>% 
-  mutate(age = 2018 - as.numeric(t2_yearofbirth)) %>% 
+  mutate(leftright = t2_pol_alignment) %>% 
+  mutate(pol_interest = 5 - t2_pol_interest) %>% 
+  mutate(church_attendance = 7 - t2_religion_church) %>% 
+  mutate(age = 2018 - as.numeric(t2_year_of_birth)) %>% 
   mutate(university = ifelse(t2_university == 4, 0, 1))
 
 # trolley %>% 
@@ -153,14 +153,14 @@ reg_dat <- reg_dat %>%
 ```{r}
 range01 <- function(x, ...){(x - min(x, ...)) / (max(x, ...) - min(x, ...))}
 
-reg_dat %<>% 
+reg_dat %>% 
   mutate_at(vars(relativism_pca, idealism_pca), ~range01(., na.rm=T)) %>% 
   mutate(types = case_when(
     idealism_pca >= .5 & relativism_pca < .5 ~ "Absolutists",
     idealism_pca >= .5 & relativism_pca >= .5 ~ "Situationists",
     idealism_pca < .5 & relativism_pca >= .5 ~ "Subjectivists",
     idealism_pca < .5 & relativism_pca < .5 ~ "Exceptionists"
-  )) #select(types) %>% table()
+  )) %>% dplyr::select(types) %>% table()
   
 reg_dat %>% 
   ggplot(aes(relativism_pca, idealism_pca)) +
@@ -295,8 +295,8 @@ ggsave(filename = "images/Opinionchange_pushperson.png", height = 5, width = 12)
 ```{r}
 nb_dat <- reg_dat %>% 
   #select(idealism_pca, relativism_pca) %>% 
-  mutate(ideal_xtremes = ifelse(idealism_pca >= 0.75, 1, 0))  %>% 
-  mutate(relative_xtremes = ifelse(relativism_pca >= 0.75, 1, 0)) %>% 
+  mutate(ideal_xtremes = ifelse(idealism_pca >= 0.9, 1, 0))  %>% 
+  mutate(relative_xtremes = ifelse(relativism_pca >= 0.9, 1, 0)) %>% 
 #  select(ideal_xtremes, relative_xtremes) %>% table()
   mutate(absolute_change = abs(t2_szenario1q2 - t1_szenario1q2)) %>% 
   mutate(change_dummy = ifelse(absolute_change > 0, 1 ,0))
@@ -304,9 +304,13 @@ nb_dat <- reg_dat %>%
 
 pacman::p_load(MASS)
 
-mnb <- glm.nb(absolute_change ~ ideal_xtremes + relative_xtremes + general_group_discussion + general_group_information + gender + leftright + pol_interest + church_attendance + age + university, data = nb_dat)
+mnb <- glm.nb(absolute_change ~ ideal_xtremes + relative_xtremes + general_group_discussion + ideal_xtremes*general_group_information + gender + leftright + pol_interest + church_attendance + age + university, data = nb_dat)
 
 summary(mnb)
+
+sjPlot::plot_model(mnb, type = "int")
+
+hist(nb_dat$absolute_change)
 
 
 glm_fit <- glm(change_dummy ~ ideal_xtremes + relative_xtremes + general_group_discussion + general_group_information + gender + leftright + pol_interest + church_attendance + age + university, data = nb_dat, family = "binomial")
