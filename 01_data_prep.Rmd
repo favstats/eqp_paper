@@ -6,7 +6,7 @@ output: html_notebook
 ## packages
 
 ```{r}
-pacman::p_load(tidyverse, haven, psych, sjPlot, ggpubr)
+pacman::p_load(tidyverse, haven, psych, sjPlot, ggpubr, ggthemes)
 ```
 
 ## data
@@ -22,14 +22,14 @@ trolley <- read_spss("data/TrolleyExperimentArgumentNew.sav") %>%
          t1_szenario1q2, t2_szenario1q2, t1_szenario2q2, t2_szenario2q2) %>% 
   filter(t2_gender != 2) %>% 
   mutate(gender = ifelse(t2_gender == 1, 0, 1)) %>% 
-  mutate(leftright = t2_pol_alignment) %>% 
-  mutate(pol_interest = 5 - t2_pol_interest) %>% 
-  mutate(church_attendance = 7 - t2_religion_church) %>% 
-  mutate(age = 2018 - as.numeric(t2_year_of_birth)) %>% 
+  mutate(leftright = t2_polalignment) %>% 
+  mutate(pol_interest = 5 - t2_polinterest) %>% 
+  mutate(church_attendance = 7 - t2_religionchurch) %>% 
+  mutate(age = 2018 - as.numeric(t2_yearofbirth)) %>% 
   mutate(university = ifelse(t2_university == 4, 0, 1))
 
-trolley %>% 
-  select(general_finisher:t2_religion_community, t2_religion_practice:t2_year_of_birth)
+# trolley %>% 
+#   select(general_finisher:t2_religion_community, t2_religion_practice:t2_year_of_birth)
 
 
 eqp <- trolley %>% 
@@ -287,6 +287,31 @@ reg_dat %>%
 ggsave(filename = "images/Opinionchange_pushperson.png", height = 5, width = 12)
 
 
+
+```
+
+## polarization - negative-binomial
+
+```{r}
+nb_dat <- reg_dat %>% 
+  #select(idealism_pca, relativism_pca) %>% 
+  mutate(ideal_xtremes = ifelse(idealism_pca >= 0.75, 1, 0))  %>% 
+  mutate(relative_xtremes = ifelse(relativism_pca >= 0.75, 1, 0)) %>% 
+#  select(ideal_xtremes, relative_xtremes) %>% table()
+  mutate(absolute_change = abs(t2_szenario1q2 - t1_szenario1q2)) %>% 
+  mutate(change_dummy = ifelse(absolute_change > 0, 1 ,0))
+
+
+pacman::p_load(MASS)
+
+mnb <- glm.nb(absolute_change ~ ideal_xtremes + relative_xtremes + general_group_discussion + general_group_information + gender + leftright + pol_interest + church_attendance + age + university, data = nb_dat)
+
+summary(mnb)
+
+
+glm_fit <- glm(change_dummy ~ ideal_xtremes + relative_xtremes + general_group_discussion + general_group_information + gender + leftright + pol_interest + church_attendance + age + university, data = nb_dat, family = "binomial")
+
+summary(glm_fit)
 
 ```
 
