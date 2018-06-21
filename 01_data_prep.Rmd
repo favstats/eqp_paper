@@ -12,7 +12,7 @@ pacman::p_load(tidyverse, haven, psych, sjPlot, ggpubr)
 ## data
 
 ```{r}
-trolley <- read_spss("data/trolley.sav") %>% 
+trolley <- read_spss("data/TrolleyExperimentArgumentNew.sav") %>% 
   janitor::clean_names(.) %>% 
   filter(general_finisher == 1) %>% 
   drop_na(t1_eqp_eqp1, t1_eqp_eqp3, t1_eqp_eqp7, t1_eqp_eqp8, t1_eqp_eqp9,
@@ -588,7 +588,7 @@ ggsave(filename = "images/brm6.png", width = 7, height = 7)
 reg_dat %<>% 
   mutate(types = factor(types))
 
-brm7 <- brm(t2_szenario1q2 ~ t1_szenario1q2 + akquisenz_pca + ideal_relativ_pca + general_group_discussion + general_group_information + gender + leftright + pol_interest + church_attendance + age + university + types, data = reg_dat)
+brm7 <- brm(t2_szenario1q2 ~ t1_szenario1q2 + general_group_discussion + general_group_information + gender + leftright + pol_interest + church_attendance + age + university + types, data = reg_dat)
 
 plot_model(brm7, show.p = T, show.values = T) +
   ggtitle("Regression - Opinion Change in Szenario 1") +
@@ -597,7 +597,7 @@ plot_model(brm7, show.p = T, show.values = T) +
 
 ggsave(filename = "images/brm7.png", width = 7, height = 7)
 
-brm8 <- brm(t2_szenario2q2 ~ t1_szenario2q2 + akquisenz_pca + ideal_relativ_pca + general_group_discussion + general_group_information + gender + leftright + pol_interest + church_attendance + age + university + types, data = reg_dat)
+brm8 <- brm(t2_szenario2q2 ~ t1_szenario2q2 + general_group_discussion + general_group_information + gender + leftright + pol_interest + church_attendance + age + university + types, data = reg_dat)
 
 plot_model(brm8, show.p = T, show.values = T) +
   ggtitle("Regression - Opinion Change in Szenario 2") +
