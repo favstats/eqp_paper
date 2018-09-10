@@ -6,7 +6,7 @@ output: html_notebook
 ## packages
 
 ```{r}
-pacman::p_load(tidyverse, haven, psych, sjPlot, ggpubr, ggthemes)
+pacman::p_load(tidyverse, haven, psych, sjPlot, ggpubr)
 ```
 
 ## data
@@ -28,8 +28,8 @@ trolley <- read_spss("data/TrolleyExperimentArgumentNew.sav") %>%
   mutate(age = 2018 - as.numeric(t2_year_of_birth)) %>% 
   mutate(university = ifelse(t2_university == 4, 0, 1))
 
-# trolley %>% 
-#   select(general_finisher:t2_religion_community, t2_religion_practice:t2_year_of_birth)
+trolley %>% 
+  select(general_finisher:t2_religion_community, t2_religion_practice:t2_year_of_birth)
 
 
 eqp <- trolley %>% 
@@ -145,22 +145,317 @@ reg_dat <- reg_dat %>%
   rename(idealism_pca = RC1) %>% 
   rename(relativism_pca = RC2)   
 
-
+   
 ```
+
+
+## lavaan
+
+```{r}
+#library(lavaan)
+#lav1 <- 
+```
+
+## extreme types
+
+
+```{r}
+nb_dat <- reg_dat %>% 
+  #select(idealism_pca, relativism_pca) %>% 
+  mutate(ideal_xtremes = ifelse(idealism_pca >= 0.75, "High Idealists > 0.75", "Idealism < .75"))  %>% 
+  mutate(relative_xtremes = ifelse(relativism_pca >= 0.75, "High Relativists > 0.75", "Relativism < .75")) %>% 
+#  select(ideal_xtremes, relative_xtremes) %>% table()
+  mutate(absolute_change = abs(t2_szenario1q2 - t1_szenario1q2)) %>% 
+  mutate(change_dummy = ifelse(absolute_change > 0, 1 ,0))
+
+ideal_n <- nb_dat %>% 
+  mutate(key = case_when(
+    general_group_control == 1 ~ "Control Group",
+    general_group_discussion == 1 ~ "Discussion Group",
+    general_group_information == 1 ~ "Information Group",
+  )) %>% 
+  group_by(ideal_xtremes, key) %>% 
+  tally() %>% 
+  mutate(n = paste0("n = ", n))
+
+ideal_bar <- nb_dat %>% 
+  select(ideal_xtremes, general_group_control:general_group_information, t1_szenario1q2, t2_szenario1q2) %>% 
+  rename(t1 = t1_szenario1q2, t2 = t2_szenario1q2) %>% 
+  rename(`Control Group` = general_group_control,
+         `Discussion Group` = general_group_discussion,
+         `Information Group` = general_group_information
+         ) %>% 
+  gather(key, value, -ideal_xtremes, -t1, -t2) %>% 
+  filter(value == 1) %>% 
+  mutate(change = t2 - t1)  %>% 
+  mutate(ideal_xtremes = as.factor(ideal_xtremes)) %>% 
+  group_by(ideal_xtremes, key) %>% 
+  summarise_all(mean) 
+
+nb_dat %>% 
+  select(ideal_xtremes, general_group_control:general_group_information, t1_szenario1q2, t2_szenario1q2) %>% 
+  rename(t1 = t1_szenario1q2, t2 = t2_szenario1q2) %>% 
+  rename(`Control Group` = general_group_control,
+         `Discussion Group` = general_group_discussion,
+         `Information Group` = general_group_information
+         ) %>% 
+  gather(key, value, -ideal_xtremes, -t1, -t2) %>% 
+  filter(value == 1) %>% 
+  mutate(change = t2 - t1)  %>% 
+  mutate(ideal_xtremes = as.factor(ideal_xtremes)) %>% 
+  ggplot(aes(ideal_xtremes, change, group = ideal_xtremes)) +
+  geom_text(data = ideal_n, aes(y = -5.6, label = n), nudge_x = .3) +
+  geom_violin(aes(fill = ideal_xtremes), alpha = 0.4) +
+  # geom_bar(data = ideal_bar, stat = "identity", aes(fill = ideal_xtremes), width = 0.4, legend = FALSE) +
+  geom_boxplot(width = 0.1) +
+  facet_wrap(~key, nrow = 1)  +
+  ggthemes::theme_hc() +
+  ggthemes::scale_fill_gdocs() +
+  ggtitle("Average Opinion Change for high Idealists - Switch Track") +
+  xlab("") +
+  ylab("Morally justifiable: Switch Track") 
+
+ggsave(filename = "images/extreme_ideal_switchtrack1.png", height = 5, width = 12)
+
+nb_dat %>% 
+  select(ideal_xtremes, general_group_control:general_group_information, t1_szenario1q2, t2_szenario1q2) %>% 
+  rename(t1 = t1_szenario1q2, t2 = t2_szenario1q2) %>% 
+  rename(`Control Group` = general_group_control,
+         `Discussion Group` = general_group_discussion,
+         `Information Group` = general_group_information
+         ) %>% 
+  gather(key, value, -ideal_xtremes, -t1, -t2) %>% 
+  filter(value == 1) %>% 
+  mutate(change = t2 - t1)  %>% 
+  mutate(ideal_xtremes = as.factor(ideal_xtremes)) %>% 
+  group_by(ideal_xtremes, key) %>% 
+  summarise(change_mean = mean(change, na.rm = T),
+            change_sd = sd(change, na.rm = T)) %>% 
+  mutate(lower = change_mean - change_sd) %>% 
+  mutate(upper = change_mean + change_sd) %>% 
+  ggplot(aes(ideal_xtremes, change_mean)) +
+  geom_col(stat = "identity", aes(fill = ideal_xtremes), legend = FALSE) +
+  geom_text(data = ideal_n, aes(y = -0.7, label = n), nudge_x = .2) +
+  # geom_errorbar(aes(ymin = lower, ymax = upper)) +
+  facet_wrap(~key, nrow = 1) +
+  ggthemes::theme_hc() +
+  ggthemes::scale_fill_gdocs()  +
+  ggtitle("Average Opinion Change for high Idealists - Switch Track") +
+  xlab("") +
+  ylab("Morally justifiable: Switch Track") 
+
+
+ggsave(filename = "images/extreme_ideal_switchtrack2.png", height = 5, width = 12)
+
+
+nb_dat %>% 
+  select(ideal_xtremes, general_group_control:general_group_information, t1_szenario2q2, t2_szenario2q2) %>% 
+  rename(t1 = t1_szenario2q2, t2 = t2_szenario2q2) %>% 
+  rename(`Control Group` = general_group_control,
+         `Discussion Group` = general_group_discussion,
+         `Information Group` = general_group_information
+         ) %>% 
+  gather(key, value, -ideal_xtremes, -t1, -t2) %>% 
+  filter(value == 1) %>% 
+  mutate(change = t2 - t1)  %>% 
+  mutate(ideal_xtremes = as.factor(ideal_xtremes)) %>% 
+  ggplot(aes(ideal_xtremes, change, group = ideal_xtremes)) +
+  geom_text(data = ideal_n, aes(y = -5.6, label = n), nudge_x = .3) +
+  geom_violin(aes(fill = ideal_xtremes), alpha = 0.4) +
+  # geom_bar(data = ideal_bar, stat = "identity", aes(fill = ideal_xtremes), width = 0.4, legend = FALSE) +
+  geom_boxplot(width = 0.1) +
+  facet_wrap(~key, nrow = 1)  +
+  ggthemes::theme_hc() +
+  ggthemes::scale_fill_gdocs() +
+  ggtitle("Average Opinion Change for high Idealists - Push Person") +
+  xlab("") +
+  ylab("Morally justifiable: Switch Track") 
+
+ggsave(filename = "images/extreme_ideal_pushperson1.png", height = 5, width = 12)
+
+nb_dat %>% 
+  select(ideal_xtremes, general_group_control:general_group_information, t1_szenario2q2, t2_szenario2q2) %>% 
+  rename(t1 = t1_szenario2q2, t2 = t2_szenario2q2) %>% 
+  rename(`Control Group` = general_group_control,
+         `Discussion Group` = general_group_discussion,
+         `Information Group` = general_group_information
+         ) %>% 
+  gather(key, value, -ideal_xtremes, -t1, -t2) %>% 
+  filter(value == 1) %>% 
+  mutate(change = t2 - t1)  %>% 
+  mutate(ideal_xtremes = as.factor(ideal_xtremes)) %>% 
+  group_by(ideal_xtremes, key) %>% 
+  summarise(change_mean = mean(change, na.rm = T),
+            change_sd = sd(change, na.rm = T)) %>% 
+  mutate(lower = change_mean - change_sd) %>% 
+  mutate(upper = change_mean + change_sd) %>% 
+  ggplot(aes(ideal_xtremes, change_mean)) +
+  geom_col(stat = "identity", aes(fill = ideal_xtremes), legend = FALSE) +
+  geom_text(data = ideal_n, aes(y = -0.7, label = n), nudge_x = .2) +
+  # geom_errorbar(aes(ymin = lower, ymax = upper)) +
+  facet_wrap(~key, nrow = 1) +
+  ggthemes::theme_hc() +
+  ggthemes::scale_fill_gdocs()  +
+  ggtitle("Average Opinion Change for high Idealists - Push Person") +
+  xlab("") +
+  ylab("Morally justifiable: Switch Track") 
+
+
+ggsave(filename = "images/extreme_ideal_pushperson2.png", height = 5, width = 12)
+
+
+
+relative_n <- nb_dat %>% 
+  mutate(key = case_when(
+    general_group_control == 1 ~ "Control Group",
+    general_group_discussion == 1 ~ "Discussion Group",
+    general_group_information == 1 ~ "Information Group",
+  )) %>% 
+  group_by(relative_xtremes, key) %>% 
+  tally() %>% 
+  mutate(n = paste0("n = ", n))
+
+relative_bar <- nb_dat %>% 
+  select(relative_xtremes, general_group_control:general_group_information, t1_szenario1q2, t2_szenario1q2) %>% 
+  rename(t1 = t1_szenario1q2, t2 = t2_szenario1q2) %>% 
+  rename(`Control Group` = general_group_control,
+         `Discussion Group` = general_group_discussion,
+         `Information Group` = general_group_information
+         ) %>% 
+  gather(key, value, -relative_xtremes, -t1, -t2) %>% 
+  filter(value == 1) %>% 
+  mutate(change = t2 - t1)  %>% 
+  mutate(relative_xtremes = as.factor(relative_xtremes)) %>% 
+  group_by(relative_xtremes, key) %>% 
+  summarise_all(mean) 
+
+nb_dat %>% 
+  select(relative_xtremes, general_group_control:general_group_information, t1_szenario1q2, t2_szenario1q2) %>% 
+  rename(t1 = t1_szenario1q2, t2 = t2_szenario1q2) %>% 
+  rename(`Control Group` = general_group_control,
+         `Discussion Group` = general_group_discussion,
+         `Information Group` = general_group_information
+         ) %>% 
+  gather(key, value, -relative_xtremes, -t1, -t2) %>% 
+  filter(value == 1) %>% 
+  mutate(change = t2 - t1)  %>% 
+  mutate(relative_xtremes = as.factor(relative_xtremes)) %>% 
+  ggplot(aes(relative_xtremes, change, group = relative_xtremes)) +
+  geom_text(data = relative_n, aes(y = -5.6, label = n), nudge_x = .3) +
+  geom_violin(aes(fill = relative_xtremes), alpha = 0.4) +
+  # geom_bar(data = relative_bar, stat = "identity", aes(fill = relative_xtremes), width = 0.4, legend = FALSE) +
+  geom_boxplot(width = 0.1) +
+  facet_wrap(~key, nrow = 1)  +
+  ggthemes::theme_hc() +
+  ggthemes::scale_fill_gdocs() +
+  ggtitle("Average Opinion Change for high Relativists - Switch Track") +
+  xlab("") +
+  ylab("Morally justifiable: Switch Track") 
+
+ggsave(filename = "images/extreme_relative_switchtrack1.png", height = 5, width = 12)
+
+nb_dat %>% 
+  select(relative_xtremes, general_group_control:general_group_information, t1_szenario1q2, t2_szenario1q2) %>% 
+  rename(t1 = t1_szenario1q2, t2 = t2_szenario1q2) %>% 
+  rename(`Control Group` = general_group_control,
+         `Discussion Group` = general_group_discussion,
+         `Information Group` = general_group_information
+         ) %>% 
+  gather(key, value, -relative_xtremes, -t1, -t2) %>% 
+  filter(value == 1) %>% 
+  mutate(change = t2 - t1)  %>% 
+  mutate(relative_xtremes = as.factor(relative_xtremes)) %>% 
+  group_by(relative_xtremes, key) %>% 
+  summarise(change_mean = mean(change, na.rm = T),
+            change_sd = sd(change, na.rm = T)) %>% 
+  mutate(lower = change_mean - change_sd) %>% 
+  mutate(upper = change_mean + change_sd) %>% 
+  ggplot(aes(relative_xtremes, change_mean)) +
+  geom_col(stat = "identity", aes(fill = relative_xtremes), legend = FALSE) +
+  geom_text(data = relative_n, aes(y = -0.7, label = n), nudge_x = .2) +
+  # geom_errorbar(aes(ymin = lower, ymax = upper)) +
+  facet_wrap(~key, nrow = 1) +
+  ggthemes::theme_hc() +
+  ggthemes::scale_fill_gdocs()  +
+  ggtitle("Average Opinion Change for high Relativists - Switch Track") +
+  xlab("") +
+  ylab("Morally justifiable: Switch Track") 
+
+
+ggsave(filename = "images/extreme_relative_switchtrack2.png", height = 5, width = 12)
+
+
+nb_dat %>% 
+  select(relative_xtremes, general_group_control:general_group_information, t1_szenario2q2, t2_szenario2q2) %>% 
+  rename(t1 = t1_szenario2q2, t2 = t2_szenario2q2) %>% 
+  rename(`Control Group` = general_group_control,
+         `Discussion Group` = general_group_discussion,
+         `Information Group` = general_group_information
+         ) %>% 
+  gather(key, value, -relative_xtremes, -t1, -t2) %>% 
+  filter(value == 1) %>% 
+  mutate(change = t2 - t1)  %>% 
+  mutate(relative_xtremes = as.factor(relative_xtremes)) %>% 
+  ggplot(aes(relative_xtremes, change, group = relative_xtremes)) +
+  geom_text(data = relative_n, aes(y = -5.6, label = n), nudge_x = .3) +
+  geom_violin(aes(fill = relative_xtremes), alpha = 0.4) +
+  # geom_bar(data = relative_bar, stat = "identity", aes(fill = relative_xtremes), width = 0.4, legend = FALSE) +
+  geom_boxplot(width = 0.1) +
+  facet_wrap(~key, nrow = 1)  +
+  ggthemes::theme_hc() +
+  ggthemes::scale_fill_gdocs() +
+  ggtitle("Average Opinion Change for high Relativists - Push Person") +
+  xlab("") +
+  ylab("Morally justifiable: Switch Track") 
+
+ggsave(filename = "images/extreme_relative_pushperson1.png", height = 5, width = 12)
+
+nb_dat %>% 
+  select(relative_xtremes, general_group_control:general_group_information, t1_szenario2q2, t2_szenario2q2) %>% 
+  rename(t1 = t1_szenario2q2, t2 = t2_szenario2q2) %>% 
+  rename(`Control Group` = general_group_control,
+         `Discussion Group` = general_group_discussion,
+         `Information Group` = general_group_information
+         ) %>% 
+  gather(key, value, -relative_xtremes, -t1, -t2) %>% 
+  filter(value == 1) %>% 
+  mutate(change = t2 - t1)  %>% 
+  mutate(relative_xtremes = as.factor(relative_xtremes)) %>% 
+  group_by(relative_xtremes, key) %>% 
+  summarise(change_mean = mean(change, na.rm = T),
+            change_sd = sd(change, na.rm = T)) %>% 
+  mutate(lower = change_mean - change_sd) %>% 
+  mutate(upper = change_mean + change_sd) %>% 
+  ggplot(aes(relative_xtremes, change_mean)) +
+  geom_col(stat = "identity", aes(fill = relative_xtremes), legend = FALSE) +
+  geom_text(data = relative_n, aes(y = -0.7, label = n), nudge_x = .2) +
+  # geom_errorbar(aes(ymin = lower, ymax = upper)) +
+  facet_wrap(~key, nrow = 1) +
+  ggthemes::theme_hc() +
+  ggthemes::scale_fill_gdocs()  +
+  ggtitle("Average Opinion Change for high Relativists - Push Person") +
+  xlab("") +
+  ylab("Morally justifiable: Switch Track") 
+
+
+ggsave(filename = "images/extreme_relative_pushperson2.png", height = 5, width = 12)
+```
+
+
 
 ## four types
 
 ```{r}
 range01 <- function(x, ...){(x - min(x, ...)) / (max(x, ...) - min(x, ...))}
 
-reg_dat %>% 
+reg_dat %<>% 
   mutate_at(vars(relativism_pca, idealism_pca), ~range01(., na.rm=T)) %>% 
   mutate(types = case_when(
     idealism_pca >= .5 & relativism_pca < .5 ~ "Absolutists",
     idealism_pca >= .5 & relativism_pca >= .5 ~ "Situationists",
     idealism_pca < .5 & relativism_pca >= .5 ~ "Subjectivists",
     idealism_pca < .5 & relativism_pca < .5 ~ "Exceptionists"
-  )) %>% dplyr::select(types) %>% table()
+  )) #select(types) %>% table()
   
 reg_dat %>% 
   ggplot(aes(relativism_pca, idealism_pca)) +
@@ -287,35 +582,6 @@ reg_dat %>%
 ggsave(filename = "images/Opinionchange_pushperson.png", height = 5, width = 12)
 
 
-
-```
-
-## polarization - negative-binomial
-
-```{r}
-nb_dat <- reg_dat %>% 
-  #select(idealism_pca, relativism_pca) %>% 
-  mutate(ideal_xtremes = ifelse(idealism_pca >= 0.9, 1, 0))  %>% 
-  mutate(relative_xtremes = ifelse(relativism_pca >= 0.9, 1, 0)) %>% 
-#  select(ideal_xtremes, relative_xtremes) %>% table()
-  mutate(absolute_change = abs(t2_szenario1q2 - t1_szenario1q2)) %>% 
-  mutate(change_dummy = ifelse(absolute_change > 0, 1 ,0))
-
-
-pacman::p_load(MASS)
-
-mnb <- glm.nb(absolute_change ~ ideal_xtremes + relative_xtremes + general_group_discussion + ideal_xtremes*general_group_information + gender + leftright + pol_interest + church_attendance + age + university, data = nb_dat)
-
-summary(mnb)
-
-sjPlot::plot_model(mnb, type = "int")
-
-hist(nb_dat$absolute_change)
-
-
-glm_fit <- glm(change_dummy ~ ideal_xtremes + relative_xtremes + general_group_discussion + general_group_information + gender + leftright + pol_interest + church_attendance + age + university, data = nb_dat, family = "binomial")
-
-summary(glm_fit)
 
 ```
 
@@ -500,7 +766,81 @@ reg_dat %>%
   
 ```
 
+## polarization - negative-binomial
 
+```{r}
+nb_dat <- reg_dat %>% 
+  #select(idealism_pca, relativism_pca) %>% 
+  mutate(ideal_xtremes = ifelse(idealism_pca >= 0.75, 1, 0))  %>% 
+  mutate(relative_xtremes = ifelse(relativism_pca >= 0.75, 1, 0)) %>% 
+#  select(ideal_xtremes, relative_xtremes) %>% table()
+  mutate(absolute_change = abs(t2_szenario1q2 - t1_szenario1q2)) %>% 
+  mutate(change_dummy = ifelse(absolute_change > 0, 1 ,0))
+
+
+nb_dat %>% 
+  select(ideal_xtremes, general_group_control:general_group_information, t1_szenario1q2, t2_szenario1q2) %>% 
+  rename(t1 = t1_szenario1q2, t2 = t2_szenario1q2) %>% 
+  rename(`Control Group` = general_group_control,
+         `Discussion Group` = general_group_discussion,
+         `Information Group` = general_group_information
+         ) %>% 
+  gather(key, value, -ideal_xtremes, -t1, -t2) %>% 
+  filter(value == 1) %>% 
+  mutate(change = t2 - t1)  %>% 
+  mutate(ideal_xtremes = as.factor(ideal_xtremes)) %>% 
+  ggplot(aes(ideal_xtremes, change, group = ideal_xtremes)) +
+  geom_violin(aes(fill = ideal_xtremes), alpha = 0.4) +
+  geom_boxplot(width = 0.1) +
+  facet_wrap(~key, nrow = 1)  +
+  ggthemes::theme_hc() +
+  ggthemes::scale_fill_gdocs() +
+  ggtitle("Average Opinion Change for high (>.75) Idealists - Switch Track") +
+  xlab("") +
+  ylab("Morally justifiable: Switch Track") 
+
+ggsave(filename = "images/Opinionchange_switchtrack2.png", height = 5, width = 12)
+
+nb_dat %>% 
+  select(ideal_xtremes, general_group_control:general_group_information, t1_szenario1q2, t2_szenario1q2) %>% 
+  rename(t1 = t1_szenario1q2, t2 = t2_szenario1q2) %>% 
+  rename(`Control Group` = general_group_control,
+         `Discussion Group` = general_group_discussion,
+         `Information Group` = general_group_information
+         ) %>% 
+  gather(key, value, -ideal_xtremes, -t1, -t2) %>% 
+  filter(value == 1) %>% 
+  mutate(change = t2 - t1)  %>% 
+  mutate(ideal_xtremes = as.factor(ideal_xtremes)) %>% 
+  group_by(ideal_xtremes, key) %>% 
+  summarise_all(mean) %>% 
+  ggplot(aes(ideal_xtremes, change)) +
+  geom_bar(stat = "identity", aes(fill = ideal_xtremes), legend = FALSE) +
+  facet_wrap(~key, nrow = 1) +
+  ggthemes::theme_hc() +
+  ggthemes::scale_fill_gdocs()  +
+  ggtitle("Average Opinion Change by four Types of Ethical Positions - Push Person") +
+  xlab("") +
+  ylab("Morally justifiable: Push Person") 
+
+
+
+pacman::p_load(MASS)
+
+mnb <- glm.nb(absolute_change ~ ideal_xtremes + relative_xtremes + general_group_discussion + ideal_xtremes*general_group_information + gender + leftright + pol_interest + church_attendance + age + university, data = nb_dat)
+
+summary(mnb)
+
+sjPlot::plot_model(mnb, type = "int")
+
+hist(nb_dat$absolute_change)
+
+
+glm_fit <- glm(change_dummy ~ ideal_xtremes + relative_xtremes + general_group_discussion + general_group_information + gender + leftright + pol_interest + church_attendance + age + university, data = nb_dat, family = "binomial")
+
+summary(glm_fit)
+
+```
 
 ## regression
 
