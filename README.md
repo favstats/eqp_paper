@@ -155,6 +155,7 @@ eqp <- trolley %>%
          t1_eqp_eqp2, t1_eqp_eqp4, t1_eqp_eqp5, t1_eqp_eqp6, t1_eqp_eqp10,
          t1_eqp_eqp15, t1_eqp_eqp16 ,t1_eqp_eqp17, t1_eqp_eqp19, t1_eqp_eqp20)
 
+trolley$mean_eqp <- rowMeans(eqp)
 
 trolley <- eqp %>% 
   psych::pca(2, rotate = "varimax") %>% 
@@ -569,6 +570,14 @@ sjPlot::plot_model(fit1_s1, show.p = T, show.values = T) +
 ``` r
 ggsave(filename = "images/reg1_s1.png", width = 5, height = 5)
 
+broom::glance(fit1_s1) %>% knitr::kable()
+```
+
+| r.squared | adj.r.squared |    sigma | statistic |  p.value | df |     logLik |     AIC |      BIC | deviance | df.residual |
+| --------: | ------------: | -------: | --------: | -------: | -: | ---------: | ------: | -------: | -------: | ----------: |
+| 0.1050599 |     0.0817715 | 2.792309 |  4.511256 | 8.98e-05 |  8 | \-673.4298 | 1364.86 | 1397.476 | 2097.391 |         269 |
+
+``` r
 fit2_s1 <- lm(t2_szenario1q2 ~ t1_szenario1q2 + idealism_pca + relativism_pca + 
              gender + age + church_attendance +
              groups, 
@@ -585,6 +594,14 @@ sjPlot::plot_model(fit2_s1, show.p = T, show.values = T) +
 ``` r
 ggsave(filename = "images/reg2_s1.png", width = 5, height = 5)
 
+broom::glance(fit2_s1) %>% knitr::kable()
+```
+
+| r.squared | adj.r.squared |   sigma | statistic | p.value | df |     logLik |      AIC |      BIC | deviance | df.residual |
+| --------: | ------------: | ------: | --------: | ------: | -: | ---------: | -------: | -------: | -------: | ----------: |
+| 0.7414711 |     0.7337538 | 1.49006 |  96.07933 |       0 |  9 | \-498.9434 | 1017.887 | 1054.127 | 595.0346 |         268 |
+
+``` r
 fit3_s1 <- lm(t2_szenario1q2 ~ t1_szenario1q2 + idealism_pca + relativism_pca + 
              gender + age + church_attendance +
              groups * idealism_pca, 
@@ -601,6 +618,14 @@ sjPlot::plot_model(fit3_s1, show.p = T, show.values = T) +
 ``` r
 ggsave(filename = "images/reg3_s1.png", width = 5, height = 5)
 
+broom::glance(fit3_s1) %>% knitr::kable()
+```
+
+| r.squared | adj.r.squared |    sigma | statistic | p.value | df |     logLik |      AIC |      BIC | deviance | df.residual |
+| --------: | ------------: | -------: | --------: | ------: | -: | ---------: | -------: | -------: | -------: | ----------: |
+| 0.7423137 |     0.7326262 | 1.493212 |  76.62628 |       0 | 11 | \-498.4912 | 1020.982 | 1064.471 | 593.0953 |         266 |
+
+``` r
 # sjPlot::sjp.int(fit3_s1, p.kr = F)$plot +
 #   ggtitle("Model3a - Interaction") +
 #   ggthemes::theme_hc() +
@@ -623,7 +648,13 @@ sjPlot::plot_model(fit4_s1, show.p = T, show.values = T) +
 
 ``` r
 ggsave(filename = "images/reg4_s1.png", width = 5, height = 5)
+
+broom::glance(fit4_s1) %>% knitr::kable()
 ```
+
+| r.squared | adj.r.squared |    sigma | statistic | p.value | df |     logLik |      AIC |      BIC | deviance | df.residual |
+| --------: | ------------: | -------: | --------: | ------: | -: | ---------: | -------: | -------: | -------: | ----------: |
+| 0.7433485 |     0.7336999 | 1.490211 |  77.04247 |       0 | 11 | \-497.9339 | 1019.868 | 1063.356 | 590.7136 |         266 |
 
 ### Szenario 2
 
@@ -651,6 +682,14 @@ sjPlot::plot_model(fit1_s2, show.p = T, show.values = T) +
 ``` r
 ggsave(filename = "images/reg1_s2.png", width = 5, height = 5)
 
+broom::glance(fit1_s2) %>% knitr::kable()
+```
+
+| r.squared | adj.r.squared |    sigma | statistic | p.value | df |     logLik |      AIC |      BIC | deviance | df.residual |
+| --------: | ------------: | -------: | --------: | ------: | -: | ---------: | -------: | -------: | -------: | ----------: |
+| 0.1479287 |     0.1257558 | 2.657334 |   6.67161 |   3e-07 |  8 | \-659.7056 | 1337.411 | 1370.027 | 1899.522 |         269 |
+
+``` r
 fit2_s2 <- lm(t2_szenario2q2 ~ t1_szenario2q2 + idealism_pca + relativism_pca + 
              gender + age + church_attendance +
              groups, 
@@ -667,6 +706,14 @@ sjPlot::plot_model(fit2_s2, show.p = T, show.values = T) +
 ``` r
 ggsave(filename = "images/reg2_s2.png", width = 5, height = 5)
 
+broom::glance(fit2_s2) %>% knitr::kable()
+```
+
+| r.squared | adj.r.squared |    sigma | statistic | p.value | df |     logLik |      AIC |      BIC | deviance | df.residual |
+| --------: | ------------: | -------: | --------: | ------: | -: | ---------: | -------: | -------: | -------: | ----------: |
+|  0.656978 |     0.6467385 | 1.696347 |  64.16137 |       0 |  9 | \-534.8594 | 1089.719 | 1125.959 | 771.1952 |         268 |
+
+``` r
 fit3_s2 <- lm(t2_szenario2q2 ~ t1_szenario2q2 + idealism_pca + relativism_pca + 
              gender + age + church_attendance +
              groups * idealism_pca, 
@@ -683,7 +730,14 @@ sjPlot::plot_model(fit3_s2, show.p = T, show.values = T) +
 ``` r
 ggsave(filename = "images/reg3_s2.png", width = 5, height = 5)
 
+broom::glance(fit3_s2) %>% knitr::kable()
+```
 
+| r.squared | adj.r.squared |    sigma | statistic | p.value | df |     logLik |      AIC |      BIC | deviance | df.residual |
+| --------: | ------------: | -------: | --------: | ------: | -: | ---------: | -------: | -------: | -------: | ----------: |
+| 0.6583268 |     0.6454819 | 1.699362 |  51.25216 |       0 | 11 | \-534.3138 | 1092.628 | 1136.116 | 768.1628 |         266 |
+
+``` r
 fit4_s2 <- lm(t2_szenario2q2 ~ t1_szenario2q2 + idealism_pca + relativism_pca + 
              gender + age + church_attendance +
              groups * relativism_pca, 
@@ -699,4 +753,10 @@ sjPlot::plot_model(fit4_s2, show.p = T, show.values = T) +
 
 ``` r
 ggsave(filename = "images/reg4_s2.png", width = 5, height = 5)
+
+broom::glance(fit4_s2) %>% knitr::kable()
 ```
+
+| r.squared | adj.r.squared |    sigma | statistic | p.value | df |     logLik |      AIC |     BIC | deviance | df.residual |
+| --------: | ------------: | -------: | --------: | ------: | -: | ---------: | -------: | ------: | -------: | ----------: |
+| 0.6608168 |     0.6480656 | 1.693158 |   51.8237 |       0 | 11 | \-533.3007 | 1090.601 | 1134.09 | 762.5646 |         266 |

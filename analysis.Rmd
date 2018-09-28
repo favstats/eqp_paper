@@ -75,6 +75,7 @@ eqp <- trolley %>%
          t1_eqp_eqp2, t1_eqp_eqp4, t1_eqp_eqp5, t1_eqp_eqp6, t1_eqp_eqp10,
          t1_eqp_eqp15, t1_eqp_eqp16 ,t1_eqp_eqp17, t1_eqp_eqp19, t1_eqp_eqp20)
 
+trolley$mean_eqp <- rowMeans(eqp)
 
 trolley <- eqp %>% 
   psych::pca(2, rotate = "varimax") %>% 
@@ -409,6 +410,8 @@ sjPlot::plot_model(fit1_s1, show.p = T, show.values = T) +
 
 ggsave(filename = "images/reg1_s1.png", width = 5, height = 5)
 
+broom::glance(fit1_s1) %>% knitr::kable()
+
 fit2_s1 <- lm(t2_szenario1q2 ~ t1_szenario1q2 + idealism_pca + relativism_pca + 
              gender + age + church_attendance +
              groups, 
@@ -421,6 +424,8 @@ sjPlot::plot_model(fit2_s1, show.p = T, show.values = T) +
 
 ggsave(filename = "images/reg2_s1.png", width = 5, height = 5)
 
+broom::glance(fit2_s1) %>% knitr::kable()
+
 fit3_s1 <- lm(t2_szenario1q2 ~ t1_szenario1q2 + idealism_pca + relativism_pca + 
              gender + age + church_attendance +
              groups * idealism_pca, 
@@ -432,6 +437,8 @@ sjPlot::plot_model(fit3_s1, show.p = T, show.values = T) +
   ggthemes::scale_fill_fivethirtyeight()
 
 ggsave(filename = "images/reg3_s1.png", width = 5, height = 5)
+
+broom::glance(fit3_s1) %>% knitr::kable()
 
 # sjPlot::sjp.int(fit3_s1, p.kr = F)$plot +
 #   ggtitle("Model3a - Interaction") +
@@ -451,6 +458,8 @@ sjPlot::plot_model(fit4_s1, show.p = T, show.values = T) +
   ggthemes::scale_fill_fivethirtyeight()
 
 ggsave(filename = "images/reg4_s1.png", width = 5, height = 5)
+
+broom::glance(fit4_s1) %>% knitr::kable()
 
 
 ```
@@ -476,6 +485,8 @@ sjPlot::plot_model(fit1_s2, show.p = T, show.values = T) +
 
 ggsave(filename = "images/reg1_s2.png", width = 5, height = 5)
 
+broom::glance(fit1_s2) %>% knitr::kable()
+
 fit2_s2 <- lm(t2_szenario2q2 ~ t1_szenario2q2 + idealism_pca + relativism_pca + 
              gender + age + church_attendance +
              groups, 
@@ -487,6 +498,8 @@ sjPlot::plot_model(fit2_s2, show.p = T, show.values = T) +
   ggthemes::scale_fill_fivethirtyeight()
 
 ggsave(filename = "images/reg2_s2.png", width = 5, height = 5)
+
+broom::glance(fit2_s2) %>% knitr::kable()
 
 fit3_s2 <- lm(t2_szenario2q2 ~ t1_szenario2q2 + idealism_pca + relativism_pca + 
              gender + age + church_attendance +
@@ -500,6 +513,7 @@ sjPlot::plot_model(fit3_s2, show.p = T, show.values = T) +
 
 ggsave(filename = "images/reg3_s2.png", width = 5, height = 5)
 
+broom::glance(fit3_s2) %>% knitr::kable()
 
 fit4_s2 <- lm(t2_szenario2q2 ~ t1_szenario2q2 + idealism_pca + relativism_pca + 
              gender + age + church_attendance +
@@ -513,5 +527,5 @@ sjPlot::plot_model(fit4_s2, show.p = T, show.values = T) +
 
 ggsave(filename = "images/reg4_s2.png", width = 5, height = 5)
 
-
+broom::glance(fit4_s2) %>% knitr::kable()
 ```
