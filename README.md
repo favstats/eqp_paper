@@ -567,7 +567,7 @@ sjPlot::plot_model(fit1_s1, show.p = T, show.values = T) +
 <img src="analysis_files/figure-gfm/unnamed-chunk-18-1.png" style="display: block; margin: auto;" />
 
 ``` r
-ggsave(filename = "images/reg1_s1.png", width = 5, height = 5)
+ggsave(filename = "images/reg1_s1.png", width = 8, height = 5)
 
 broom::glance(fit1_s1) %>% knitr::kable()
 ```
@@ -591,7 +591,7 @@ sjPlot::plot_model(fit2_s1, show.p = T, show.values = T) +
 <img src="analysis_files/figure-gfm/unnamed-chunk-18-2.png" style="display: block; margin: auto;" />
 
 ``` r
-ggsave(filename = "images/reg2_s1.png", width = 5, height = 5)
+ggsave(filename = "images/reg2_s1.png", width = 8, height = 5)
 
 broom::glance(fit2_s1) %>% knitr::kable()
 ```
@@ -615,7 +615,7 @@ sjPlot::plot_model(fit3_s1, show.p = T, show.values = T) +
 <img src="analysis_files/figure-gfm/unnamed-chunk-18-3.png" style="display: block; margin: auto;" />
 
 ``` r
-ggsave(filename = "images/reg3_s1.png", width = 5, height = 5)
+ggsave(filename = "images/reg3_s1.png", width = 8, height = 5)
 
 broom::glance(fit3_s1) %>% knitr::kable()
 ```
@@ -625,12 +625,25 @@ broom::glance(fit3_s1) %>% knitr::kable()
 | 0.7423137 |     0.7326262 | 1.493212 |  76.62628 |       0 | 11 | \-498.4912 | 1020.982 | 1064.471 | 593.0953 |         266 |
 
 ``` r
-# sjPlot::sjp.int(fit3_s1, p.kr = F)$plot +
-#   ggtitle("Model3a - Interaction") +
-#   ggthemes::theme_hc() +
-#   ggthemes::scale_fill_fivethirtyeight()
+get_model_data(fit3_s1, type = "pred",
+               terms = c("idealism_pca", "groups")) %>% 
+  ggplot(aes(x, predicted)) +
+  geom_ribbon(aes(ymin = conf.low, 
+                  ymax = conf.high, 
+                  fill = group), alpha = 0.11) +
+  geom_line(aes(color = group), size = 1.2) +
+  ggtitle("Model3a - Interaction") +
+  ggthemes::theme_hc() +
+  ggthemes::scale_fill_fivethirtyeight("Experimental Groups") +
+  ggthemes::scale_color_fivethirtyeight("Experimental Groups") +
+  ylab("Morally justifiable: Switch Track") +
+  xlab("Idealism") 
+```
 
-ggsave(filename = "images/reg3_s1.png", width = 5, height = 5)
+<img src="analysis_files/figure-gfm/unnamed-chunk-18-4.png" style="display: block; margin: auto;" />
+
+``` r
+ggsave(filename = "images/reg3_s1_int.png", width = 8, height = 5)
 
 fit4_s1 <- lm(t2_szenario1q2 ~ t1_szenario1q2 + idealism_pca + relativism_pca + 
              gender + age + church_attendance +
@@ -643,10 +656,10 @@ sjPlot::plot_model(fit4_s1, show.p = T, show.values = T) +
   ggthemes::scale_fill_fivethirtyeight()
 ```
 
-<img src="analysis_files/figure-gfm/unnamed-chunk-18-4.png" style="display: block; margin: auto;" />
+<img src="analysis_files/figure-gfm/unnamed-chunk-18-5.png" style="display: block; margin: auto;" />
 
 ``` r
-ggsave(filename = "images/reg4_s1.png", width = 5, height = 5)
+ggsave(filename = "images/reg4_s1.png", width = 8, height = 5)
 
 broom::glance(fit4_s1) %>% knitr::kable()
 ```
@@ -654,6 +667,28 @@ broom::glance(fit4_s1) %>% knitr::kable()
 | r.squared | adj.r.squared |    sigma | statistic | p.value | df |     logLik |      AIC |      BIC | deviance | df.residual |
 | --------: | ------------: | -------: | --------: | ------: | -: | ---------: | -------: | -------: | -------: | ----------: |
 | 0.7433485 |     0.7336999 | 1.490211 |  77.04247 |       0 | 11 | \-497.9339 | 1019.868 | 1063.356 | 590.7136 |         266 |
+
+``` r
+get_model_data(fit4_s1, type = "pred",
+               terms = c("relativism_pca", "groups")) %>% 
+  ggplot(aes(x, predicted)) +
+  geom_ribbon(aes(ymin = conf.low, 
+                  ymax = conf.high, 
+                  fill = group), alpha = 0.11) +
+  geom_line(aes(color = group), size = 1.2) +
+  ggtitle("Model4a - Interaction") +
+  ggthemes::theme_hc() +
+  ggthemes::scale_fill_fivethirtyeight("Experimental Groups") +
+  ggthemes::scale_color_fivethirtyeight("Experimental Groups") +
+  ylab("Morally justifiable: Switch Track") +
+  xlab("Relativism") 
+```
+
+<img src="analysis_files/figure-gfm/unnamed-chunk-18-6.png" style="display: block; margin: auto;" />
+
+``` r
+ggsave(filename = "images/reg4_s1_int.png", width = 8, height = 5)
+```
 
 ### Szenario 2
 
@@ -678,7 +713,7 @@ sjPlot::plot_model(fit1_s2, show.p = T, show.values = T) +
 <img src="analysis_files/figure-gfm/unnamed-chunk-19-1.png" style="display: block; margin: auto;" />
 
 ``` r
-ggsave(filename = "images/reg1_s2.png", width = 5, height = 5)
+ggsave(filename = "images/reg1_s2.png", width = 8, height = 5)
 
 broom::glance(fit1_s2) %>% knitr::kable()
 ```
@@ -702,7 +737,7 @@ sjPlot::plot_model(fit2_s2, show.p = T, show.values = T) +
 <img src="analysis_files/figure-gfm/unnamed-chunk-19-2.png" style="display: block; margin: auto;" />
 
 ``` r
-ggsave(filename = "images/reg2_s2.png", width = 5, height = 5)
+ggsave(filename = "images/reg2_s2.png", width = 8, height = 5)
 
 broom::glance(fit2_s2) %>% knitr::kable()
 ```
@@ -726,7 +761,7 @@ sjPlot::plot_model(fit3_s2, show.p = T, show.values = T) +
 <img src="analysis_files/figure-gfm/unnamed-chunk-19-3.png" style="display: block; margin: auto;" />
 
 ``` r
-ggsave(filename = "images/reg3_s2.png", width = 5, height = 5)
+ggsave(filename = "images/reg3_s2.png", width = 8, height = 5)
 
 broom::glance(fit3_s2) %>% knitr::kable()
 ```
@@ -736,6 +771,26 @@ broom::glance(fit3_s2) %>% knitr::kable()
 | 0.6583268 |     0.6454819 | 1.699362 |  51.25216 |       0 | 11 | \-534.3138 | 1092.628 | 1136.116 | 768.1628 |         266 |
 
 ``` r
+get_model_data(fit3_s2, type = "pred",
+               terms = c("idealism_pca", "groups")) %>% 
+  ggplot(aes(x, predicted)) +
+  geom_ribbon(aes(ymin = conf.low, 
+                  ymax = conf.high, 
+                  fill = group), alpha = 0.11) +
+  geom_line(aes(color = group), size = 1.2) +
+  ggtitle("Model3a - Interaction") +
+  ggthemes::theme_hc() +
+  ggthemes::scale_fill_fivethirtyeight("Experimental Groups") +
+  ggthemes::scale_color_fivethirtyeight("Experimental Groups") +
+  ylab("Morally justifiable: Push Person") +
+  xlab("Idealism") 
+```
+
+<img src="analysis_files/figure-gfm/unnamed-chunk-19-4.png" style="display: block; margin: auto;" />
+
+``` r
+ggsave(filename = "images/fit3_s2_int.png", width = 8, height = 5)
+
 fit4_s2 <- lm(t2_szenario2q2 ~ t1_szenario2q2 + idealism_pca + relativism_pca + 
              gender + age + church_attendance +
              groups * relativism_pca, 
@@ -747,10 +802,10 @@ sjPlot::plot_model(fit4_s2, show.p = T, show.values = T) +
   ggthemes::scale_fill_fivethirtyeight()
 ```
 
-<img src="analysis_files/figure-gfm/unnamed-chunk-19-4.png" style="display: block; margin: auto;" />
+<img src="analysis_files/figure-gfm/unnamed-chunk-19-5.png" style="display: block; margin: auto;" />
 
 ``` r
-ggsave(filename = "images/reg4_s2.png", width = 5, height = 5)
+ggsave(filename = "images/reg4_s2.png", width = 8, height = 5)
 
 broom::glance(fit4_s2) %>% knitr::kable()
 ```
@@ -758,3 +813,25 @@ broom::glance(fit4_s2) %>% knitr::kable()
 | r.squared | adj.r.squared |    sigma | statistic | p.value | df |     logLik |      AIC |     BIC | deviance | df.residual |
 | --------: | ------------: | -------: | --------: | ------: | -: | ---------: | -------: | ------: | -------: | ----------: |
 | 0.6608168 |     0.6480656 | 1.693158 |   51.8237 |       0 | 11 | \-533.3007 | 1090.601 | 1134.09 | 762.5646 |         266 |
+
+``` r
+get_model_data(fit4_s2, type = "pred",
+               terms = c("idealism_pca", "groups")) %>% 
+  ggplot(aes(x, predicted)) +
+  geom_ribbon(aes(ymin = conf.low, 
+                  ymax = conf.high, 
+                  fill = group), alpha = 0.11) +
+  geom_line(aes(color = group), size = 1.2) +
+  ggtitle("Model3a - Interaction") +
+  ggthemes::theme_hc() +
+  ggthemes::scale_fill_fivethirtyeight("Experimental Groups") +
+  ggthemes::scale_color_fivethirtyeight("Experimental Groups") +
+  ylab("Morally justifiable: Push Person") +
+  xlab("Relativism") 
+```
+
+<img src="analysis_files/figure-gfm/unnamed-chunk-19-6.png" style="display: block; margin: auto;" />
+
+``` r
+ggsave(filename = "images/reg4_s2_int.png", width = 8, height = 5)
+```
