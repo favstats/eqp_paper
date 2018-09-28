@@ -555,8 +555,7 @@ trolley %<>%
   mutate(gender = factor(gender))
 
 fit1_s1 <- lm(t1_szenario1q2 ~ idealism_pca + relativism_pca + 
-             gender + age + church_attendance +
-             groups, 
+             gender + age + church_attendance, 
            data = trolley)
 
 sjPlot::plot_model(fit1_s1, show.p = T, show.values = T) +
@@ -573,9 +572,9 @@ ggsave(filename = "images/reg1_s1.png", width = 5, height = 5)
 broom::glance(fit1_s1) %>% knitr::kable()
 ```
 
-| r.squared | adj.r.squared |    sigma | statistic |  p.value | df |     logLik |     AIC |      BIC | deviance | df.residual |
-| --------: | ------------: | -------: | --------: | -------: | -: | ---------: | ------: | -------: | -------: | ----------: |
-| 0.1050599 |     0.0817715 | 2.792309 |  4.511256 | 8.98e-05 |  8 | \-673.4298 | 1364.86 | 1397.476 | 2097.391 |         269 |
+| r.squared | adj.r.squared |    sigma | statistic |  p.value | df |     logLik |      AIC |      BIC | deviance | df.residual |
+| --------: | ------------: | -------: | --------: | -------: | -: | ---------: | -------: | -------: | -------: | ----------: |
+| 0.0962303 |     0.0795556 | 2.795677 |  5.771028 | 4.42e-05 |  6 | \-674.7895 | 1363.579 | 1388.947 | 2118.084 |         271 |
 
 ``` r
 fit2_s1 <- lm(t2_szenario1q2 ~ t1_szenario1q2 + idealism_pca + relativism_pca + 
@@ -667,8 +666,7 @@ broom::glance(fit4_s1) %>% knitr::kable()
 
 ``` r
 fit1_s2 <- lm(t1_szenario2q2 ~ idealism_pca + relativism_pca + 
-             gender + age + church_attendance +
-             groups, 
+             gender + age + church_attendance, 
            data = trolley)
 
 sjPlot::plot_model(fit1_s2, show.p = T, show.values = T) +
@@ -685,9 +683,9 @@ ggsave(filename = "images/reg1_s2.png", width = 5, height = 5)
 broom::glance(fit1_s2) %>% knitr::kable()
 ```
 
-| r.squared | adj.r.squared |    sigma | statistic | p.value | df |     logLik |      AIC |      BIC | deviance | df.residual |
-| --------: | ------------: | -------: | --------: | ------: | -: | ---------: | -------: | -------: | -------: | ----------: |
-| 0.1479287 |     0.1257558 | 2.657334 |   6.67161 |   3e-07 |  8 | \-659.7056 | 1337.411 | 1370.027 | 1899.522 |         269 |
+| r.squared | adj.r.squared |    sigma | statistic | p.value | df |    logLik |      AIC |      BIC | deviance | df.residual |
+| --------: | ------------: | -------: | --------: | ------: | -: | --------: | -------: | -------: | -------: | ----------: |
+| 0.1451961 |     0.1294249 | 2.651751 |  9.206359 |       0 |  6 | \-660.149 | 1334.298 | 1359.666 | 1905.614 |         271 |
 
 ``` r
 fit2_s2 <- lm(t2_szenario2q2 ~ t1_szenario2q2 + idealism_pca + relativism_pca + 
