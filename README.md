@@ -547,21 +547,25 @@ trolley %<>%
 ```
 
 1.  t1 als AV
+
 2.  t1 als AV und gender interaction (Idealism)
-2.  t1 als AV und gender interaction (Relativism)
-3.  t2 mit Controls für t1 und für treatments
-4.  Modelle aus 2. mit Treatment-Interaktion (Idealism)
-5.  Modelle aus 2. mit Treatment-Interaktion (Relativism)
 
-<!-- end list -->
+3.  t1 als AV und gender interaction (Relativism)
 
-1.  Szenario 1a (Switch Track)
-2.  Szenario 2b (Push Person)
+4.  t2 mit Controls für t1 und für treatments
+
+5.  Modelle aus 2. mit Treatment-Interaktion (Idealism)
+
+6.  Modelle aus 2. mit Treatment-Interaktion (Relativism)
+
+7.  Szenario 1a (Switch Track)
+
+8.  Szenario 2b (Push Person)
 
 ### Model 1a - Switch Track
 
 ``` r
-fit1_s1 <- lm(t1_szenario2q2 ~ idealism_pca + relativism_pca + 
+fit1_s1 <- lm(t1_szenario1q2 ~ idealism_pca + relativism_pca + 
              gender + age + church_attendance + gender, 
            data = trolley)
 
@@ -579,9 +583,9 @@ ggsave(filename = "images/reg1_s1.png", width = 8, height = 5)
 broom::glance(fit1_s1) %>% knitr::kable()
 ```
 
-| r.squared | adj.r.squared |    sigma | statistic | p.value | df |    logLik |      AIC |      BIC | deviance | df.residual |
-| --------: | ------------: | -------: | --------: | ------: | -: | --------: | -------: | -------: | -------: | ----------: |
-| 0.1451961 |     0.1294249 | 2.651751 |  9.206359 |       0 |  6 | \-660.149 | 1334.298 | 1359.666 | 1905.614 |         271 |
+| r.squared | adj.r.squared |    sigma | statistic |  p.value | df |     logLik |      AIC |      BIC | deviance | df.residual |
+| --------: | ------------: | -------: | --------: | -------: | -: | ---------: | -------: | -------: | -------: | ----------: |
+| 0.0962303 |     0.0795556 | 2.795677 |  5.771028 | 4.42e-05 |  6 | \-674.7895 | 1363.579 | 1388.947 | 2118.084 |         271 |
 
 ### Model 1b - Push Person
 
