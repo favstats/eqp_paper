@@ -554,13 +554,9 @@ trolley %<>%
 
 4.  t2 mit Controls für t1 und für treatments
 
-5.  Modelle aus 2. mit Treatment-Interaktion (Idealism)
+5.  Modelle aus 4. mit Treatment-Interaktion (Idealism)
 
-6.  Modelle aus 2. mit Treatment-Interaktion (Relativism)
-
-7.  Szenario 1a (Switch Track)
-
-8.  Szenario 2b (Push Person)
+6.  Modelle aus 4. mit Treatment-Interaktion (Relativism)
 
 ### Model 1a - Switch Track
 
