@@ -547,15 +547,16 @@ trolley %<>%
 ```
 
 1.  t1 als AV
-2.  t1 als AV und gender interaction
+2.  t1 als AV und gender interaction (Idealism)
+2.  t1 als AV und gender interaction (Relativism)
 3.  t2 mit Controls für t1 und für treatments
 4.  Modelle aus 2. mit Treatment-Interaktion (Idealism)
 5.  Modelle aus 2. mit Treatment-Interaktion (Relativism)
 
 <!-- end list -->
 
-1.  Szenario 1 (Switch Track)
-2.  Szenario 2 (Push Person)
+1.  Szenario 1a (Switch Track)
+2.  Szenario 2b (Push Person)
 
 ### Model 1a - Switch Track
 
