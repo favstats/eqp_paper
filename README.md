@@ -477,7 +477,7 @@ tidytemplate::ggsave_it(gender_av_compare, width = 12, height = 6)
 ## Factor Analysis Table
 
 ``` r
-# eqp %>% 
+# eqp %>% psych::alpha()
 #   psych::pca(2, rotate = "varimax") %>% 
 #   .$loadings %>% unclass() %>% as.data.frame() %>% 
 #   rownames_to_column("eqp_variable")
@@ -501,8 +501,9 @@ factor_analysis <- sjp.pca(eqp, rotation = "varimax",
         show.values = T)$plot  +
   ggthemes::scale_color_gdocs("") +
   ggthemes::theme_hc() +
-  ggtitle("Ethical Positions Questionnaire - Factor Analysis") +
-  facet_grid(~xpos, labeller = as_labeller(factor_names))
+  ggtitle("Ethical Positions Questionnaire - PCA") +
+  facet_grid(~xpos, labeller = as_labeller(factor_names)) +
+  labs(captions = "Cronbach's Alpha = 0.80")
 
 factor_analysis
 ```
@@ -596,10 +597,10 @@ ggsave(filename = "text/images/reg2_c1_idealism.png", width = 8, height = 9)
 ``` r
 bind_rows(
   get_model_data(fit2_s1_int_idealism, type = "pred",
-               terms = c("idealism_pca", "gender")) %>% 
+               terms = c("idealism_pca", "gender"), ci.lvl = .9) %>% 
             mutate(type = "Model 2a - Switch Track"),  
   get_model_data(fit2_s2_int_idealism, type = "pred",
-               terms = c("idealism_pca", "gender")) %>% 
+               terms = c("idealism_pca", "gender"), ci.lvl = .9) %>% 
             mutate(type = "Model 2b - Push Person")
   ) %>% 
   ggplot(aes(x, predicted)) +
@@ -643,10 +644,10 @@ ggsave(filename = "text/images/reg3_c1_relativism.png", width = 8, height = 9)
 ``` r
 bind_rows(
   get_model_data(fit3_s1_int_relativism, type = "pred",
-               terms = c("relativism_pca", "gender")) %>% 
+               terms = c("relativism_pca", "gender"), ci.lvl = .9) %>% 
             mutate(type = "Model 3a - Switch Track"),  
   get_model_data(fit3_s2_int_relativism, type = "pred",
-               terms = c("relativism_pca", "gender")) %>% 
+               terms = c("relativism_pca", "gender"), ci.lvl = .9) %>% 
             mutate(type = "Model 3b - Push Person")
   ) %>% 
   ggplot(aes(x, predicted)) +
@@ -706,10 +707,10 @@ ggsave(filename = "text/images/reg5_c1_idealism.png", width = 8, height = 9)
 ``` r
 bind_rows(
   get_model_data(fit5_s1, type = "pred",
-               terms = c("idealism_pca", "groups")) %>% 
+               terms = c("idealism_pca", "groups"), ci.lvl = .9) %>% 
             mutate(type = "Model 5a - Switch Track"),  
   get_model_data(fit5_s2, type = "pred",
-               terms = c("idealism_pca", "groups")) %>% 
+               terms = c("idealism_pca", "groups"), ci.lvl = .9) %>% 
             mutate(type = "Model 5b - Push Person")
   ) %>% 
   ggplot(aes(x, predicted)) +
@@ -753,10 +754,10 @@ ggsave(filename = "text/images/reg6_c1_relativism.png", width = 7, height = 8)
 ``` r
 bind_rows(
   get_model_data(fit6_s1, type = "pred",
-               terms = c("relativism_pca", "groups")) %>% 
+               terms = c("relativism_pca", "groups"), ci.lvl = .9) %>% 
             mutate(type = "Model 6a - Switch Track"),  
   get_model_data(fit6_s2, type = "pred",
-               terms = c("relativism_pca", "groups")) %>% 
+               terms = c("relativism_pca", "groups"), ci.lvl = .9) %>% 
             mutate(type = "Model 6b - Push Person")
   ) %>% 
   ggplot(aes(x, predicted)) +
