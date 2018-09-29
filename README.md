@@ -6,7 +6,7 @@ The Date
 ## packages
 
 ``` r
-pacman::p_load(tidyverse, haven, psych, sjPlot, ggpubr)
+pacman::p_load(tidyverse, haven, psych, sjPlot, ggpubr, glue)
 ```
 
 ## data
