@@ -33,67 +33,7 @@ trolley <- read_spss("data/TrolleyExperimentArgumentNew.sav") %>%
     general_group_information == 1 ~ "Information Group",
   )) 
 
-trolley
 ```
-
-    ## # A tibble: 290 x 129
-    ##    d_nof_added_arg~ d_nof_rated_arg~ d_nof_read_argu~ d_nof_sokrates_~
-    ##               <dbl>            <dbl>            <dbl>            <dbl>
-    ##  1                0               NA               NA               NA
-    ##  2               NA               NA               NA               NA
-    ##  3                0                0                0                0
-    ##  4                0               NA               NA               NA
-    ##  5               NA               NA               NA               NA
-    ##  6               NA               NA               NA               NA
-    ##  7                0                0                0                0
-    ##  8                0               NA               NA               NA
-    ##  9                0                6                8                2
-    ## 10                0               NA               NA               NA
-    ## # ... with 280 more rows, and 125 more variables:
-    ## #   d_nof_total_requests <dbl>, general_finisher <dbl>,
-    ## #   general_group_control <dbl>, general_group_discussion <dbl>,
-    ## #   general_group_information <dbl>, general_random <dbl>,
-    ## #   general_token <chr>, general_treatment_group <dbl+lbl>,
-    ## #   general_user_id <dbl>, t1_bigfive_bf0010c <dbl>,
-    ## #   t1_bigfive_bf0011c <dbl>, t1_bigfive_bf0012c <dbl>,
-    ## #   t1_bigfive_bf0013n <dbl>, t1_bigfive_bf0014n <dbl>,
-    ## #   t1_bigfive_bf0015n <dbl>, t1_bigfive_bf0016n <dbl>,
-    ## #   t1_bigfive_bf0017o <dbl>, t1_bigfive_bf0018o <dbl>,
-    ## #   t1_bigfive_bf0019o <dbl>, t1_bigfive_bf001e <dbl>,
-    ## #   t1_bigfive_bf0020o <dbl>, t1_bigfive_bf0021o <dbl>,
-    ## #   t1_bigfive_bf002e <dbl>, t1_bigfive_bf003e <dbl>,
-    ## #   t1_bigfive_bf004e <dbl>, t1_bigfive_bf005a <dbl>,
-    ## #   t1_bigfive_bf006a <dbl>, t1_bigfive_bf007a <dbl>,
-    ## #   t1_bigfive_bf008a <dbl>, t1_bigfive_bf009c <dbl>, t1_eqp_eqp1 <dbl>,
-    ## #   t1_eqp_eqp10 <dbl>, t1_eqp_eqp11 <dbl>, t1_eqp_eqp12 <dbl>,
-    ## #   t1_eqp_eqp13 <dbl>, t1_eqp_eqp14 <dbl>, t1_eqp_eqp15 <dbl>,
-    ## #   t1_eqp_eqp16 <dbl>, t1_eqp_eqp17 <dbl>, t1_eqp_eqp18 <dbl>,
-    ## #   t1_eqp_eqp19 <dbl>, t1_eqp_eqp2 <dbl>, t1_eqp_eqp20 <dbl>,
-    ## #   t1_eqp_eqp3 <dbl>, t1_eqp_eqp4 <dbl>, t1_eqp_eqp5 <dbl>,
-    ## #   t1_eqp_eqp6 <dbl>, t1_eqp_eqp7 <dbl>, t1_eqp_eqp8 <dbl>,
-    ## #   t1_eqp_eqp9 <dbl>, t1_first_presented_szenario <dbl>,
-    ## #   t1_startdate <chr>, t1_submitdate <chr>, t1_szenario1q1 <dbl>,
-    ## #   t1_szenario1q2 <dbl>, t1_szenario2q1 <dbl>, t1_szenario2q2 <dbl>,
-    ## #   t2_discussionexperiment <dbl>, t2_first_presented_szenario <dbl>,
-    ## #   t2_gender <dbl+lbl>, t2_pol_alignment <dbl+lbl>,
-    ## #   t2_pol_interest <dbl+lbl>, t2_religion_church <dbl+lbl>,
-    ## #   t2_religion_community <dbl+lbl>, t2_religion_not_christian <dbl+lbl>,
-    ## #   t2_religion_practice <dbl+lbl>, t2_startdate <chr>,
-    ## #   t2_study_course <chr>, t2_submitdate <chr>, t2_szenario1arg_con <chr>,
-    ## #   t2_szenario1arg_con_chars <dbl>, t2_szenario1argcount_con <dbl>,
-    ## #   t2_szenario1argcount_pro <dbl>, t2_szenario1arg_pro <chr>,
-    ## #   t2_szenario1arg_pro_chars <dbl>, t2_szenario1q1 <dbl>,
-    ## #   t2_szenario1q2 <dbl>, t2_szenario2arg_con <chr>,
-    ## #   t2_szenario2arg_con_chars <dbl>, t2_szenario2argcount_con <dbl>,
-    ## #   t2_szenario2argcount_pro <dbl>, t2_szenario2arg_pro <chr>,
-    ## #   t2_szenario2arg_pro_chars <dbl>, t2_szenario2q1 <dbl>,
-    ## #   t2_szenario2q2 <dbl>, t2_university <dbl+lbl>,
-    ## #   t2_university_other <chr>, t2_year_of_birth <dbl>, age <dbl>,
-    ## #   d_atleast_one_added_argument <dbl>, d_atleast_one_read_argument <dbl>,
-    ## #   d_atleast_ten_rated_argument <dbl>, d_atleast_ten_read_argument <dbl>,
-    ## #   d_branch_contra_activity <dbl>, d_branch_pro_activity <dbl>,
-    ## #   d_first_branch <dbl+lbl>, opchange_sz2 <dbl>, opchange_sz2_rec <dbl>,
-    ## #   t1_szenario2q2_ext <dbl>, faculty <dbl>, ...
 
 ## Basic Stats
 
@@ -411,15 +351,15 @@ t1_szenario2q2_gender
 ``` r
 tidytemplate::ggsave_it(t1_szenario2q2_gender, width = 10, height = 6)
 
-gender_av_compare <- cowplot::plot_grid(t1_szenario1q2_gender, t1_szenario2q2_gender)
+gender_av_compare1 <- cowplot::plot_grid(t1_szenario1q2_gender, t1_szenario2q2_gender)
 
-gender_av_compare
+gender_av_compare1
 ```
 
 <img src="analysis_files/figure-gfm/unnamed-chunk-14-3.png" style="display: block; margin: auto;" />
 
 ``` r
-tidytemplate::ggsave_it(gender_av_compare, width = 12, height = 6)
+tidytemplate::ggsave_it(gender_av_compare1, width = 12, height = 6)
 ```
 
 #### Scatters
@@ -463,15 +403,15 @@ t1_szenario2q2_gender
 ``` r
 tidytemplate::ggsave_it(t1_szenario2q2_gender, width = 10, height = 6)
 
-gender_av_compare <- cowplot::plot_grid(t1_szenario1q2_gender, t1_szenario2q2_gender)
+gender_av_compare2 <- cowplot::plot_grid(t1_szenario1q2_gender, t1_szenario2q2_gender)
 
-gender_av_compare
+gender_av_compare2
 ```
 
 <img src="analysis_files/figure-gfm/unnamed-chunk-15-3.png" style="display: block; margin: auto;" />
 
 ``` r
-tidytemplate::ggsave_it(gender_av_compare, width = 12, height = 6)
+tidytemplate::ggsave_it(gender_av_compare2, width = 12, height = 6)
 ```
 
 ## Factor Analysis Table
@@ -517,6 +457,8 @@ tidytemplate::ggsave_it(factor_analysis, width = 10, height = 6)
 ## Summary Statistics
 
 ``` r
+save(trolley, file = "text/data/trolley.Rdata")
+
 trolley %>% 
   select(t1_szenario1q2, t2_szenario1q2, t1_szenario2q2, t2_szenario2q2, idealism_pca, relativism_pca, gender, age, church_attendance, general_group_control, general_group_discussion, general_group_information) %>% 
   describe() %>% 
@@ -613,7 +555,7 @@ bind_rows(
   ggthemes::scale_fill_fivethirtyeight("Gender") +
   ggthemes::scale_color_fivethirtyeight("Gender") +
   facet_wrap(~type) +
-  ylab("Morally justifiable 1 - 10") +
+  ylab("Morally justifiable 1 - 11") +
   xlab("Idealism")  
 ```
 
@@ -660,7 +602,7 @@ bind_rows(
   ggthemes::scale_fill_fivethirtyeight("Gender") +
   ggthemes::scale_color_fivethirtyeight("Gender") +
   facet_wrap(~type) +
-  ylab("Morally justifiable 1 - 10") +
+  ylab("Morally justifiable 1 - 11") +
   xlab("Relativism")  
 ```
 
@@ -723,7 +665,7 @@ bind_rows(
   ggthemes::scale_fill_fivethirtyeight("Experimental Groups") +
   ggthemes::scale_color_fivethirtyeight("Experimental Groups") +
   facet_wrap(~type) +
-  ylab("Morally justifiable 1 - 10") +
+  ylab("Morally justifiable 1 - 11") +
   xlab("Idealism")  
 ```
 
@@ -770,7 +712,7 @@ bind_rows(
   ggthemes::scale_fill_fivethirtyeight("Experimental Groups") +
   ggthemes::scale_color_fivethirtyeight("Experimental Groups") +
   facet_wrap(~type) +
-  ylab("Morally justifiable 1 - 10") +
+  ylab("Morally justifiable 1 - 11") +
   xlab("Relativism")  
 ```
 
