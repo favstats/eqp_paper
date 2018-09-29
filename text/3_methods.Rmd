@@ -23,7 +23,7 @@ After these treatments the subjects were once again asked for their decision in 
 
 The resulting dataset consists of 93 variables and data from 300 subjects. The studied sample depicts a high percentage of students (approximately 92 percent) and therefore reflects a low age (24 years) a political centre-left attitude (4.7 on a scale from 1 to 10) and a relatively high political interest (3.2 on a scale from 1 to 4) on average. The exact population cannot be determined, because of arbitrary selection mechanisms within some steps of the research process (dispension of invitations, reaction to invitations etc.). The interpretation of any results from this study should therefore be carried out with caution, even with respect to the population of german students/students from Stuttgart.
 
-## Operationialization
+## Operationialization and  Factor Analysis
 
 The factors under study were operationalized as follows: 
 
@@ -37,39 +37,93 @@ One example for such a (Idealism-)statement is:
 
 The used translation of the ‚Ethical Position Questionnaire‘ was taken from Strack and Gennerich [-@strack2007erfahrung: 13] (see attachement). To validate and extract the two dimensions, ‚Idealism‘ and ‚Relativism‘, from the data, a Explorative Factor Analysis (Principal Component Analysis) was conducted and indices, each consisting of their dimensions 10 variables, were formed (see below). The selected control variables were age (continuous), gender (dichotomous) and frequency of church attendance from 1 ‚More than once a week‘ to 6 ‚Never‘.
 
-## Factor Analysis
-
 In order to validate the two dimensions Idealism and Relativism, from the Ethical Positions Questionnaire, a factor analysis with the rotation method varimax was performed.
 
 \begin{figure}[!h]
-	\caption{Factor Analysis}
+	\caption{Principal Component Analysis}
 	\includegraphics[width=\textwidth]{images/factor_analysis}
+	\flushright
+{\scriptsize N = 278. Own calculations based on data from Online-Survey Experiment.\par}
 \end{figure}
-
-
 
 The factor analysis (Figure 1) shows that the variables of the ethical positions questionaire load very well without any cross-loads (cut off value: 0.40). Only the loading of eqp11 is too low (-0.12) to take into account. With the remaining variables the variables Idealism and Relativism were created.
 
 
 ## Randomization and Descriptive Statistics
 
-This section will introduce some basic descriptive statistics of the used variables. (Summary Statistics as footnote & appendix?...). Figure 2 shows a comparison between the experimental groups by age, gender, Idealism and Relativism. As mentioned before, the randomization of the groups was flawed. Regarding the comparison between the experimental groups by age and gender, the differences are significant. The control group has a women proportion of over 52%, whereas only 41% of the discussion group are women. In addition, there is a strong outlier in the control group with over 50 years in the age. 
+This section will introduce some basic descriptive statistics of the used variables. Table 1 shows summary statistics for the used variables.
+
+```{r}
+# load("data/trolley.Rdata")
+# 
+# pacman::p_load(tidyverse, psych)
+# 
+# trolley %>% 
+#   select(t1_szenario1q2, t2_szenario1q2, t1_szenario2q2, t2_szenario2q2, idealism_pca, relativism_pca, gender, age, church_attendance, general_group_control, general_group_discussion, general_group_information) %>% 
+#   describe() %>% 
+#   select(-vars, -trimmed, -mad, -se, -range) %>% 
+#   magrittr::set_rownames(c("Switch Track T1", "Switch Track T2", 
+#                  "Push Person T1", "Push Person T2", 
+#                  "Idealism", "Relativism", 
+#                  "Gender", "Age", 
+#                  "Church Attendance", "Control Group",
+#                  "Discussion Group", "Information Group")) %>% 
+#   rename(N = n, Mean = mean, SD = sd, Median = median, 
+#          Min = min, Max = max, Skew = skew, Kurt = kurtosis) %>% 
+#   xtable::xtable()
+```
+
+\begin{table}[ht]
+\caption{Summary Statistics}
+\centering
+\begin{tabular}{rrrrrrrrr}
+  \hline
+ & N & Mean & SD & Median & Min & Max & Skew & Kurt \\ 
+  \hline
+Switch Track T1 & 290 & 5.76 & 2.91 & 6 & 1 & 11 & -0.03 & -0.90 \\ 
+  Switch Track T2 & 290 & 5.56 & 2.91 & 6 & 1 & 11 & 0.01 & -0.94 \\ 
+  Push Person T1 & 290 & 4.29 & 2.83 & 4 & 1 & 11 & 0.55 & -0.72 \\ 
+  Push Person T2 & 290 & 4.18 & 2.86 & 4 & 1 & 11 & 0.60 & -0.64 \\ 
+  Idealism & 290 & 0 & 1 & 0.18 & -3.40 & 1.73 & -0.86 & 0.37 \\ 
+  Relativism & 290 & 0 & 1 & 0.11 & -3.21 & 2.34 & -0.35 & 0.02 \\ 
+  Gender & 290 & 1.46 & 0.50 & 1 & 1 & 2 & 0.17 & -1.98 \\ 
+  Age & 289 & 24.09 & 3.86 & 23 & 18 & 53 & 2.14 & 10.52 \\ 
+  Church Attendance & 278 & 1.87 & 1.04 & 2 & 1 & 6 & 1.38 & 2.06 \\ 
+  Control Group & 290 & 0.32 & 0.47 & 0 & 0 & 1 & 0.78 & -1.39 \\ 
+  Discussion Group & 290 & 0.34 & 0.47 & 0 & 0 & 1 & 0.67 & -1.56 \\ 
+  Information Group & 290 & 0.34 & 0.47 & 0 & 0 & 1 & 0.67 & -1.56 \\ 
+   \hline
+\end{tabular}
+\end{table}
+
+Figure 2 shows a comparison between the experimental groups by age, gender, Idealism and Relativism. As mentioned before, the randomization of the groups was flawed. Regarding the comparison between the experimental groups by age and gender, the differences are significant. The control group has a women proportion of over 52%, whereas only 41% of the discussion group are women. In addition, there is a strong outlier in the control group with over 50 years in the age. 
+
 
 \begin{figure}
 	\caption{Randomization - Sociodemographics}
 	\includegraphics[width=\textwidth]{images/dem_compare}
+	\flushright
+{\scriptsize N = 278. P-Values are reported. Own calculations based on data from Online-Survey Experiment.\par}
 \end{figure}
 
-Moreover, there are also significant differences between the experimental groups regarding the main independent variables Idealism and Relativism. Concerning this issue, the following analysis should be interpreted with caution. When it comes to the question of whether it is morally justifiable to switch the track or even push a person, there are differences in age and gender (see Figure 3).
+Moreover, there are also significant differences between the experimental groups regarding the main independent variables Idealism and Relativism. Concerning this issue, the following analysis should be interpreted with caution.
+
+When it comes to the question of whether it is morally justifiable to switch the track or even push a person, there are differences in age and gender (see Figure 3).
+
 
 \begin{figure}[!h]
 	\caption{Randomization - Dependent Variables}
 	\includegraphics[width=\textwidth]{images/gender_av_compare}
+	\flushright
+{\scriptsize N = 278. Own calculations based on data from Online-Survey Experiment.\par}
 \end{figure}
 
-Older people as well as female persons consider both scenarios less morally justified. A comparison of the means, regarding the gender, the differences between men and women are clearly significant in both scenarios. However, comparing the two scenarios shows that switching tracks is more likely to be morally justified than pushing a person.
+Older people as well as female persons consider both scenarios less morally justified. A comparison of the means, regarding the gender, the differences between men and women are clearly significant in both scenarios. However, comparing the two scenarios shows that switching tracks is more likely to be morally justified than pushing a person. 
+
 
 \begin{figure}[!h]
 	\caption{Randomization - Independent Variables}
 	\includegraphics[width=\textwidth]{images/uv_compare}
+	\flushright
+{\scriptsize N = 278. P-Values are reported. Own calculations based on data from Online-Survey Experiment.\par}
 \end{figure}
