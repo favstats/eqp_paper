@@ -1,0 +1,9 @@
+---
+output: pdf_document
+---
+
+Hypothesen die bestätigt wurden kurz erwähnen
+
+Überlegen, warum Hypothesen ggf. nicht bestätigt wurden
+
+Hier die Theorie zu Geschlecht einfügen? → yoh da haben ma doch wat. Kann man zsm diskutieren

@@ -1,0 +1,74 @@
+---
+output: pdf_document
+---
+
+In this Section, the regression models are reported and interpreted in regard to their implications for the previously derived hypotheses. In sum, XX models were estimated, which are depicted in coefficient plots (see plot XX to XX). 
+
+\begin{figure}[!h]
+	\caption{Models 1}
+	\includegraphics[width=\textwidth]{images/reg1_combined}
+\end{figure}
+
+First, the models with the dependent variable at time t1 (before the treatment) are analyzed. Model 1a shows the results for scenario 1, model 1b for scenario 2.  The factor idealism has a strong negative effect, meaning that the more idealistic a person is, the less they tend to switch and push (Model 1a: b = xx , p< 0.001 and Model 1b: b = xx , p< 0.001) . Relativism in turn has a positive sign, but is statistically insignificant and has only a marginal coefficient size (Model 1a: b =  and Model 1b: b =  ). It has to be noted that the R^2 statistics are not particularly large, indicating only 9, 6% and 14,5% explained variance of the dependent variable for the Models 1a and 1b, respectively. Nevertheless, for the previously derived hypotheses H1a, which states that, the more idealist an individual, the less likely it will switch/push, confirming evidence can be noted. The same holds true for H1b, which assumes that relativism has no effect on an individual’s decision to switch/push. 
+
+\begin{figure}[!h]
+	\caption{Models 2 - Idealism}
+	\includegraphics[width=\textwidth]{images/reg2_c1_idealism}
+\end{figure}
+
+As a next step, models with the dependent variable after the treatment are estimated (t2). Here, we control for the variable  at the time t1, which means that the other independent variables only predict the variance of the dependent variable which differs from the one at t1.  Positive coefficients indicate opinion change in the direction of higher values on the dependent variable, negative coefficients in turn indicate negative opinion change. In general, the R^2 values in all of the t2-models therefore indicate a high amount of explained variance, due to the fact that the judgment at the time t2 is highly dependent on the judgment at t1, wich is included in the models. 
+
+\begin{figure}[!h]
+	\caption{Models 2 - Idealism Interaction Plots}
+	\includegraphics[width=\textwidth]{images/reg2_c2_idealism}
+\end{figure}
+
+Model 2a depicts the results for the scenario 1 dependent variable, Model 2b for scenario 2 (see plot XX and XX). First, it comes to attention that the treatments have a strong effect. The discussion group has negative coefficients for both scenarios, indicating that persons which engaged in discussion had, compared to persons of the control group, a opinion change in the direction of “not switching/pushing” (Model 2a: b = -0.73, p< 0.01 and Model 2b: b = -0.81,p< 0.01). Regarding the information group, these effects can be observed as well, although not as strong (Model 2a: b = -0.46, p< 0.05 and Model 2b: b = -0.56, p< 0.05). The opinion change in the discussion group is more negative, but the differences to the information group are not as large and not statistically significant. Regarding idealism, for scenario 1 a rather weak and insignificant effect can be observed (b = -0.15), while relativism has no observable effect on opinion change at all (b = 0.00). The results for scenario 2 are insignificant as well, but differ in regard to relativism, which now has a weak negative effect (b = -0.14), while the effect of idealism did not change much (b = -0.09). 
+
+\begin{figure}[!h]
+	\caption{Models 3 - Relativism}
+	\includegraphics[width=\textwidth]{images/reg3_c1_relativism}
+\end{figure}
+
+In Models 3a and 3b, an interaction effect with the treatment and idealism is estimated to test hypothesis H2a and H2b ( Compared to the control group, information and discussion treatment, respectively,  strengthen the effect of idealism on decision to not switch/push) . Plot xx and XX show the marginal effects for the interactions, respectively. The reported results do not point in the direction assumed in the hypotheses. XXX Hier wären die Interaction plots toll.XXXX
+
+\begin{figure}[!h]
+	\caption{Models 3 - Relativism Interaction Plots}
+	\includegraphics[width=\textwidth]{images/reg3_c2_relativism}
+\end{figure}
+
+Hier am Samstag weiter arbeiten
+
+In Models 4a and 4b, an interaction effect with the treatment and relativism is estimated. Plot xx and XX show the marginal effects for the interactions, respectively. It appears that for relativism, there is… XXX Auch hier wären die Interaction plots toll.XXXX
+
+\begin{figure}[!h]
+	\caption{Models 4 - Opinion Change}
+	\includegraphics[width=\textwidth]{images/reg4_combined}
+\end{figure}
+
+Hier am Samstag weiter arbeiten
+H3a: In general, relativism has no effect on the direction of opinion change. -> nicht ganz so bestätigt, bisschen durcheinander die effekte, aber alle nicht signifikant
+H3b: The more relativist an individual is, the more likely it will switch/push after receiving discussion treatment. -> effektrichtung stimmt, aber nicht signifikant und nicht sehr starker effekt
+
+\begin{figure}[!h]
+	\caption{Models 5 - Idealism}
+	\includegraphics[width=\textwidth]{images/reg5_c1_idealism}
+\end{figure}
+
+
+Regarding the control variables for the dependent t1 variable, none of them reaches statistical significance. In both models, a negative effect is observed for gender. Women score lower on the dependent variables, meaning that they are less inclined to switch/push. For both scenarios, church attendance has a really small positive effect, while age has no observable effect at all. Regarding the the control variables in the t2 models, gender has a negative and weakly significant effect, indicating that opinion change was more negative for woman than man. The other control variables have only weak and insignificant effects. 
+
+\begin{figure}[!h]
+	\caption{Models 5 - Idealism Interaction Plots}
+	\includegraphics[width=\textwidth]{images/reg5_c2_idealism}
+\end{figure}
+
+\begin{figure}[!h]
+	\caption{Models 6 - Relativism}
+	\includegraphics[width=\textwidth]{images/reg6_c1_relativism}
+\end{figure}
+
+\begin{figure}[!h]
+	\caption{Models 6 - Relativism Interaction Plots}
+	\includegraphics[width=\textwidth]{images/reg6_c2_relativism}
+\end{figure}
