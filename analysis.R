@@ -1,24 +1,10 @@
----
-title: "Trolley Experiment"
-author: "Fabio Votta"
-date: "The Date"
-output: github_document
----
-
-```{r, echo=F}
+## ---- echo=F-------------------------------------------------------------
 knitr::opts_chunk$set(message = F, warning = F, fig.align = "center", fig.width = 10, fig.height = 6)
-```
 
+## ------------------------------------------------------------------------
+pacman::p_load(tidyverse, haven, psych, sjPlot, ggpubr)
 
-## packages
-
-```{r}
-pacman::p_load(tidyverse, haven, psych, sjPlot, ggpubr, glue)
-```
-
-## data
-
-```{r}
+## ------------------------------------------------------------------------
 trolley <- read_spss("data/TrolleyExperimentArgumentNew.sav") %>% 
   janitor::clean_names(.) %>% 
   filter(general_finisher == 1) %>% 
@@ -39,12 +25,10 @@ trolley <- read_spss("data/TrolleyExperimentArgumentNew.sav") %>%
     general_group_discussion == 1 ~ "Discussion Group",
     general_group_information == 1 ~ "Information Group",
   )) 
-```
 
+trolley
 
-## Basic Stats
-
-```{r, analysis}
+## ---- analysis-----------------------------------------------------------
 trolley %>% 
   group_by(university) %>% 
   tally() %>% knitr::kable()
@@ -60,11 +44,8 @@ trolley %>%
 trolley %>% 
   select(leftright, pol_interest, church_attendance, age) %>% 
   describe() %>% knitr::kable()
-```
 
-## Factor Analysis
-
-```{r}
+## ------------------------------------------------------------------------
 eqp <- trolley %>% 
   select(contains("eqp")) %>% 
 #  na.omit() %>% 
@@ -83,13 +64,8 @@ trolley <- eqp %>%
 trolley <- trolley %>% 
   rename(idealism_pca = RC1) %>% 
   rename(relativism_pca = RC2)   
-```
 
-## Randomisierung/Descriptives
-
-### Age
-
-```{r}
+## ------------------------------------------------------------------------
 my_comparisons <- list( c("Control Group", "Discussion Group"), 
                         c("Discussion Group", "Information Group"), 
                         c("Control Group", "Information Group") )
@@ -108,11 +84,8 @@ age_compare <- trolley %>%
 age_compare
 
 tidytemplate::ggsave_it(age_compare, width = 10, height = 6)
-```
-### Gender
 
-
-```{r}
+## ------------------------------------------------------------------------
 gender_compare <- sjp.xtab(trolley$groups, trolley$gender, 
          margin = "row", bar.pos = "stack",
          show.summary = TRUE, coord.flip = TRUE, 
@@ -126,23 +99,15 @@ gender_compare <- sjp.xtab(trolley$groups, trolley$gender,
 gender_compare
 
 tidytemplate::ggsave_it(gender_compare, width = 10, height = 6)
-```
 
-
-#### Together
-
-```{r, fig.width=14, fig.height=6}
+## ---- fig.width=14, fig.height=6-----------------------------------------
 dem_compare <- cowplot::plot_grid(age_compare, gender_compare)
 
 dem_compare
 
 tidytemplate::ggsave_it(dem_compare, width = 14, height = 6)
-```
 
-
-### Idealism
-
-```{r}
+## ------------------------------------------------------------------------
 my_comparisons <- list( c("Control Group", "Discussion Group"), 
                         c("Discussion Group", "Information Group"), 
                         c("Control Group", "Information Group") )
@@ -161,11 +126,8 @@ idealism_pca_compare <- trolley %>%
 idealism_pca_compare
 
 tidytemplate::ggsave_it(idealism_pca_compare, width = 10, height = 6)
-```
 
-### Relativism
-
-```{r}
+## ------------------------------------------------------------------------
 my_comparisons <- list( c("Control Group", "Discussion Group"), 
                         c("Discussion Group", "Information Group"), 
                         c("Control Group", "Information Group") )
@@ -184,23 +146,15 @@ relativism_pca_compare <- trolley %>%
 relativism_pca_compare
 
 tidytemplate::ggsave_it(relativism_pca_compare, width = 10, height = 6)
-```
 
-#### Together
-
-```{r, fig.width=12, fig.height=6}
+## ---- fig.width=12, fig.height=6-----------------------------------------
 uv_compare <- cowplot::plot_grid(relativism_pca_compare, idealism_pca_compare)
 
 uv_compare
 
 tidytemplate::ggsave_it(uv_compare, width = 12, height = 6)
-```
 
-### AVs
-
-#### Switch Track
-
-```{r}
+## ------------------------------------------------------------------------
 my_comparisons <- list( c("Control Group", "Discussion Group"), 
                         c("Discussion Group", "Information Group"), 
                         c("Control Group", "Information Group") )
@@ -219,12 +173,8 @@ t1_szenario1q2_compare <- trolley %>%
 t1_szenario1q2_compare
 
 tidytemplate::ggsave_it(t1_szenario1q2_compare, width = 10, height = 6)
-```
 
-#### Push Person
-
-
-```{r}
+## ------------------------------------------------------------------------
 my_comparisons <- list( c("Control Group", "Discussion Group"), 
                         c("Discussion Group", "Information Group"), 
                         c("Control Group", "Information Group") )
@@ -243,21 +193,15 @@ t1_szenario2q2_compare <- trolley %>%
 t1_szenario2q2_compare
 
 tidytemplate::ggsave_it(t1_szenario2q2_compare, width = 10, height = 6)
-```
 
-##### Together
-
-```{r, fig.width=12, fig.height=6}
+## ---- fig.width=12, fig.height=6-----------------------------------------
 av_compare <- cowplot::plot_grid(t1_szenario1q2_compare, t1_szenario2q2_compare)
 
 av_compare
 
 tidytemplate::ggsave_it(av_compare, width = 12, height = 6)
-```
 
-### Demographics
-
-```{r}
+## ------------------------------------------------------------------------
 
 t1_szenario1q2_gender <- trolley %>% 
   ggplot(aes(gender, t1_szenario1q2)) +
@@ -289,16 +233,13 @@ t1_szenario2q2_gender
 
 tidytemplate::ggsave_it(t1_szenario2q2_gender, width = 10, height = 6)
 
-gender_av_compare1 <- cowplot::plot_grid(t1_szenario1q2_gender, t1_szenario2q2_gender)
+gender_av_compare <- cowplot::plot_grid(t1_szenario1q2_gender, t1_szenario2q2_gender)
 
-gender_av_compare1
+gender_av_compare
 
-tidytemplate::ggsave_it(gender_av_compare1, width = 12, height = 6)
-```
+tidytemplate::ggsave_it(gender_av_compare, width = 12, height = 6)
 
-#### Scatters
-
-```{r}
+## ------------------------------------------------------------------------
 t1_szenario1q2_gender <- trolley %>% 
   ggplot(aes(age, t1_szenario1q2)) +
   geom_jitter(aes(color = gender), alpha = 0.6) +
@@ -329,17 +270,14 @@ t1_szenario2q2_gender
 
 tidytemplate::ggsave_it(t1_szenario2q2_gender, width = 10, height = 6)
 
-gender_av_compare2 <- cowplot::plot_grid(t1_szenario1q2_gender, t1_szenario2q2_gender)
+gender_av_compare <- cowplot::plot_grid(t1_szenario1q2_gender, t1_szenario2q2_gender)
 
-gender_av_compare2
+gender_av_compare
 
-tidytemplate::ggsave_it(gender_av_compare2, width = 12, height = 6)
-```
+tidytemplate::ggsave_it(gender_av_compare, width = 12, height = 6)
 
-## Factor Analysis Table
-
-```{r}
-# eqp %>% psych::alpha()
+## ------------------------------------------------------------------------
+# eqp %>% 
 #   psych::pca(2, rotate = "varimax") %>% 
 #   .$loadings %>% unclass() %>% as.data.frame() %>% 
 #   rownames_to_column("eqp_variable")
@@ -363,95 +301,58 @@ factor_analysis <- sjp.pca(eqp, rotation = "varimax",
         show.values = T)$plot  +
   ggthemes::scale_color_gdocs("") +
   ggthemes::theme_hc() +
-  ggtitle("Ethical Positions Questionnaire - PCA") +
-  facet_grid(~xpos, labeller = as_labeller(factor_names)) +
-  labs(captions = "Cronbach's Alpha = 0.80")
+  ggtitle("Ethical Positions Questionnaire - Factor Analysis") +
+  facet_grid(~xpos, labeller = as_labeller(factor_names))
 
 factor_analysis
 
 tidytemplate::ggsave_it(factor_analysis, width = 10, height = 6)
-```
 
-## Summary Statistics
-
-```{r}
-save(trolley, file = "text/data/trolley.Rdata")
-
+## ------------------------------------------------------------------------
 trolley %>% 
   select(t1_szenario1q2, t2_szenario1q2, t1_szenario2q2, t2_szenario2q2, idealism_pca, relativism_pca, gender, age, church_attendance, general_group_control, general_group_discussion, general_group_information) %>% 
   describe() %>% 
   select(-vars, -trimmed, -mad, -se) %>% 
   knitr::kable()
-```
 
-
-## Models
-
-```{r}
+## ------------------------------------------------------------------------
 trolley %<>% 
   mutate(groups = factor(groups)) %>% 
   mutate(gender = factor(gender)) 
-```
 
-
-1.  t1 als AV
-2.  t1 als AV und gender interaction (Idealism)
-3.  t1 als AV und gender interaction (Relativism)
-4.  t2 mit Controls für t1 und für treatments
-5.  Modelle aus 4. mit Treatment-Interaktion (Idealism)
-6.  Modelle aus 4. mit Treatment-Interaktion (Relativism)
-
-a. Szenario 1 (a = Switch Track)
-b. Szenario 2b (b = Push Person)
-
-### Model 1a - Switch Track
-
-```{r, include = F}
+## ---- include = F--------------------------------------------------------
 fit1_s1 <- lm(t1_szenario1q2 ~ idealism_pca + relativism_pca + 
              gender + age + church_attendance + gender, 
            data = trolley)
 
-r2_1_s1 <- tidytemplate::get_r2_label(fit1_s1, adj = T)
-
 reg1_s1 <- sjPlot::plot_model(fit1_s1, show.p = T, 
-                              show.values = T, 
-                              value.offset = 0.2, 
-                              ci.lvl = .9) +
-  ggtitle("Model 1a - Switch Track") +
+                              show.values = T, value.offset = 0.2) +
+  ggtitle("Model 1a - Morally justifiable: Switch Track") +
   scale_x_discrete(labels = c("Relativism", "Idealism", 
                               "Gender (Men/Women)", "Church Attendance",
                               "Age")) +
   ggthemes::theme_hc() +
-  ggthemes::scale_fill_fivethirtyeight() +
-  labs(caption = glue("Adjusted R Squared: {r2_1_s1}"))
+  ggthemes::scale_fill_fivethirtyeight()
 
+reg1_s1
 
 # ggsave(filename = "text/images/reg1_s1.png", width = 8, height = 5)
 
 broom::glance(fit1_s1) %>% knitr::kable()
-```
 
-### Model 1b - Push Person
-
-```{r, include = F}
+## ---- include = F--------------------------------------------------------
 fit1_s2 <- lm(t1_szenario2q2 ~ idealism_pca + relativism_pca + 
              gender + age + church_attendance, 
            data = trolley)
 
-r2_1_s2 <- tidytemplate::get_r2_label(fit1_s2, adj = T)
-
-
 reg1_s2 <- sjPlot::plot_model(fit1_s2, show.p = T, 
-                              show.values = T,
-                              value.offset = 0.2, 
-                              ci.lvl = .9) +
-  ggtitle("Model 1b - Push Person") +
+                              show.values = T, value.offset = 0.2) +
+  ggtitle("Model 1b - Morally justifiable: Push Person") +
   scale_x_discrete(labels = c("Relativism", "Idealism", 
                               "Gender (Men/Women)", "Church Attendance",
                               "Age")) +
   ggthemes::theme_hc() +
-  ggthemes::scale_fill_fivethirtyeight() +
-  labs(caption = glue("Adjusted R Squared: {r2_1_s2}"))
+  ggthemes::scale_fill_fivethirtyeight()
 
 reg1_s2
 
@@ -460,39 +361,29 @@ reg1_s2
 broom::glance(fit1_s2) %>% knitr::kable()
 
 
-```
 
-#### Both Models
-
-```{r, fig.width = 7, fig.height = 8}
+## ---- fig.width = 7, fig.height = 8--------------------------------------
 cowplot::plot_grid(reg1_s1, reg1_s2, ncol = 1)
 
 
 ggsave(filename = "text/images/reg1_combined.png", width = 8, height = 9)
-```
 
-### Model 2a - Switch Track - Idealism X Gender
-
-```{r, include = F}
+## ---- include = F--------------------------------------------------------
 fit2_s1_int_idealism <- lm(t1_szenario1q2 ~ idealism_pca + relativism_pca + 
              gender + age + church_attendance + gender +
                gender*idealism_pca, 
            data = trolley)
 
-r2_2_s1 <- tidytemplate::get_r2_label(fit2_s1_int_idealism, adj = T)
-
-
 sjPlot::plot_model(fit2_s1_int_idealism, show.p = T, show.values = T,
-                   value.offset = 0.2, ci.lvl = .9) +
-  ggtitle("Model 2a - Switch Track") +
+                   value.offset = 0.2) +
+  ggtitle("Model 2a - Morally justifiable: Switch Track") +
   scale_x_discrete(labels = c("Relativism", 
                               "Idealism X Gender",
                               "Idealism", 
                               "Gender (Men/Women)", "Church Attendance",
                               "Age")) +
   ggthemes::theme_hc() +
-  ggthemes::scale_fill_fivethirtyeight()  +
-  labs(caption = glue("Adjusted R Squared: {r2_2_s1}")) -> reg2_s1_int_idealism
+  ggthemes::scale_fill_fivethirtyeight() -> reg2_s1_int_idealism
 
 reg2_s1_int_idealism
 
@@ -516,32 +407,23 @@ get_model_data(fit2_s1_int_idealism, type = "pred",
 
 
 # ggsave(filename = "text/images/reg2_s1_int2_idealism.png", width = 8, height = 5)
-```
 
-
-
-
-### Model 2b - Push Person - Idealism X Gender
-
-```{r, include = F}
+## ---- include = F--------------------------------------------------------
 fit2_s2_int_idealism <- lm(t1_szenario2q2 ~ idealism_pca + relativism_pca + 
              gender + age + church_attendance + gender +
                gender*idealism_pca, 
            data = trolley)
 
-r2_2_s2 <- tidytemplate::get_r2_label(fit2_s2_int_idealism, adj = T)
-
 sjPlot::plot_model(fit2_s2_int_idealism, show.p = T, show.values = T,
-                   value.offset = 0.2, ci.lvl = .9) +
-  ggtitle("Model 2b - Push Person") +
+                   value.offset = 0.2) +
+  ggtitle("Model 2b - Morally justifiable: Push Person") +
   scale_x_discrete(labels = c("Relativism", 
                               "Idealism X Gender",
                               "Idealism", 
                               "Gender (Men/Women)", "Church Attendance",
                               "Age")) +
   ggthemes::theme_hc() +
-  ggthemes::scale_fill_fivethirtyeight() +
-  labs(caption = glue("Adjusted R Squared: {r2_2_s2}")) -> reg2_s2_int_idealism
+  ggthemes::scale_fill_fivethirtyeight() -> reg2_s2_int_idealism
 
 reg2_s2_int_idealism
 
@@ -565,26 +447,20 @@ get_model_data(fit2_s2_int_idealism, type = "pred",
 
 
 # ggsave(filename = "text/images/reg2_s2_int2_idealism.png", width = 8, height = 5)
-```
 
-#### Both Models
-
-```{r, fig.width = 7, fig.height = 8}
+## ---- fig.width = 7, fig.height = 8--------------------------------------
 cowplot::plot_grid(reg2_s1_int_idealism, reg2_s2_int_idealism, ncol = 1)
 
 
 ggsave(filename = "text/images/reg2_c1_idealism.png", width = 8, height = 9)
-```
 
-#### Both Interactions
-
-```{r}
+## ------------------------------------------------------------------------
 bind_rows(
   get_model_data(fit2_s1_int_idealism, type = "pred",
-               terms = c("idealism_pca", "gender"), ci.lvl = .9) %>% 
+               terms = c("idealism_pca", "gender")) %>% 
             mutate(type = "Model 2a - Switch Track"),  
   get_model_data(fit2_s2_int_idealism, type = "pred",
-               terms = c("idealism_pca", "gender"), ci.lvl = .9) %>% 
+               terms = c("idealism_pca", "gender")) %>% 
             mutate(type = "Model 2b - Push Person")
   ) %>% 
   ggplot(aes(x, predicted)) +
@@ -597,37 +473,29 @@ bind_rows(
   ggthemes::scale_fill_fivethirtyeight("Gender") +
   ggthemes::scale_color_fivethirtyeight("Gender") +
   facet_wrap(~type) +
-  ylab("Morally justifiable 1 - 11") +
+  ylab("Morally justifiable 1 - 10") +
   xlab("Idealism")  
   
 ggsave(filename = "text/images/reg2_c2_idealism.png", width = 8, height = 5)
 
-```
 
-
-### Model 3a - Switch Track - Relativism X Gender
-
-```{r, include = F}
+## ---- include = F--------------------------------------------------------
 fit3_s1_int_relativism <- lm(t1_szenario1q2 ~ idealism_pca + relativism_pca + 
              gender + age + church_attendance + gender +
                gender*relativism_pca, 
            data = trolley)
 
-r2_3_s1 <- tidytemplate::get_r2_label(fit3_s1_int_relativism, adj = T)
-
-
 sjPlot::plot_model(fit3_s1_int_relativism, show.p = T, show.values = T,
-                   value.offset = 0.2, ci.lvl = .9) +
+                   value.offset = 0.2) +
   scale_x_discrete(labels = c("Relativism X Gender", 
                               "Relativism",
                               "Idealism", 
                               "Gender (Men/Women)", 
                               "Church Attendance",
                               "Age")) +
-  ggtitle("Model 3a - Switch Track") +
+  ggtitle("Model 3a - Morally justifiable: Switch Track") +
   ggthemes::theme_hc() +
-  ggthemes::scale_fill_fivethirtyeight()  +
-  labs(caption = glue("Adjusted R Squared: {r2_3_s1}")) -> reg3_s1_int_relativism
+  ggthemes::scale_fill_fivethirtyeight() -> reg3_s1_int_relativism
 
 reg3_s1_int_relativism
 
@@ -651,31 +519,24 @@ get_model_data(fit3_s1_int_relativism, type = "pred",
 
 
 # ggsave(filename = "text/images/reg3_s1_int2_relativism.png", width = 8, height = 5)
-```
 
-### Model 3b - Push Person- Relativism X Gender
-
-```{r, include = F}
+## ---- include = F--------------------------------------------------------
 fit3_s2_int_relativism <- lm(t1_szenario2q2 ~ idealism_pca + relativism_pca + 
              gender + age + church_attendance + gender +
                gender*relativism_pca, 
            data = trolley)
 
-
-r2_3_s2 <- tidytemplate::get_r2_label(fit3_s2_int_relativism, adj = T)
-
 sjPlot::plot_model(fit3_s2_int_relativism, show.p = T, show.values = T,
-                   value.offset = 0.2, ci.lvl = .9) +
+                   value.offset = 0.2) +
   scale_x_discrete(labels = c("Relativism X Gender", 
                               "Relativism",
                               "Idealism", 
                               "Gender (Men/Women)", 
                               "Church Attendance",
                               "Age")) +
-  ggtitle("Model 3b - Push Person") +
+  ggtitle("Model 3b - Morally justifiable: Push Person") +
   ggthemes::theme_hc() +
-  ggthemes::scale_fill_fivethirtyeight()  +
-  labs(caption = glue("Adjusted R Squared: {r2_3_s2}")) -> reg3_s2_int_relativism
+  ggthemes::scale_fill_fivethirtyeight() -> reg3_s2_int_relativism
 
 reg3_s2_int_relativism
 
@@ -699,26 +560,20 @@ get_model_data(fit3_s2_int_relativism, type = "pred",
 
 
 # ggsave(filename = "text/images/reg3_s2_int2_relativism.png", width = 8, height = 5)
-```
 
-#### Both Models
-
-```{r, fig.width = 7, fig.height = 8}
+## ---- fig.width = 7, fig.height = 8--------------------------------------
 cowplot::plot_grid(reg3_s1_int_relativism, reg3_s2_int_relativism, ncol = 1)
 
 
 ggsave(filename = "text/images/reg3_c1_relativism.png", width = 8, height = 9)
-```
 
-#### Both Interactions
-
-```{r}
+## ------------------------------------------------------------------------
 bind_rows(
   get_model_data(fit3_s1_int_relativism, type = "pred",
-               terms = c("relativism_pca", "gender"), ci.lvl = .9) %>% 
+               terms = c("relativism_pca", "gender")) %>% 
             mutate(type = "Model 3a - Switch Track"),  
   get_model_data(fit3_s2_int_relativism, type = "pred",
-               terms = c("relativism_pca", "gender"), ci.lvl = .9) %>% 
+               terms = c("relativism_pca", "gender")) %>% 
             mutate(type = "Model 3b - Push Person")
   ) %>% 
   ggplot(aes(x, predicted)) +
@@ -731,26 +586,20 @@ bind_rows(
   ggthemes::scale_fill_fivethirtyeight("Gender") +
   ggthemes::scale_color_fivethirtyeight("Gender") +
   facet_wrap(~type) +
-  ylab("Morally justifiable 1 - 11") +
+  ylab("Morally justifiable 1 - 10") +
   xlab("Relativism")  
   
 ggsave(filename = "text/images/reg3_c2_relativism.png", width = 8, height = 5)
 
-```
 
-### Model 4a - Switch Track
-
-```{r, include = F}
+## ---- include = F--------------------------------------------------------
 fit4_s1 <- lm(t2_szenario1q2 ~ t1_szenario1q2 + idealism_pca + relativism_pca +
              gender + age + church_attendance +
              groups, 
            data = trolley)
 
-r2_4_s1 <- tidytemplate::get_r2_label(fit4_s1, adj = T)
-
-
-sjPlot::plot_model(fit4_s1, show.p = T, show.values = T, value.offset = 0.4, ci.lvl = .9) +
-  ggtitle("Model 4a - Opinion Change - Switch Track") +
+sjPlot::plot_model(fit4_s1, show.p = T, show.values = T, value.offset = 0.4) +
+  ggtitle("Model 4a - Opinion Change - Morally justifiable: Switch Track") +
   scale_x_discrete(labels = c("Mor. Justifiable T1", 
                               "Relativism",
                               "Idealism", 
@@ -760,30 +609,22 @@ sjPlot::plot_model(fit4_s1, show.p = T, show.values = T, value.offset = 0.4, ci.
                               "Church Attendance",
                               "Age")) +
   ggthemes::theme_hc() +
-  ggthemes::scale_fill_fivethirtyeight()  +
-  labs(caption = glue("Adjusted R Squared: {r2_4_s1}"))  -> reg4_s1
+  ggthemes::scale_fill_fivethirtyeight() -> reg4_s1
 
 reg4_s1
 
 # ggsave(filename = "text/images/reg4_s1.png", width = 8, height = 5)
 
 broom::glance(fit4_s1) %>% knitr::kable()
-```
 
-
-### Model 4b - Push Person
-
-```{r, include = F}
+## ---- include = F--------------------------------------------------------
 fit4_s2 <- lm(t2_szenario2q2 ~ t1_szenario2q2 + idealism_pca + relativism_pca + 
              gender + age + church_attendance +
              groups, 
            data = trolley)
 
-r2_4_s2 <- tidytemplate::get_r2_label(fit4_s2, adj = T)
-
-
-sjPlot::plot_model(fit4_s2, show.p = T, show.values = T, value.offset = 0.4, ci.lvl = .9) +
-  ggtitle("Model 4b - Opinion Change - Push Person") +
+sjPlot::plot_model(fit4_s2, show.p = T, show.values = T, value.offset = 0.4) +
+  ggtitle("Model 4b - Opinion Change - Morally justifiable: Push Person") +
   scale_x_discrete(labels = c("Mor. Justifiable T1", 
                               "Relativism",
                               "Idealism", 
@@ -793,38 +634,28 @@ sjPlot::plot_model(fit4_s2, show.p = T, show.values = T, value.offset = 0.4, ci.
                               "Church Attendance",
                               "Age")) +
   ggthemes::theme_hc() +
-  ggthemes::scale_fill_fivethirtyeight()  +
-  labs(caption = glue("Adjusted R Squared: {r2_4_s2}"))  -> reg4_s2
+  ggthemes::scale_fill_fivethirtyeight() -> reg4_s2
 
 reg4_s2
 
 # ggsave(filename = "text/images/reg4_s2.png", width = 8, height = 5)
 
 broom::glance(fit4_s2) %>% knitr::kable()
-```
 
-#### Both Models
-
-```{r, fig.width = 7, fig.height = 8}
+## ---- fig.width = 7, fig.height = 8--------------------------------------
 cowplot::plot_grid(reg4_s1, reg4_s2, ncol = 1)
 
 
 ggsave(filename = "text/images/reg4_combined.png", width = 8, height = 9)
-```
 
-### Model 5a - Switch Track - Idealism
-
-```{r, include = F}
+## ---- include = F--------------------------------------------------------
 fit5_s1 <- lm(t2_szenario1q2 ~ t1_szenario1q2 + idealism_pca + relativism_pca + 
              gender + age + church_attendance +
              groups * idealism_pca, 
            data = trolley)
 
-r2_5_s1 <- tidytemplate::get_r2_label(fit5_s1, adj = T)
-
-
 sjPlot::plot_model(fit5_s1, show.p = T, 
-                              show.values = T, value.offset = 0.4, ci.lvl = .9) +
+                              show.values = T, value.offset = 0.4) +
   scale_x_discrete(labels = c("Mor. Justifiable T1", 
                               "Relativism",
                               "Idealism X Information Group",
@@ -835,10 +666,9 @@ sjPlot::plot_model(fit5_s1, show.p = T,
                               "Gender (Men/Women)", 
                               "Church Attendance",
                               "Age")) +
-  ggtitle("Model 5a - Opinion Change - Switch Track") +
+  ggtitle("Model 5a - Opinion Change - Morally justifiable: Switch Track") +
   ggthemes::theme_hc() +
-  ggthemes::scale_fill_fivethirtyeight()   +
-  labs(caption = glue("Adjusted R Squared: {r2_5_s1}")) -> reg5_s1
+  ggthemes::scale_fill_fivethirtyeight() -> reg5_s1
 
 reg5_s1
 
@@ -861,21 +691,15 @@ get_model_data(fit5_s1, type = "pred",
   xlab("Idealism") 
 
 # ggsave(filename = "text/images/reg5_s1_int.png", width = 8, height = 5)
-```
 
-### Model 5b - Push Person - Idealism
-
-```{r, include = F}
+## ---- include = F--------------------------------------------------------
 fit5_s2 <- lm(t2_szenario2q2 ~ t1_szenario2q2 + idealism_pca + relativism_pca + 
              gender + age + church_attendance +
              groups * idealism_pca, 
            data = trolley)
 
-r2_5_s2 <- tidytemplate::get_r2_label(fit5_s2, adj = T)
-
-
 sjPlot::plot_model(fit5_s2, show.p = T, 
-                              show.values = T, value.offset = 0.4, ci.lvl = .9) +
+                              show.values = T, value.offset = 0.4) +
   scale_x_discrete(labels = c("Mor. Justifiable T1", 
                               "Relativism",
                               "Idealism X Information Group",
@@ -886,10 +710,9 @@ sjPlot::plot_model(fit5_s2, show.p = T,
                               "Gender (Men/Women)", 
                               "Church Attendance",
                               "Age")) +
-  ggtitle("Model 5b - Opinion Change - Push Person") +
+  ggtitle("Model 5b - Opinion Change - Morally justifiable: Push Person") +
   ggthemes::theme_hc() +
-  ggthemes::scale_fill_fivethirtyeight()   +
-  labs(caption = glue("Adjusted R Squared: {r2_5_s2}")) -> reg5_s2
+  ggthemes::scale_fill_fivethirtyeight() -> reg5_s2
 
 reg5_s2
 
@@ -912,27 +735,20 @@ get_model_data(fit5_s2, type = "pred",
   xlab("Idealism") 
 
 # ggsave(filename = "text/images/reg5_s2_int.png", width = 8, height = 5)
-```
 
-
-#### Both Models
-
-```{r, fig.width = 7, fig.height = 8}
+## ---- fig.width = 7, fig.height = 8--------------------------------------
 cowplot::plot_grid(reg5_s1, reg5_s2, ncol = 1)
 
 
 ggsave(filename = "text/images/reg5_c1_idealism.png", width = 8, height = 9)
-```
 
-#### Both Interactions
-
-```{r}
+## ------------------------------------------------------------------------
 bind_rows(
   get_model_data(fit5_s1, type = "pred",
-               terms = c("idealism_pca", "groups"), ci.lvl = .9) %>% 
+               terms = c("idealism_pca", "groups")) %>% 
             mutate(type = "Model 5a - Switch Track"),  
   get_model_data(fit5_s2, type = "pred",
-               terms = c("idealism_pca", "groups"), ci.lvl = .9) %>% 
+               terms = c("idealism_pca", "groups")) %>% 
             mutate(type = "Model 5b - Push Person")
   ) %>% 
   ggplot(aes(x, predicted)) +
@@ -945,26 +761,20 @@ bind_rows(
   ggthemes::scale_fill_fivethirtyeight("Experimental Groups") +
   ggthemes::scale_color_fivethirtyeight("Experimental Groups") +
   facet_wrap(~type) +
-  ylab("Morally justifiable 1 - 11") +
+  ylab("Morally justifiable 1 - 10") +
   xlab("Idealism")  
   
 ggsave(filename = "text/images/reg5_c2_idealism.png", width = 8, height = 5)
 
-```
 
-### Model 6a - Switch Track - Relativism
-
-```{r, include = F}
+## ---- include = F--------------------------------------------------------
 fit6_s1 <- lm(t2_szenario1q2 ~ t1_szenario1q2 + idealism_pca + relativism_pca + 
              gender + age + church_attendance +
              groups * relativism_pca, 
            data = trolley)
 
-r2_6_s1 <- tidytemplate::get_r2_label(fit6_s1, adj = T)
-
-
 sjPlot::plot_model(fit6_s1, show.p = T, 
-                              show.values = T, value.offset = 0.4, ci.lvl = .9) +
+                              show.values = T, value.offset = 0.4) +
   scale_x_discrete(labels = c("Mor. Justifiable T1", 
                               "Relativism X Information Group",
                               "Relativism X Discussion Group",
@@ -975,10 +785,9 @@ sjPlot::plot_model(fit6_s1, show.p = T,
                               "Gender (Men/Women)", 
                               "Church Attendance",
                               "Age")) +
-  ggtitle("Model 6a - Opinion Change - Switch Track") +
+  ggtitle("Model 6a - Opinion Change - Morally justifiable: Switch Track") +
   ggthemes::theme_hc() +
-  ggthemes::scale_fill_fivethirtyeight() +
-  labs(caption = glue("Adjusted R Squared: {r2_6_s1}"))  -> reg6_s1
+  ggthemes::scale_fill_fivethirtyeight() -> reg6_s1
 
 reg6_s1
 
@@ -1001,23 +810,15 @@ get_model_data(fit6_s1, type = "pred",
   xlab("Relativism") 
 
 # ggsave(filename = "text/images/reg6_s1_int.png", width = 8, height = 5)
-```
 
-
-### Model 6b - Push Person - Relativism
-
-
-```{r, include = F}
+## ---- include = F--------------------------------------------------------
 fit6_s2 <- lm(t2_szenario2q2 ~ t1_szenario2q2 + idealism_pca + relativism_pca + 
              gender + age + church_attendance +
              groups * relativism_pca, 
            data = trolley)
 
-r2_6_s2 <- tidytemplate::get_r2_label(fit6_s2, adj = T)
-
-
 sjPlot::plot_model(fit6_s2, show.p = T, 
-                              show.values = T, value.offset = 0.4, ci.lvl = .9) +
+                              show.values = T, value.offset = 0.4) +
   scale_x_discrete(labels = c("Mor. Justifiable T1", 
                               "Relativism X Information Group",
                               "Relativism X Discussion Group",
@@ -1028,10 +829,9 @@ sjPlot::plot_model(fit6_s2, show.p = T,
                               "Gender (Men/Women)", 
                               "Church Attendance",
                               "Age")) +
-  ggtitle("Model 6b - Opinion Change - Push Person") +
+  ggtitle("Model 6b - Opinion Change - Morally justifiable: Switch Track") +
   ggthemes::theme_hc() +
-  ggthemes::scale_fill_fivethirtyeight() +
-  labs(caption = glue("Adjusted R Squared: {r2_6_s2}"))  -> reg6_s2
+  ggthemes::scale_fill_fivethirtyeight() -> reg6_s2
 
 reg6_s2
 
@@ -1054,29 +854,21 @@ get_model_data(fit6_s2, type = "pred",
   xlab("Relativism") 
 
 # ggsave(filename = "text/images/reg6_s2_int.png", width = 8, height = 5)
-```
 
-
-
-#### Both Models
-
-```{r, fig.width = 7, fig.height = 8}
+## ---- fig.width = 7, fig.height = 8--------------------------------------
 cowplot::plot_grid(reg6_s1, reg6_s2, ncol = 1)
 
 
 ggsave(filename = "text/images/reg6_c1_relativism.png", width = 7, height = 8)
-```
 
-#### Both Interactions
-
-```{r}
+## ------------------------------------------------------------------------
 
 bind_rows(
   get_model_data(fit6_s1, type = "pred",
-               terms = c("relativism_pca", "groups"), ci.lvl = .9) %>% 
+               terms = c("relativism_pca", "groups")) %>% 
             mutate(type = "Model 6a - Switch Track"),  
   get_model_data(fit6_s2, type = "pred",
-               terms = c("relativism_pca", "groups"), ci.lvl = .9) %>% 
+               terms = c("relativism_pca", "groups")) %>% 
             mutate(type = "Model 6b - Push Person")
   ) %>% 
   ggplot(aes(x, predicted)) +
@@ -1089,9 +881,9 @@ bind_rows(
   ggthemes::scale_fill_fivethirtyeight("Experimental Groups") +
   ggthemes::scale_color_fivethirtyeight("Experimental Groups") +
   facet_wrap(~type) +
-  ylab("Morally justifiable 1 - 11") +
+  ylab("Morally justifiable 1 - 10") +
   xlab("Relativism")  
 
 ggsave(filename = "text/images/reg6_c2_relativism.png", width = 8, height = 5)
 
-```
+

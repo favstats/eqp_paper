@@ -4,40 +4,43 @@ output: pdf_document
 
 ## Online Experiment
 
-The online survey-experiment was conducted over a period of one week. The studied subjects were chosen beforehand through dispension of digital invitations by members of the project group. This way three hundred subjects were selected. As a result of the selection method the sample reflects a very high percentage of students as well as a very low age and a political centre-left attitude on average (see below). 
+The online survey-experiment concerning moral decision-making in two hypothetical scenarios/dilemmas was conducted over a period of one week. The studied subjects were chosen beforehand through dispension of digital invitations by members of the project group. This way three hundred subjects were selected. As a result of the selection method the sample reflects a very high percentage of students as well as a very low age and a political centre-left attitude on average (see below).
 
-The pooled subjects were randomized into three groups each receiving a different treatment in between the first and the second query of a decision in one of two ethcial dilemmas. The two different dilemmas were the described ‚trolley-problem‘ and the ‚fat man-problem‘ (see attachement for descriptions). These two dilemmas were distributed randomly among the three treatment-groups. 
+The pooled subjects were randomized into three groups each receiving a different treatment in between the first and the second query of a decision in one of two scenarios/ethical dilemmas. The two different dilemmas were the described ‘trolley-problem‘ and ‘fat man-problem‘, also referred to as o  the ‘switch track’ and ‘push person’ dilemma, respectively (see Appendix for original descriptions). For the first scenario, people were asked (translated from german):“Please imagine the following situation: A waggon is moving towards five persons, which are on the track and will be killed if nothing is done. Anna can redirect the waggon to a second track, rescuing all five persons. But on the second track, there is one uninvolved person. This person will die if the tracks are switched. How much is it morally justifiable for Anna to redirect the waggon to the second track?” The second scenario differed in regard to the action Anna could take to stop the train: instead of switching tracks, she could push a person in front of the train to stop it, so the five persons would be rescued, but the pushed person dies. 
 
-It should be noted though that the randomized assignment of subjects to one of the three treatment-/control-groups was flawed. This can be derived from a comparison of the mean-values of this studies main-variables: The compared mean-values by groups for the dependent variable in dichotomous (?) and continous forms, as well as the variables for gender, age and the primary indepent variables Idealism and Relativism show some significant differences (see below). The following analysis should therefore be interpreted with caution and keep in mind possible effects of non-random group-assignment. 
+Chosen subjects got to read a insertion text and had to fill in a survey regarding their general ethical position [@forsyth1980taxonomy] as well as their personality and political attitude. The they were asked to make a first decision in one of the two ethical dilemmas via dichotomous Yes/No choice and continuous tendency-rating. Afterwards each of the three groups received a treatment:
 
-Chosen subjects got to read a insertion text and had to fill in a survey regarding their general ethical position [@forsyth1980taxonomy] as well as their personality and political attitude. The they were asked to make a first decision in one of the two ethical dilemmas via dichotomous Yes/No choice and continous tendency-rating (towards intervening or staying passive). Afterwards each of the three groups received a treatment:
 
 
 + The first group, which comes closest to a ‚control group‘, had to read a short text conerning ethics (see attachement). 
 + In the second group each subject received identical utilitarian and deontological arguments. Three arguments each argued for or against an intervention in the ethical dilemmas (see attachement). 
 + The third group participated in a one-week-long asynchronous dialog on a digital platform. "Smartopinion" allowed the participants to post and comment their own arguments for or against any decision in the ethical dilemma or comment on one of 6 pro/contra-arguments (3 each utilitarian/deontological) which were posted beforehand by the project group. The discussion was moderated by project members who didn’t intervene in the dialog at any given point. 
 
-After these treatments the subjects were once again asked for their decision in their respective ehtical dilemma in the forms of choice and rating and answered a questionnaire concerning their socio-dempographic background.
+After these treatments the subjects were once again asked for their decision in their respective ethical dilemma in the forms of choice and rating and answered a questionnaire concerning their socio-demographic background.
+
 
 ## Dataset
 
-The resulting dataset consists of 93 variables and data from 300 subjects. The studied sample depicts a high percentage of students (approximately 92 percent) and therefore reflects a low age (24 years) a political centre-left attitude (4.7 on a scale from 1 to 10) and a relatively high political interest (3.2 on a scale from 1 to 4) on average. The exact population cannot be determined, because of arbitrary selection mechanisms within some steps of the research process (dispension of invitations, reaction to invitations etc.). The interpretation of any results from this study should therefore be carried out with caution, even with respect to the population of german students/students from Stuttgart.
+The resulting dataset consists of 93 variables and data from 300 subjects. The studied sample depicts a high percentage of students (approximately 92 percent) and therefore reflects a low age (24 years), a political centre-left attitude (4.7 on a scale from 1 to 10) and a relatively high political interest (3.2 on a scale from 1 to 4) on average. The exact population cannot be determined, because of arbitrary selection mechanisms within some steps of the research process (dispension of invitations, reaction to invitations etc.). The interpretation of any results from this study should therefore be carried out with caution, even with respect to the population of students from Stuttgart University.
+
 
 ## Operationialization and  Factor Analysis
 
-The factors under study were operationalized as follows: 
+The factors under study were operationalized as follows:  
 
-The dependent variable, the decision in one of two ethical dilemmas, was gathered in the form of a dichotomous choice between Interevention and Passivity and a continous tendency on a scale from 1 (Pro-Passivity) to 11 (Pro-Intervention). The main independent variables, the different ethical ideologies of the subjects under study, were gathered as german versions of the twenty ‚Ethical-Position‘-items originally developed by Forsyth [-@forsyth1980taxonomy]. 
+The dependent variable, the decision in one of two ethical dilemmas, was gathered in the form continuous tendency in regards to whether Annas action of switching the tracks/pushing the person was morally justifiable (ranging from 1”Not at all”, 6 “partly” to 11 “Absolutely”) 
 
-These items ask the respondent for their reaction to ethical statements concerning one of the two dimensions (Idealism and Relativism) identified by Forsyth, on a scale from 1 ‚Completely disagree‘ to 9 ‚Completely agree‘ [@forsyth1980taxonomy: 178].
+The main independent variables, the different ethical ideologies of the subjects under study, were gathered as german versions of the twenty ‚Ethical-Position‘-items originally developed by Forsyth [-@forsyth1980taxonomy]. These items ask the respondent for their reaction to ethical statements concerning one of the two dimensions (Idealism and Relativism) identified by Forsyth, on a scale from 1 ‚Completely disagree‘ to 9 ‚Completely agree‘ [@forsyth1980taxonomy: 178].
 
 One example for such a (Idealism-)statement is:
 
+
 > "A person should make certain that their actions never intentionally harm another even to a small degree" [@forsyth1980taxonomy: 178].
 
-The used translation of the ‚Ethical Position Questionnaire‘ was taken from Strack and Gennerich [-@strack2007erfahrung: 13] (see attachement). To validate and extract the two dimensions, ‚Idealism‘ and ‚Relativism‘, from the data, a Explorative Factor Analysis (Principal Component Analysis) was conducted and indices, each consisting of their dimensions 10 variables, were formed (see below). The selected control variables were age (continuous), gender (dichotomous) and frequency of church attendance from 1 ‚More than once a week‘ to 6 ‚Never‘.
+The used translation of the "Ethical Position Questionnaire" was taken from Strack and Gennerich [@strack2007erfahrung: 13]. The question wording in German can be found in the Appendix. To validate and extract the two dimensions, ‚Idealism‘ and ‚Relativism‘, from the data, an Explorative Factor Analysis (Principal Component Analysis) was conducted and indices, each consisting of their dimension’s 10 variables, were formed (see below).
+The selected control variables were age (continuous), gender (dichotomous) and frequency of church attendance from 1 ‚More than once a week‘ to 6 ‚Never‘.
 
-In order to validate the two dimensions Idealism and Relativism, from the Ethical Positions Questionnaire, a factor analysis with the rotation method varimax was performed.
+In order to validate the two latent dimensions Idealism and Relativism, from the Ethical Positions Questionnaire, a principal component analysis with the rotation method varimax was performed. Consequently, the extracted factors are orthogonal and therefore independent from each other. This rotation method was also used by Forsythe [@forsythe1980taxonomy; @davis2001measuring: 45].
 
 \begin{figure}[!h]
 	\caption{Principal Component Analysis}
@@ -46,12 +49,14 @@ In order to validate the two dimensions Idealism and Relativism, from the Ethica
 {\scriptsize N = 278. Own calculations based on data from Online-Survey Experiment.\par}
 \end{figure}
 
-The factor analysis (Figure 1) shows that the variables of the ethical positions questionaire load very well without any cross-loads (cut off value: 0.40). Only the loading of eqp11 is too low (-0.12) to take into account. With the remaining variables the variables Idealism and Relativism were created.
+The factor analysis (Figure factor_analysis) shows that the variables of the ethical positions questionnaire load very well without any large cross-loads (highest cross-loading: eqp19 = -0.23). Therefore, a high divergent/discriminant validity is indicated. Regarding convergence validity, only the loading of eqp11 is rather low (-0.12), although the factor Idealism has higher factor loadings on average. In general, construct validity for both factors can be assumed, even if the factor idealism seems to be better captured by its items. For the aggregation of the factors, factore scores were created and used to weight the respective variables.
+
 
 
 ## Randomization and Descriptive Statistics
 
-This section will introduce some basic descriptive statistics of the used variables. Table 1 shows summary statistics for the used variables.
+This section will introduce some basic descriptive statistics of the used variables. Table 1 shows summary statistics for the variables of the analysis. Regarding the rule of thumb for normal distribution of skewness and kurtosis within +/- 1, only the control variables age and church attendance show violations of the assumption. Especially age has a high kurtosis, the other values show not as large deviations. 
+
 
 ```{r}
 # load("data/trolley.Rdata")
@@ -96,20 +101,17 @@ Switch Track T1 & 290 & 5.76 & 2.91 & 6 & 1 & 11 & -0.03 & -0.90 \\
 \end{tabular}
 \end{table}
 
-Figure 2 shows a comparison between the experimental groups by age, gender, Idealism and Relativism. As mentioned before, the randomization of the groups was flawed. Regarding the comparison between the experimental groups by age and gender, the differences are significant. The control group has a women proportion of over 52%, whereas only 41% of the discussion group are women. In addition, there is a strong outlier in the control group with over 50 years in the age. 
+Figure dem_compare depicts a comparison between the experimental groups by age and gender. It appears that, to some degree, the randomization of the groups was flawed. Regarding the comparison between the experimental groups by age and gender, the differences are significant. The control group has a women proportion of over 52%, whereas only 41% of the discussion group are women. In addition, there is a strong outlier in the control group with over 50 years in age, although the differences between the three groups are not statistically significant (p-values of t-tests are shown above the brackets for the respective distributions). In general, when excluding the outlier, age is rather evenly distributed between the treatment groups.
 
 
-\begin{figure}
+\begin{figure}[!b]
 	\caption{Randomization - Sociodemographics}
 	\includegraphics[width=\textwidth]{images/dem_compare}
 	\flushright
 {\scriptsize N = 278. P-Values are reported. Own calculations based on data from Online-Survey Experiment.\par}
 \end{figure}
 
-Moreover, there are also significant differences between the experimental groups regarding the main independent variables Idealism and Relativism. Concerning this issue, the following analysis should be interpreted with caution.
-
-When it comes to the question of whether it is morally justifiable to switch the track or even push a person, there are differences in age and gender (see Figure 3).
-
+Moreover, there are also differences between the experimental groups regarding the main independent variables Idealism and Relativism (see Figure uv_compare). For relativism, these are not statistically significant, although the control group has a notably lower mean than discussion and information group. For idealism, the difference in means between the control group and the discussion (p = 0.092) and information group (p = 0.055) are significant on the 90%-level, indicating that these groups contain on average more idealistic persons. 
 
 \begin{figure}[!h]
 	\caption{Randomization - Dependent Variables}
@@ -118,12 +120,19 @@ When it comes to the question of whether it is morally justifiable to switch the
 {\scriptsize N = 278. Own calculations based on data from Online-Survey Experiment.\par}
 \end{figure}
 
-Older people as well as female persons consider both scenarios less morally justified. A comparison of the means, regarding the gender, the differences between men and women are clearly significant in both scenarios. However, comparing the two scenarios shows that switching tracks is more likely to be morally justified than pushing a person. 
+Regarding the dependent variables at the time T1, Figure av_compare indicates significant differences between control and discussion groups for Scenario 1 (p < 0.05). Moreover the visual inspection of the distribution does show some differences: the highest category was never chosen by individuals of the control group. Regarding Szenario 2, there are similar differences observable, although statistically not significant, which might be due to the fact that in sum, more people chose lower scores on this variable. 
 
 
-\begin{figure}[!h]
+In sum, it can be concluded that the randomization into the three groups did not work out as intended. There are significant differences in means and different distributions of variables which are central to the analysis: gender,  relativism and the dependent variables, especially den Switch track variable. Concerning this issue, the following analysis should be interpreted with caution.
+
+
+
+\begin{figure}[!b]
 	\caption{Randomization - Independent Variables}
 	\includegraphics[width=\textwidth]{images/uv_compare}
 	\flushright
 {\scriptsize N = 278. P-Values are reported. Own calculations based on data from Online-Survey Experiment.\par}
 \end{figure}
+
+After the randomization was checked, some general descriptive statistics are reported. When it comes to the question of whether it is morally justifiable to switch the track or even push a person, there are differences in age and gender (see Figure gender_av_compare1). Older people as well as female persons consider both scenarios as less morally justified. By comparison of the means between men and women (see Figure gender_av_compare2), the differences between men and women are clearly significant in both scenarios. Comparing the two scenarios shows that switching tracks is on average more likely to be considered  morally justifiable than pushing a person. 
+
