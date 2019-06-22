@@ -60,7 +60,7 @@ options(xtable.comment = FALSE, scipen = 9999)
 ```
 
 \newpage
-\section{Discussion and Conclusion} \label{conclusion}
+\section{Conclusions} \label{conclusion}
 
 ```{r child = '5_conclusions.Rmd'}
 ```
