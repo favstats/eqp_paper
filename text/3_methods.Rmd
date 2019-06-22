@@ -1,0 +1,149 @@
+---
+output: pdf_document
+---
+
+## Online Experiment
+
+A online survey-experiment, on which this paper was based, concerning moral decision-making in the two hypothetical dilemmas was conducted over a period of one week. The studied subjects were chosen beforehand through dispension of digital invitations by members of the project group. Three hundred subjects were selected this way. As a result of the selection method, the sample reflects a very high percentage of students as well as a very low age and a political centre-left attitude on average (see below).
+
+The pooled subjects were randomized into three groups each receiving a different treatment in between the first and the second query of a decision in the two scenarios. The two different dilemmas were the described ‘trolley dilemma‘ and ‘footbridge dilemma‘, also referred to as o  the ‘switch track’ and ‘push person’ dilemma, respectively (see appendix for original descriptions). For the first scenario, people were asked (translated from German): "Please imagine the following situation: A waggon is moving towards five persons, who are standing on the track and will be killed if nothing is done. Anna can redirect the waggon to a second track, rescuing all five persons. But on the second track, there is one uninvolved person. This person will die if the tracks are switched. To which degree is it morally justifiable for Anna to redirect the waggon onto the second track?" The second scenario differed in regard to the action Anna could take to stop the train: instead of switching tracks, she could push a person in front of the train to stop it, so the five persons would be rescued, but the pushed person would die."
+
+Chosen subjects got to read a insertion text and had to fill in a survey regarding their general ethical position [cf. @forsyth1980taxonomy] as well as their personality and political attitudes. The they were asked to make a first decision in one of the two ethical dilemmas via dichotomous Yes/No choice and continuous tendency-rating, which will be used as the dependent variable in this paper. Afterwards each of the three groups received a treatment:
+
+
+
+
++ The first group, which comes closest to a ‚control group‘, had to read a short text conerning ethics (see attachement). 
++ In the second group each subject received identical utilitarian and deontological arguments. Three arguments each argued for or against an intervention in the ethical dilemmas (see attachement). 
++ The third group participated in a one-week-long asynchronous dialog on a digital platform. "Smartopinion" allowed the participants to post and comment their own arguments for or against any decision in the ethical dilemma or comment on one of 6 pro/contra-arguments (3 each utilitarian/deontological) which were posted beforehand by the project group. The discussion was moderated by project members who did not intervene in the dialog at any given point. 
+
+After these treatments the subjects were once again asked for their decision in their respective ethical dilemma in the forms of choice and rating and answered a questionnaire concerning their socio-demographic background.
+
+
+## Dataset
+
+The resulting dataset consists of 93 variables and data from 300 subjects. The studied sample depicts a high percentage of students (approximately 92 percent) and therefore reflects a low age (24 years), a political centre-left attitude (4.7 on a scale from 1 to 10) and a relatively high political interest (3.2 on a scale from 1 to 4) on average. The exact population cannot be determined, because of arbitrary selection mechanisms within some steps of the research process (dispension of invitations, reaction to invitations etc.). The interpretation of any results from this study should therefore be carried out with caution, even with respect to the population of students from the University of Stuttgart. 
+
+
+## Operationialization and  Factor Analysis
+
+The factors under study were operationalized as follows:  
+
+The dependent variable, the decision in one of two ethical dilemmas, was gathered in the form continuous tendency in regards to whether Anna's action of switching the tracks/pushing the person was morally justifiable (ranging from 1"Not at all", 6 “partly" to 11 “Absolutely") 
+
+The main independent variables, the different ethical ideologies of the subjects under study, were gathered as German versions of the twenty "Ethical Position" items originally developed by Forsyth [-@forsyth1980taxonomy]. These items ask the respondent for their reaction to ethical statements concerning one of the two dimensions (Idealism and Relativism) identified by Forsyth, on a scale from 1 ‚Completely disagree‘ to 9 ‚Completely agree‘ [@forsyth1980taxonomy: 178].
+
+One example for such an (Idealism-)statement is:
+
+
+> "A person should make certain that their actions never intentionally harm another even to a small degree" [@forsyth1980taxonomy: 178].
+
+The used translation of the "Ethical Position Questionnaire" was taken from Strack and Gennerich [@strack2007erfahrung: 13]. The question wording in German can be found in the Appendix. To validate and extract the two dimensions, ‚Idealism‘ and ‚Relativism‘, from the data, an Explorative Factor Analysis (Principal Component Analysis) was conducted and indices, each consisting of their dimension’s 10 variables, were formed (see below).
+The selected control variables were age (continuous), gender (dichotomous) and frequency of church attendance from 1 ‚More than once a week‘ to 6 ‚Never‘.
+
+In order to validate the two latent dimensions Idealism and Relativism, from the Ethical Positions Questionnaire, a principal component analysis with the rotation method varimax was performed. Consequently, the extracted factors are orthogonal and therefore independent from each other. This rotation method was also used by Forsyth [cf. @forsyth1980taxonomy; @davis2001measuring: 45].
+
+\begin{figure}[!h]
+\label{pca}
+	\caption{Principal Component Analysis}
+	\includegraphics[width=\textwidth]{images/factor_analysis}
+	\flushright
+{\scriptsize N = 278. Own calculations based on data from Online-Survey Experiment.\par}
+\end{figure}
+
+The factor analysis (Figure 1) shows that the variables of the ethical positions questionnaire load very well without any large cross-loads (highest cross-loading: eqp19 = -0.23). Therefore, a high divergent/discriminant validity is indicated. Regarding convergence validity, only the loading of eqp11 is rather low (-0.12), although the factor Idealism has higher factor loadings on average. In general, construct validity for both factors can be assumed, even if the factor idealism seems to be better captured by its items. For the aggregation of the factors, factore scores were created and used to weight the respective variables.
+
+
+
+## Randomization and Descriptive Statistics
+
+\begin{table}[ht]
+\caption{Summary Statistics}
+\centering
+\begin{tabular}{rrrrrrrrr}
+  \hline
+ & N & Mean & SD & Median & Min & Max & Skew & Kurt \\ 
+  \hline
+Switch Track T1 & 290 & 5.76 & 2.91 & 6 & 1 & 11 & -0.03 & -0.90 \\ 
+  Switch Track T2 & 290 & 5.56 & 2.91 & 6 & 1 & 11 & 0.01 & -0.94 \\ 
+  Push Person T1 & 290 & 4.29 & 2.83 & 4 & 1 & 11 & 0.55 & -0.72 \\ 
+  Push Person T2 & 290 & 4.18 & 2.86 & 4 & 1 & 11 & 0.60 & -0.64 \\ 
+  Idealism & 290 & 0 & 1 & 0.18 & -3.40 & 1.73 & -0.86 & 0.37 \\ 
+  Relativism & 290 & 0 & 1 & 0.11 & -3.21 & 2.34 & -0.35 & 0.02 \\ 
+  Gender & 290 & 1.46 & 0.50 & 1 & 1 & 2 & 0.17 & -1.98 \\ 
+  Age & 289 & 24.09 & 3.86 & 23 & 18 & 53 & 2.14 & 10.52 \\ 
+  Church Attendance & 278 & 1.87 & 1.04 & 2 & 1 & 6 & 1.38 & 2.06 \\ 
+  Control Group & 290 & 0.32 & 0.47 & 0 & 0 & 1 & 0.78 & -1.39 \\ 
+  Discussion Group & 290 & 0.34 & 0.47 & 0 & 0 & 1 & 0.67 & -1.56 \\ 
+  Information Group & 290 & 0.34 & 0.47 & 0 & 0 & 1 & 0.67 & -1.56 \\ 
+   \hline
+\end{tabular}
+\end{table}
+
+This section will introduce some basic descriptive statistics of the used variables. Table 1 shows summary statistics for the variables of the analysis. Regarding the rule of thumb for normal distribution of skewness and kurtosis within +/- 1, only the control variables age and church attendance show violations of the assumption. Especially age has a high kurtosis, the other values are well within the acceptable range of normal distributions. 
+
+
+```{r}
+# load("data/trolley.Rdata")
+# 
+# pacman::p_load(tidyverse, psych)
+# 
+# trolley %>% 
+#   select(t1_szenario1q2, t2_szenario1q2, t1_szenario2q2, t2_szenario2q2, idealism_pca, relativism_pca, gender, age, church_attendance, general_group_control, general_group_discussion, general_group_information) %>% 
+#   describe() %>% 
+#   select(-vars, -trimmed, -mad, -se, -range) %>% 
+#   magrittr::set_rownames(c("Switch Track T1", "Switch Track T2", 
+#                  "Push Person T1", "Push Person T2", 
+#                  "Idealism", "Relativism", 
+#                  "Gender", "Age", 
+#                  "Church Attendance", "Control Group",
+#                  "Discussion Group", "Information Group")) %>% 
+#   rename(N = n, Mean = mean, SD = sd, Median = median, 
+#          Min = min, Max = max, Skew = skew, Kurt = kurtosis) %>% 
+#   xtable::xtable()
+```
+
+\begin{figure}[!b]
+\label{dem_compare}
+	\caption{Randomization - Sociodemographics}
+	\includegraphics[width=\textwidth]{images/dem_compare}
+	\flushright
+{\scriptsize N = 278. P-Values are reported. Own calculations based on data from Online-Survey Experiment.\par}
+\end{figure}
+
+Figure 2 depicts a comparison between the experimental groups by age and gender. It appears that, to some degree, the randomization of the groups was flawed. Regarding the comparison between the experimental groups by age and gender, the differences are significant. The control group has a women proportion of over 52%, whereas only 41% of the discussion group are women. In addition, there is a strong outlier in the control group with over 50 years in age, although the differences between the three groups are not statistically significant (p-values of t-tests are shown above the brackets for the respective distributions). In general, when excluding the outlier, age is rather evenly distributed between the treatment groups.
+
+
+\begin{figure}[!h]
+\label{uv_compare}
+	\caption{Randomization - Dependent Variables}
+	\includegraphics[width=\textwidth]{images/av_compare}
+	\flushright
+{\scriptsize N = 278. P-Values are reported. Own calculations based on data from Online-Survey Experiment.\par}
+\end{figure}
+
+Regarding the dependent variables at the time T1, Figure 3 indicates significant differences between control and discussion groups for Scenario 1 (p < 0.05). Moreover the visual inspection of the distribution does show some differences: the highest category was never chosen by individuals of the control group. Regarding scenario 2, there are similar differences observable, although statistically not significant, which might be due to the fact that in sum, more people chose lower scores on this variable. 
+
+\begin{figure}[!b]
+\label{uv_compare}
+	\caption{Randomization - Independent Variables}
+	\includegraphics[width=\textwidth]{images/uv_compare}
+	\flushright
+{\scriptsize N = 278. P-Values are reported. Own calculations based on data from Online-Survey Experiment.\par}
+\end{figure}
+
+Moreover, there are also differences between the experimental groups regarding the main independent variables Idealism and Relativism (see Figure 4). For relativism, these are not statistically significant, although the control group has a notably lower mean than discussion and information group. For idealism, the difference in means between the control group and the discussion (p = 0.092) and information group (p = 0.055) are significant on the 90%-level, indicating that these groups contain on average more idealistic persons. 
+
+
+In sum, it can be concluded that the randomization into the three groups did not work out as intended. There are significant differences in means and different distributions of variables which are central to the analysis: gender,  relativism and the dependent variables, especially the Switch track variable. Concerning this issue, the following analysis should be interpreted with caution.
+
+
+\begin{figure}[!h]
+\label{gender_av_compare2}
+	\caption{Randomization - Dependent Variables by Gender}
+	\includegraphics[width=\textwidth]{images/gender_av_compare2}
+	\flushright
+{\scriptsize N = 278. Own calculations based on data from Online-Survey Experiment.\par}
+\end{figure}
+
+After the randomization was checked, some general descriptive statistics are reported. When it comes to the question of whether it is morally justifiable to switch the track or even push a person, there are differences in age and gender (see Figure 5). Older people as well as female persons consider both scenarios as less morally justified. Examining the values of both scenarios for men and women seperately, the differences are statistically significant in both scenarios with men being more likely to push and switch. Comparing the two scenarios shows that switching tracks is on average more likely to be considered  morally justifiable than pushing a person. 

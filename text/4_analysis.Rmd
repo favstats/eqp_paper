@@ -1,0 +1,120 @@
+---
+output: pdf_document
+---
+
+\begin{figure}[!h]
+\label{reg1}
+	\caption{Models 1}
+	\includegraphics[width=\textwidth]{images/reg1_combined}
+	\flushright
+{\scriptsize $^{***}p<0.001$, $^{**}p<0.01$, $^*p<0.05$.  Unstandardized regression coefficients. 90\% confidence intervals are shown. \\ Own calculations based on data from Online-Survey Experiment.\par}
+\end{figure}
+
+In this section, the regression models are reported and interpreted in regard to their implications for the previously derived hypotheses. In sum, 12 models were estimated, which are depicted in coefficient and interaction plots (see Figures 1 to 13). Models with the suffix ‘a’ represent the dependent variable asked for scenario 1 (switch track), the suffix ‘b’ designates the respective models with the dependent variable for scenario 2 (push person). In general, statistical significance is reported, but it should be noted, that it has not the same meaning as it has for analyses with data from a random sample. Therefore, significance should not be overinterpreted. Nevertheless, it can be used as an indicator of the precision and accuracy of the estimations (cf. Hildebrandt 2015: 82).
+
+\begin{figure}[!t]
+	\caption{Models 2 - Idealism}
+	\includegraphics[width=\textwidth]{images/reg2_c1_idealism}
+	\flushright
+{\scriptsize $^{***}p<0.001$, $^{**}p<0.01$, $^*p<0.05$.  N = 278. Unstandardized regression coefficients. 90\% confidence intervals are shown. \\ Own calculations based on data from Online-Survey Experiment.\par}
+\end{figure}
+
+First, the models with the dependent variable at time T1 (before the treatment) are analyzed (Models 1 to 3 in Figures 6 to 10). Model 1a shows the results for scenario 1, model 1b for scenario 2 (Figure reg1).  The factor idealism has a strong negative effect in both scenarios, meaning that the more idealistic a person is, the less they find it morally justifiable to switch track or push a person (Model 1a: b = -0.72 , p < 0.001 and Model 1b: b = -0.96 , p < 0.001). 
+
+\begin{figure}[!h]
+	\caption{Models 2 - Idealism Interaction Plots}
+	\includegraphics[width=\textwidth]{images/reg2_c2_idealism}
+	\flushright
+{\scriptsize N = 278. 90\% confidence intervals are shown. \\ Own calculations based on data from Online-Survey Experiment.\par}
+\end{figure}
+
+Relativism in turn has a positive sign, but is statistically insignificant and has only a marginal coefficient size (Model 1a: b = 0.08  and Model 1b: b =  0.06). It has to be noted that the Adjusted $R^2$ statistics are not particularly large, indicating only 7,9% and 12,9% explained variance of the dependent variable for the Models 1a and 1b, respectively. Nevertheless, for the previously derived hypothesis H1a, which states that, the more idealist an individual, the less likely it will switch/push, confirming evidence can be noted. The same holds true for H1b, which assumes that relativism has no effect on an individual’s decision to switch/push. 
+
+\begin{figure}[!h]
+	\caption{Models 3 - Relativism}
+	\includegraphics[width=\textwidth]{images/reg3_c1_relativism}
+	\flushright
+{\scriptsize $^{***}p<0.001$, $^{**}p<0.01$, $^*p<0.05$. N = 278. Unstandardized regression coefficients. 90\% confidence intervals are shown. \\ Own calculations based on data from Online-Survey Experiment.\par}
+\end{figure}
+
+
+
+Regarding hypothesis 2a, which states that women are less inclined to find switching/pushing morally justifiable than men, supporting evidence can be found here as well. For scenario 1, the effect becomes weakly significant and negative (b = -0.71), which points in the direction proposed by H2a. For the push person scenario, the effect is not as large and statistically not significant, but still pointing in the same direction (b = -0.55). Models including an interaction effect between gender and idealism are reported in Figure 7 and Figure 8 to test hypotheses 2b, 2c and 2d, which assume that idealism has a negative effect for women and men, but that the difference between both genders becomes smaller with higher idealism. For all of the hypotheses, supporting evidence can be noted. For both genders, idealism has a negative effect on the intention to switch the track and push a person in front of the train (Model 2a: men b = -0.88, women: b =  -0.21; Model 2b: men: b = -1.04; women: b = -0.74). 
+
+\begin{figure}[!h]
+	\caption{Models 3 - Relativism Interaction Plots}
+	\includegraphics[width=\textwidth]{images/reg3_c2_relativism}
+	\flushright
+{\scriptsize N = 278. 90\% confidence intervals are shown. \\ Own calculations based on data from Online-Survey Experiment.\par}
+\end{figure}
+
+The slope is stronger negative for men, which have higher predicted values on the dependent variable for individuals with the lowest level of idealism, although the difference is not significant for model 2b (Model 2a:  b = -0.79, p <0.05; Model 2b: b = -0.59). This results in almost equal predicted values of the dependent variable for individuals with the highest idealism (see Figure 8). The interaction effect is stronger for scenario 1 (b = 0.57), although the effect can be observed for scenario 2 as well (b = 0.30). In line with the effect sizes, the Adjusted $R^2$ for Model 2a is only slightly higher (8.31 % compared to 7,96% in Model 1a), while it is even smaller for Model 2b (12.9% compared to 12.8%). For none of the models, the interaction effect reaches statistical significance, but points in the direction of the hypotheses. Therefore, some confirming evidence can be noted for H2a to H2d. 
+
+
+\begin{figure}[!h]
+	\caption{Models 4 - Opinion Change}
+	\includegraphics[width=\textwidth]{images/reg4_combined}
+	\flushright
+{\scriptsize $^{***}p<0.001$, $^{**}p<0.01$, $^*p<0.05$. N = 278. Unstandardized regression coefficients. 90\% confidence intervals are shown. \\ Own calculations based on data from Online-Survey Experiment.\par}
+\end{figure}
+
+
+
+
+The hypothesis H2e assume, that the more relativist a woman, the more she becomes inclined to switching/pushing, while H2f postulates the opposite for men (the more relativist a man, the less inclined he is to switching/pushing). They are tested in Models 3a and 3b, which are depicted in Figures 9 and 10. Again, at the lowest level of relativism, men are clearly more inclined to switching/pushing than women (Model 3a:  b = -0.75, p < 0.05; Model 3b: b = -0.56). As assumed by H2e, for women the effect of relativism is positive, although only weak for the push person scenario  (Model 3a: b = 0.47; Model 3b: 0.16). In turn, as assumed by H2f, the effect of relativism is negative for men, although the effect sizes are rather weak (Model 3a:  b = -0.30; Model 3b = -0.05). 
+
+
+\begin{figure}[!h]
+	\caption{Models 5 - Idealism}
+	\includegraphics[width=\textwidth]{images/reg5_c1_idealism}
+	\flushright
+{\scriptsize $^{***}p<0.001$, $^{**}p<0.01$, $^*p<0.05$.  Unstandardized regression coefficients. 90\% confidence intervals are shown. \\ Own calculations based on data from Online-Survey Experiment.\par}
+\end{figure}
+
+
+
+As shown in Figure 10, at the highest levels of relativism, woman have higher predicted values on the dependent variable, meaning they are more inclined to find it morally justifiable to switch track/push a person than men are. The difference is only marginal for Model 3b, for which the interaction effect fails to gain statistical significance (b = 0.21). For Model 3a though, the effect is rather strong and significant on the 95%-level (b = 0.77). Regarding the explained variance, the Adjusted $R^2$ for Model 3b is slightly higher (9.29 % compared to 7,96% in Model 1a), while it is equal for Model 3b (12.8% in Model 1b as well). In sum, the results point in the direction of confirming evidence for H2f and H2e, although this holds true mostly for the switch track and less for the push person scenario, and the observed effects are rather small. 
+
+\begin{figure}[!h]
+	\caption{Models 5 - Idealism Interaction Plots}
+	\includegraphics[width=\textwidth]{images/reg5_c2_idealism}
+	\flushright
+{\scriptsize N = 278. 90\% confidence intervals are shown. \\ Own calculations based on data from Online-Survey Experiment.\par}
+\end{figure}
+
+
+
+
+As a next step, models with the dependent variable after the treatment are estimated (T2) to test the hypotheses regarding opinion change (Figures 11 to 15). Here, we control for the variable at the time T1, which means that the other independent variables only predict those t parts of the variance of the dependent variable which are not bound by the T1-variable.  Thus, positive coefficients indicate opinion change in the direction of higher values on the dependent variable (finding it more justifiable to switch/push) and negative coefficients in turn indicate negative opinion change. Gender is included in this models as well, although it only serves controlling purposes. In general, the Adjusted $R^2$ values in all of the T2-models therefore indicate a high amount of explained variance, due to the fact that the judgment at the time T2 is highly dependent on the judgment at T1, wich is included in all of the T2-models. 
+
+
+\begin{figure}[!h]
+	\caption{Models 6 - Relativism}
+	\includegraphics[width=\textwidth]{images/reg6_c1_relativism}
+	\flushright
+{\scriptsize $^{***}p<0.001$, $^{**}p<0.01$, $^*p<0.05$. N = 278. Unstandardized regression coefficients. 90\% confidence intervals are shown. \\ Own calculations based on data from Online-Survey Experiment.\par}
+\end{figure}
+
+
+
+
+In Models 5a and 5b (see Figure 12), an interaction effect with the treatment and idealism is estimated to test hypothesis H3: Compared to the control group, the information (H3a) and discussion treatments (H3b) strengthen the effect of idealism on the decision to not switch/push. Figure 13 shows the marginal effects for the interactions. The explained variance rises not at all when adding the interaction effects (73.3 % in Model 5a and 64.5% in Model 5b, compared to 73.4% in Model 4a and 64.7% in Model 4b). Moreover, the reported results do not point in the direction of  the hypotheses. For the control group, idealism has a negative effect (Model 5a: b = -0.15; Model 5b: b = -0.23). The slope for the information group is close to zero for scenario 1 (b = 0.14, slope: b = -0.01), and slightly positive for scenario 2 (b = 0.26, slope: b = 0.03). Therefore, hypothesis 3a is not confirmed. In Model 5a, the effect is slightly more negative for the discussion group than the control group, as assumed in H3b (b = -0.08, slope b = -0.23), but in model 5b, the effect of idealism for the discussion group is less negative (b = 0.19, slope: b = -0.04). For H3b, the results point in no clear direction and are far from being statistically and substantively significant. 
+
+
+\begin{figure}[!h]
+	\caption{Models 6 - Relativism Interaction Plots}
+	\includegraphics[width=\textwidth]{images/reg6_c2_relativism}
+	\flushright
+{\scriptsize N = 278. 90\% confidence intervals are shown. \\ Own calculations based on data from Online-Survey Experiment.\par}
+\end{figure}
+
+
+
+In Models 6a and 6b, interaction effects with the treatment and relativism are estimated to test H4a (in general, relativism has no effect on the direction of opinion change) and especially H4b (For the discussion treatment, the more relativist an individual is, the greater the opinion change in the direction of switching/pushing.). Figure 14 depicts the coefficient plots, while Figure 15 shows the marginal effects for the interactions. It appears that for the control group, relativism has a positive effect on opinion change (Model 6a: b = 0.18; Model 6b: b = 0.11). The slope for the information group is only marginal for scenario 1 (b = -0.19, slope: b = -0.01), and weakly negative for scenario 2 (b = -0.25, slope: b = -0.14), indicating no effect of relativism in this group. For the hypothesis H4a, that relativism in general has no effect on the direction of opinion change, the results are mixed and not very supportive, similar to the results of the Models 4a and 4b. 
+
+
+
+
+
+In Model 6a, the effect is the strongest negative for the discussion group (b = -0.31, slope b = -0.13), which holds also true for Model 6b (b = -0.44, slope: b = -0.33). The Adjusted $R^2$ rises not at all when adding the interaction effects (73.4 % in Model 6b and 64.8% in Model 6b, compared to 73.4% in Model 4a and 64.7% in Model 4b). For H4b, the results point in a contradicting direction, indicating for the discussion group that individuals with higher relativism have a weaker intention to switch/push. H4b is therefore clearly not confirmed, while for H4a the analyses produce, in sum, unclear results, although the weak effect sizes and statistical insignificance do indicate some support. 
+

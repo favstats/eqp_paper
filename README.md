@@ -6,7 +6,7 @@ The Date
 ## packages
 
 ``` r
-pacman::p_load(tidyverse, haven, psych, sjPlot, ggpubr)
+pacman::p_load(tidyverse, haven, psych, sjPlot, ggpubr, glue)
 ```
 
 ## data
@@ -33,67 +33,7 @@ trolley <- read_spss("data/TrolleyExperimentArgumentNew.sav") %>%
     general_group_information == 1 ~ "Information Group",
   )) 
 
-trolley
 ```
-
-    ## # A tibble: 290 x 129
-    ##    d_nof_added_arg~ d_nof_rated_arg~ d_nof_read_argu~ d_nof_sokrates_~
-    ##               <dbl>            <dbl>            <dbl>            <dbl>
-    ##  1                0               NA               NA               NA
-    ##  2               NA               NA               NA               NA
-    ##  3                0                0                0                0
-    ##  4                0               NA               NA               NA
-    ##  5               NA               NA               NA               NA
-    ##  6               NA               NA               NA               NA
-    ##  7                0                0                0                0
-    ##  8                0               NA               NA               NA
-    ##  9                0                6                8                2
-    ## 10                0               NA               NA               NA
-    ## # ... with 280 more rows, and 125 more variables:
-    ## #   d_nof_total_requests <dbl>, general_finisher <dbl>,
-    ## #   general_group_control <dbl>, general_group_discussion <dbl>,
-    ## #   general_group_information <dbl>, general_random <dbl>,
-    ## #   general_token <chr>, general_treatment_group <dbl+lbl>,
-    ## #   general_user_id <dbl>, t1_bigfive_bf0010c <dbl>,
-    ## #   t1_bigfive_bf0011c <dbl>, t1_bigfive_bf0012c <dbl>,
-    ## #   t1_bigfive_bf0013n <dbl>, t1_bigfive_bf0014n <dbl>,
-    ## #   t1_bigfive_bf0015n <dbl>, t1_bigfive_bf0016n <dbl>,
-    ## #   t1_bigfive_bf0017o <dbl>, t1_bigfive_bf0018o <dbl>,
-    ## #   t1_bigfive_bf0019o <dbl>, t1_bigfive_bf001e <dbl>,
-    ## #   t1_bigfive_bf0020o <dbl>, t1_bigfive_bf0021o <dbl>,
-    ## #   t1_bigfive_bf002e <dbl>, t1_bigfive_bf003e <dbl>,
-    ## #   t1_bigfive_bf004e <dbl>, t1_bigfive_bf005a <dbl>,
-    ## #   t1_bigfive_bf006a <dbl>, t1_bigfive_bf007a <dbl>,
-    ## #   t1_bigfive_bf008a <dbl>, t1_bigfive_bf009c <dbl>, t1_eqp_eqp1 <dbl>,
-    ## #   t1_eqp_eqp10 <dbl>, t1_eqp_eqp11 <dbl>, t1_eqp_eqp12 <dbl>,
-    ## #   t1_eqp_eqp13 <dbl>, t1_eqp_eqp14 <dbl>, t1_eqp_eqp15 <dbl>,
-    ## #   t1_eqp_eqp16 <dbl>, t1_eqp_eqp17 <dbl>, t1_eqp_eqp18 <dbl>,
-    ## #   t1_eqp_eqp19 <dbl>, t1_eqp_eqp2 <dbl>, t1_eqp_eqp20 <dbl>,
-    ## #   t1_eqp_eqp3 <dbl>, t1_eqp_eqp4 <dbl>, t1_eqp_eqp5 <dbl>,
-    ## #   t1_eqp_eqp6 <dbl>, t1_eqp_eqp7 <dbl>, t1_eqp_eqp8 <dbl>,
-    ## #   t1_eqp_eqp9 <dbl>, t1_first_presented_szenario <dbl>,
-    ## #   t1_startdate <chr>, t1_submitdate <chr>, t1_szenario1q1 <dbl>,
-    ## #   t1_szenario1q2 <dbl>, t1_szenario2q1 <dbl>, t1_szenario2q2 <dbl>,
-    ## #   t2_discussionexperiment <dbl>, t2_first_presented_szenario <dbl>,
-    ## #   t2_gender <dbl+lbl>, t2_pol_alignment <dbl+lbl>,
-    ## #   t2_pol_interest <dbl+lbl>, t2_religion_church <dbl+lbl>,
-    ## #   t2_religion_community <dbl+lbl>, t2_religion_not_christian <dbl+lbl>,
-    ## #   t2_religion_practice <dbl+lbl>, t2_startdate <chr>,
-    ## #   t2_study_course <chr>, t2_submitdate <chr>, t2_szenario1arg_con <chr>,
-    ## #   t2_szenario1arg_con_chars <dbl>, t2_szenario1argcount_con <dbl>,
-    ## #   t2_szenario1argcount_pro <dbl>, t2_szenario1arg_pro <chr>,
-    ## #   t2_szenario1arg_pro_chars <dbl>, t2_szenario1q1 <dbl>,
-    ## #   t2_szenario1q2 <dbl>, t2_szenario2arg_con <chr>,
-    ## #   t2_szenario2arg_con_chars <dbl>, t2_szenario2argcount_con <dbl>,
-    ## #   t2_szenario2argcount_pro <dbl>, t2_szenario2arg_pro <chr>,
-    ## #   t2_szenario2arg_pro_chars <dbl>, t2_szenario2q1 <dbl>,
-    ## #   t2_szenario2q2 <dbl>, t2_university <dbl+lbl>,
-    ## #   t2_university_other <chr>, t2_year_of_birth <dbl>, age <dbl>,
-    ## #   d_atleast_one_added_argument <dbl>, d_atleast_one_read_argument <dbl>,
-    ## #   d_atleast_ten_rated_argument <dbl>, d_atleast_ten_read_argument <dbl>,
-    ## #   d_branch_contra_activity <dbl>, d_branch_pro_activity <dbl>,
-    ## #   d_first_branch <dbl+lbl>, opchange_sz2 <dbl>, opchange_sz2_rec <dbl>,
-    ## #   t1_szenario2q2_ext <dbl>, faculty <dbl>, ...
 
 ## Basic Stats
 
@@ -411,15 +351,15 @@ t1_szenario2q2_gender
 ``` r
 tidytemplate::ggsave_it(t1_szenario2q2_gender, width = 10, height = 6)
 
-gender_av_compare <- cowplot::plot_grid(t1_szenario1q2_gender, t1_szenario2q2_gender)
+gender_av_compare1 <- cowplot::plot_grid(t1_szenario1q2_gender, t1_szenario2q2_gender)
 
-gender_av_compare
+gender_av_compare1
 ```
 
 <img src="analysis_files/figure-gfm/unnamed-chunk-14-3.png" style="display: block; margin: auto;" />
 
 ``` r
-tidytemplate::ggsave_it(gender_av_compare, width = 12, height = 6)
+tidytemplate::ggsave_it(gender_av_compare1, width = 12, height = 6)
 ```
 
 #### Scatters
@@ -463,21 +403,21 @@ t1_szenario2q2_gender
 ``` r
 tidytemplate::ggsave_it(t1_szenario2q2_gender, width = 10, height = 6)
 
-gender_av_compare <- cowplot::plot_grid(t1_szenario1q2_gender, t1_szenario2q2_gender)
+gender_av_compare2 <- cowplot::plot_grid(t1_szenario1q2_gender, t1_szenario2q2_gender)
 
-gender_av_compare
+gender_av_compare2
 ```
 
 <img src="analysis_files/figure-gfm/unnamed-chunk-15-3.png" style="display: block; margin: auto;" />
 
 ``` r
-tidytemplate::ggsave_it(gender_av_compare, width = 12, height = 6)
+tidytemplate::ggsave_it(gender_av_compare2, width = 12, height = 6)
 ```
 
 ## Factor Analysis Table
 
 ``` r
-# eqp %>% 
+# eqp %>% psych::alpha()
 #   psych::pca(2, rotate = "varimax") %>% 
 #   .$loadings %>% unclass() %>% as.data.frame() %>% 
 #   rownames_to_column("eqp_variable")
@@ -501,8 +441,9 @@ factor_analysis <- sjp.pca(eqp, rotation = "varimax",
         show.values = T)$plot  +
   ggthemes::scale_color_gdocs("") +
   ggthemes::theme_hc() +
-  ggtitle("Ethical Positions Questionnaire - Factor Analysis") +
-  facet_grid(~xpos, labeller = as_labeller(factor_names))
+  ggtitle("Ethical Positions Questionnaire - PCA") +
+  facet_grid(~xpos, labeller = as_labeller(factor_names)) +
+  labs(captions = "Cronbach's Alpha = 0.80")
 
 factor_analysis
 ```
@@ -516,6 +457,8 @@ tidytemplate::ggsave_it(factor_analysis, width = 10, height = 6)
 ## Summary Statistics
 
 ``` r
+save(trolley, file = "text/data/trolley.Rdata")
+
 trolley %>% 
   select(t1_szenario1q2, t2_szenario1q2, t1_szenario2q2, t2_szenario2q2, idealism_pca, relativism_pca, gender, age, church_attendance, general_group_control, general_group_discussion, general_group_information) %>% 
   describe() %>% 
@@ -540,223 +483,241 @@ trolley %>%
 
 ## Models
 
-### Szenario 1
-
-1.  t1 als AV
-2.  t2 mit Controls für t1 und für treatments
-3.  Modelle aus 2. mit Treatment-Interaktion (Idealism)
-4.  Modelle aus 2. mit Treatment-Interaktion (Relativism)
-
-<!-- end list -->
-
 ``` r
 trolley %<>% 
   mutate(groups = factor(groups)) %>% 
-  mutate(gender = factor(gender))
-
-fit1_s1 <- lm(t1_szenario1q2 ~ idealism_pca + relativism_pca + 
-             gender + age + church_attendance +
-             groups, 
-           data = trolley)
-
-sjPlot::plot_model(fit1_s1, show.p = T, show.values = T) +
-  ggtitle("Model1a - Opinion Change in Szenario 1") +
-  ggthemes::theme_hc() +
-  ggthemes::scale_fill_fivethirtyeight()
+  mutate(gender = factor(gender)) 
 ```
-
-<img src="analysis_files/figure-gfm/unnamed-chunk-18-1.png" style="display: block; margin: auto;" />
-
-``` r
-ggsave(filename = "images/reg1_s1.png", width = 5, height = 5)
-
-broom::glance(fit1_s1) %>% knitr::kable()
-```
-
-| r.squared | adj.r.squared |    sigma | statistic |  p.value | df |     logLik |     AIC |      BIC | deviance | df.residual |
-| --------: | ------------: | -------: | --------: | -------: | -: | ---------: | ------: | -------: | -------: | ----------: |
-| 0.1050599 |     0.0817715 | 2.792309 |  4.511256 | 8.98e-05 |  8 | \-673.4298 | 1364.86 | 1397.476 | 2097.391 |         269 |
-
-``` r
-fit2_s1 <- lm(t2_szenario1q2 ~ t1_szenario1q2 + idealism_pca + relativism_pca + 
-             gender + age + church_attendance +
-             groups, 
-           data = trolley)
-
-sjPlot::plot_model(fit2_s1, show.p = T, show.values = T) +
-  ggtitle("Model2a - Opinion Change in Szenario 1") +
-  ggthemes::theme_hc() +
-  ggthemes::scale_fill_fivethirtyeight()
-```
-
-<img src="analysis_files/figure-gfm/unnamed-chunk-18-2.png" style="display: block; margin: auto;" />
-
-``` r
-ggsave(filename = "images/reg2_s1.png", width = 5, height = 5)
-
-broom::glance(fit2_s1) %>% knitr::kable()
-```
-
-| r.squared | adj.r.squared |   sigma | statistic | p.value | df |     logLik |      AIC |      BIC | deviance | df.residual |
-| --------: | ------------: | ------: | --------: | ------: | -: | ---------: | -------: | -------: | -------: | ----------: |
-| 0.7414711 |     0.7337538 | 1.49006 |  96.07933 |       0 |  9 | \-498.9434 | 1017.887 | 1054.127 | 595.0346 |         268 |
-
-``` r
-fit3_s1 <- lm(t2_szenario1q2 ~ t1_szenario1q2 + idealism_pca + relativism_pca + 
-             gender + age + church_attendance +
-             groups * idealism_pca, 
-           data = trolley)
-
-sjPlot::plot_model(fit3_s1, show.p = T, show.values = T) +
-  ggtitle("Model3a - Opinion Change in Szenario 1") +
-  ggthemes::theme_hc() +
-  ggthemes::scale_fill_fivethirtyeight()
-```
-
-<img src="analysis_files/figure-gfm/unnamed-chunk-18-3.png" style="display: block; margin: auto;" />
-
-``` r
-ggsave(filename = "images/reg3_s1.png", width = 5, height = 5)
-
-broom::glance(fit3_s1) %>% knitr::kable()
-```
-
-| r.squared | adj.r.squared |    sigma | statistic | p.value | df |     logLik |      AIC |      BIC | deviance | df.residual |
-| --------: | ------------: | -------: | --------: | ------: | -: | ---------: | -------: | -------: | -------: | ----------: |
-| 0.7423137 |     0.7326262 | 1.493212 |  76.62628 |       0 | 11 | \-498.4912 | 1020.982 | 1064.471 | 593.0953 |         266 |
-
-``` r
-# sjPlot::sjp.int(fit3_s1, p.kr = F)$plot +
-#   ggtitle("Model3a - Interaction") +
-#   ggthemes::theme_hc() +
-#   ggthemes::scale_fill_fivethirtyeight()
-
-ggsave(filename = "images/reg3_s1.png", width = 5, height = 5)
-
-fit4_s1 <- lm(t2_szenario1q2 ~ t1_szenario1q2 + idealism_pca + relativism_pca + 
-             gender + age + church_attendance +
-             groups * relativism_pca, 
-           data = trolley)
-
-sjPlot::plot_model(fit4_s1, show.p = T, show.values = T) +
-  ggtitle("Model4a - Opinion Change in Szenario 1") +
-  ggthemes::theme_hc() +
-  ggthemes::scale_fill_fivethirtyeight()
-```
-
-<img src="analysis_files/figure-gfm/unnamed-chunk-18-4.png" style="display: block; margin: auto;" />
-
-``` r
-ggsave(filename = "images/reg4_s1.png", width = 5, height = 5)
-
-broom::glance(fit4_s1) %>% knitr::kable()
-```
-
-| r.squared | adj.r.squared |    sigma | statistic | p.value | df |     logLik |      AIC |      BIC | deviance | df.residual |
-| --------: | ------------: | -------: | --------: | ------: | -: | ---------: | -------: | -------: | -------: | ----------: |
-| 0.7433485 |     0.7336999 | 1.490211 |  77.04247 |       0 | 11 | \-497.9339 | 1019.868 | 1063.356 | 590.7136 |         266 |
-
-### Szenario 2
 
 1.  t1 als AV
-2.  t2 mit Controls für t1 und für treatments
-3.  Modelle aus 2. mit Treatment-Interaktion (Idealism)
-4.  Modelle aus 2. mit Treatment-Interaktion (Relativism)
+2.  t1 als AV und gender interaction (Idealism)
+3.  t1 als AV und gender interaction (Relativism)
+4.  t2 mit Controls für t1 und für treatments
+5.  Modelle aus 4. mit Treatment-Interaktion (Idealism)
+6.  Modelle aus 4. mit Treatment-Interaktion (Relativism)
 
 <!-- end list -->
 
-``` r
-fit1_s2 <- lm(t1_szenario2q2 ~ idealism_pca + relativism_pca + 
-             gender + age + church_attendance +
-             groups, 
-           data = trolley)
+1.  Szenario 1 (a = Switch Track)
+2.  Szenario 2b (b = Push
+Person)
 
-sjPlot::plot_model(fit1_s2, show.p = T, show.values = T) +
-  ggtitle("Model1b - Opinion Change in Szenario 2") +
+### Model 1a - Switch Track
+
+### Model 1b - Push Person
+
+#### Both Models
+
+``` r
+cowplot::plot_grid(reg1_s1, reg1_s2, ncol = 1)
+```
+
+<img src="analysis_files/figure-gfm/unnamed-chunk-21-1.png" style="display: block; margin: auto;" />
+
+``` r
+ggsave(filename = "text/images/reg1_combined.png", width = 8, height = 9)
+```
+
+### Model 2a - Switch Track - Idealism X Gender
+
+### Model 2b - Push Person - Idealism X Gender
+
+#### Both Models
+
+``` r
+cowplot::plot_grid(reg2_s1_int_idealism, reg2_s2_int_idealism, ncol = 1)
+```
+
+<img src="analysis_files/figure-gfm/unnamed-chunk-24-1.png" style="display: block; margin: auto;" />
+
+``` r
+ggsave(filename = "text/images/reg2_c1_idealism.png", width = 8, height = 9)
+```
+
+#### Both Interactions
+
+``` r
+bind_rows(
+  get_model_data(fit2_s1_int_idealism, type = "pred",
+               terms = c("idealism_pca", "gender"), ci.lvl = .9) %>% 
+            mutate(type = "Model 2a - Switch Track"),  
+  get_model_data(fit2_s2_int_idealism, type = "pred",
+               terms = c("idealism_pca", "gender"), ci.lvl = .9) %>% 
+            mutate(type = "Model 2b - Push Person")
+  ) %>% 
+  ggplot(aes(x, predicted)) +
+  geom_ribbon(aes(ymin = conf.low, 
+                  ymax = conf.high, 
+                  fill = group), alpha = 0.11) +
+  geom_line(aes(color = group), size = 1.2) +
+  ggtitle("Model 2 - Idealism X Gender") +
   ggthemes::theme_hc() +
-  ggthemes::scale_fill_fivethirtyeight()
+  ggthemes::scale_fill_fivethirtyeight("Gender") +
+  ggthemes::scale_color_fivethirtyeight("Gender") +
+  facet_wrap(~type) +
+  ylab("Morally justifiable 1 - 11") +
+  xlab("Idealism")  
 ```
 
-<img src="analysis_files/figure-gfm/unnamed-chunk-19-1.png" style="display: block; margin: auto;" />
+<img src="analysis_files/figure-gfm/unnamed-chunk-25-1.png" style="display: block; margin: auto;" />
 
 ``` r
-ggsave(filename = "images/reg1_s2.png", width = 5, height = 5)
-
-broom::glance(fit1_s2) %>% knitr::kable()
+ggsave(filename = "text/images/reg2_c2_idealism.png", width = 8, height = 5)
 ```
 
-| r.squared | adj.r.squared |    sigma | statistic | p.value | df |     logLik |      AIC |      BIC | deviance | df.residual |
-| --------: | ------------: | -------: | --------: | ------: | -: | ---------: | -------: | -------: | -------: | ----------: |
-| 0.1479287 |     0.1257558 | 2.657334 |   6.67161 |   3e-07 |  8 | \-659.7056 | 1337.411 | 1370.027 | 1899.522 |         269 |
+### Model 3a - Switch Track - Relativism X Gender
+
+### Model 3b - Push Person- Relativism X Gender
+
+#### Both Models
 
 ``` r
-fit2_s2 <- lm(t2_szenario2q2 ~ t1_szenario2q2 + idealism_pca + relativism_pca + 
-             gender + age + church_attendance +
-             groups, 
-           data = trolley)
+cowplot::plot_grid(reg3_s1_int_relativism, reg3_s2_int_relativism, ncol = 1)
+```
 
-sjPlot::plot_model(fit2_s2, show.p = T, show.values = T) +
-  ggtitle("Model2b - Opinion Change in Szenario 2") +
+<img src="analysis_files/figure-gfm/unnamed-chunk-28-1.png" style="display: block; margin: auto;" />
+
+``` r
+ggsave(filename = "text/images/reg3_c1_relativism.png", width = 8, height = 9)
+```
+
+#### Both Interactions
+
+``` r
+bind_rows(
+  get_model_data(fit3_s1_int_relativism, type = "pred",
+               terms = c("relativism_pca", "gender"), ci.lvl = .9) %>% 
+            mutate(type = "Model 3a - Switch Track"),  
+  get_model_data(fit3_s2_int_relativism, type = "pred",
+               terms = c("relativism_pca", "gender"), ci.lvl = .9) %>% 
+            mutate(type = "Model 3b - Push Person")
+  ) %>% 
+  ggplot(aes(x, predicted)) +
+  geom_ribbon(aes(ymin = conf.low, 
+                  ymax = conf.high, 
+                  fill = group), alpha = 0.11) +
+  geom_line(aes(color = group), size = 1.2) +
+  ggtitle("Model 3 - Relativism X Gender") +
   ggthemes::theme_hc() +
-  ggthemes::scale_fill_fivethirtyeight()
+  ggthemes::scale_fill_fivethirtyeight("Gender") +
+  ggthemes::scale_color_fivethirtyeight("Gender") +
+  facet_wrap(~type) +
+  ylab("Morally justifiable 1 - 11") +
+  xlab("Relativism")  
 ```
 
-<img src="analysis_files/figure-gfm/unnamed-chunk-19-2.png" style="display: block; margin: auto;" />
+<img src="analysis_files/figure-gfm/unnamed-chunk-29-1.png" style="display: block; margin: auto;" />
 
 ``` r
-ggsave(filename = "images/reg2_s2.png", width = 5, height = 5)
-
-broom::glance(fit2_s2) %>% knitr::kable()
+ggsave(filename = "text/images/reg3_c2_relativism.png", width = 8, height = 5)
 ```
 
-| r.squared | adj.r.squared |    sigma | statistic | p.value | df |     logLik |      AIC |      BIC | deviance | df.residual |
-| --------: | ------------: | -------: | --------: | ------: | -: | ---------: | -------: | -------: | -------: | ----------: |
-|  0.656978 |     0.6467385 | 1.696347 |  64.16137 |       0 |  9 | \-534.8594 | 1089.719 | 1125.959 | 771.1952 |         268 |
+### Model 4a - Switch Track
+
+### Model 4b - Push Person
+
+#### Both Models
 
 ``` r
-fit3_s2 <- lm(t2_szenario2q2 ~ t1_szenario2q2 + idealism_pca + relativism_pca + 
-             gender + age + church_attendance +
-             groups * idealism_pca, 
-           data = trolley)
+cowplot::plot_grid(reg4_s1, reg4_s2, ncol = 1)
+```
 
-sjPlot::plot_model(fit3_s2, show.p = T, show.values = T) +
-  ggtitle("Model3b - Opinion Change in Szenario 2") +
+<img src="analysis_files/figure-gfm/unnamed-chunk-32-1.png" style="display: block; margin: auto;" />
+
+``` r
+ggsave(filename = "text/images/reg4_combined.png", width = 8, height = 9)
+```
+
+### Model 5a - Switch Track - Idealism
+
+### Model 5b - Push Person - Idealism
+
+#### Both Models
+
+``` r
+cowplot::plot_grid(reg5_s1, reg5_s2, ncol = 1)
+```
+
+<img src="analysis_files/figure-gfm/unnamed-chunk-35-1.png" style="display: block; margin: auto;" />
+
+``` r
+ggsave(filename = "text/images/reg5_c1_idealism.png", width = 8, height = 9)
+```
+
+#### Both Interactions
+
+``` r
+bind_rows(
+  get_model_data(fit5_s1, type = "pred",
+               terms = c("idealism_pca", "groups"), ci.lvl = .9) %>% 
+            mutate(type = "Model 5a - Switch Track"),  
+  get_model_data(fit5_s2, type = "pred",
+               terms = c("idealism_pca", "groups"), ci.lvl = .9) %>% 
+            mutate(type = "Model 5b - Push Person")
+  ) %>% 
+  ggplot(aes(x, predicted)) +
+  geom_ribbon(aes(ymin = conf.low, 
+                  ymax = conf.high, 
+                  fill = group), alpha = 0.11) +
+  geom_line(aes(color = group), size = 1.2) +
+  ggtitle("Model 5 - Idealism X Experimental Groups") +
   ggthemes::theme_hc() +
-  ggthemes::scale_fill_fivethirtyeight()
+  ggthemes::scale_fill_fivethirtyeight("Experimental Groups") +
+  ggthemes::scale_color_fivethirtyeight("Experimental Groups") +
+  facet_wrap(~type) +
+  ylab("Morally justifiable 1 - 11") +
+  xlab("Idealism")  
 ```
 
-<img src="analysis_files/figure-gfm/unnamed-chunk-19-3.png" style="display: block; margin: auto;" />
+<img src="analysis_files/figure-gfm/unnamed-chunk-36-1.png" style="display: block; margin: auto;" />
 
 ``` r
-ggsave(filename = "images/reg3_s2.png", width = 5, height = 5)
-
-broom::glance(fit3_s2) %>% knitr::kable()
+ggsave(filename = "text/images/reg5_c2_idealism.png", width = 8, height = 5)
 ```
 
-| r.squared | adj.r.squared |    sigma | statistic | p.value | df |     logLik |      AIC |      BIC | deviance | df.residual |
-| --------: | ------------: | -------: | --------: | ------: | -: | ---------: | -------: | -------: | -------: | ----------: |
-| 0.6583268 |     0.6454819 | 1.699362 |  51.25216 |       0 | 11 | \-534.3138 | 1092.628 | 1136.116 | 768.1628 |         266 |
+### Model 6a - Switch Track - Relativism
+
+### Model 6b - Push Person - Relativism
+
+#### Both Models
 
 ``` r
-fit4_s2 <- lm(t2_szenario2q2 ~ t1_szenario2q2 + idealism_pca + relativism_pca + 
-             gender + age + church_attendance +
-             groups * relativism_pca, 
-           data = trolley)
+cowplot::plot_grid(reg6_s1, reg6_s2, ncol = 1)
+```
 
-sjPlot::plot_model(fit4_s2, show.p = T, show.values = T) +
-  ggtitle("Model4b - Opinion Change in Szenario 2") +
+<img src="analysis_files/figure-gfm/unnamed-chunk-39-1.png" style="display: block; margin: auto;" />
+
+``` r
+ggsave(filename = "text/images/reg6_c1_relativism.png", width = 7, height = 8)
+```
+
+#### Both Interactions
+
+``` r
+bind_rows(
+  get_model_data(fit6_s1, type = "pred",
+               terms = c("relativism_pca", "groups"), ci.lvl = .9) %>% 
+            mutate(type = "Model 6a - Switch Track"),  
+  get_model_data(fit6_s2, type = "pred",
+               terms = c("relativism_pca", "groups"), ci.lvl = .9) %>% 
+            mutate(type = "Model 6b - Push Person")
+  ) %>% 
+  ggplot(aes(x, predicted)) +
+  geom_ribbon(aes(ymin = conf.low, 
+                  ymax = conf.high, 
+                  fill = group), alpha = 0.11) +
+  geom_line(aes(color = group), size = 1.2) +
+  ggtitle("Model 6 - Relativism X Experimental Groups") +
   ggthemes::theme_hc() +
-  ggthemes::scale_fill_fivethirtyeight()
+  ggthemes::scale_fill_fivethirtyeight("Experimental Groups") +
+  ggthemes::scale_color_fivethirtyeight("Experimental Groups") +
+  facet_wrap(~type) +
+  ylab("Morally justifiable 1 - 11") +
+  xlab("Relativism")  
 ```
 
-<img src="analysis_files/figure-gfm/unnamed-chunk-19-4.png" style="display: block; margin: auto;" />
+<img src="analysis_files/figure-gfm/unnamed-chunk-40-1.png" style="display: block; margin: auto;" />
 
 ``` r
-ggsave(filename = "images/reg4_s2.png", width = 5, height = 5)
-
-broom::glance(fit4_s2) %>% knitr::kable()
+ggsave(filename = "text/images/reg6_c2_relativism.png", width = 8, height = 5)
 ```
-
-| r.squared | adj.r.squared |    sigma | statistic | p.value | df |     logLik |      AIC |     BIC | deviance | df.residual |
-| --------: | ------------: | -------: | --------: | ------: | -: | ---------: | -------: | ------: | -------: | ----------: |
-| 0.6608168 |     0.6480656 | 1.693158 |   51.8237 |       0 | 11 | \-533.3007 | 1090.601 | 1134.09 | 762.5646 |         266 |
